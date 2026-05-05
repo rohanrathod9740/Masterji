@@ -79,7 +79,9 @@ const loginUser = async (req, res, next) => {
     data: {
       user: {
         id: user.id,
-        email: email,
+        name: user.name,
+        phone: user.phone,
+        email: user.email,
       },
       token,
     },

@@ -4,7 +4,7 @@ import { request as httpsRequest } from "node:https";
 const DEFAULT_BACKEND_BASE_URL = "http://localhost:5000";
 
 const BACKEND_BASE_URL =
-  process.env.BACKEND_API_BASE_URL?.replace(/\/$/, "") ??
+  process.env.BACKEND_API_BASE_URL?.trim().replace(/\/$/, "") ||
   DEFAULT_BACKEND_BASE_URL;
 
 function buildBackendUrl(path: string) {

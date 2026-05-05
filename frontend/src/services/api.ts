@@ -1,7 +1,7 @@
 const DEFAULT_API_BASE_URL = "";
 
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL?.replace(/\/$/, "") ??
+  process.env.NEXT_PUBLIC_API_BASE_URL?.trim().replace(/\/$/, "") ??
   DEFAULT_API_BASE_URL;
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -84,7 +84,7 @@ async function fetchJson(
     };
   } catch {
     throw new ApiError(
-      "Could not reach the frontend API gateway. Confirm Next.js is running and the backend is available on http://localhost:5000."
+      "Could not reach the API. Confirm Next.js is running and BACKEND_API_BASE_URL points to the backend server."
     );
   }
 }

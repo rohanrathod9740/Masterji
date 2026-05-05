@@ -22,18 +22,23 @@ config()
 const app = express()
 const PORT = process.env.PORT || 5000
 
-app.use(cors())
+app.use(cors({
+    origin: process.env.CORS_ORIGIN
+        ? process.env.CORS_ORIGIN.split(",").map((origin) => origin.trim())
+        : ["http://localhost:3000", "http://localhost:3001", "https://masterji-w4jb.onrender.com"],
+    methods:["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
+    credentials:true
+}));
 app.use(express.json())
+
+app.get("/health", (_req, res) => {
+    res.status(200).json({ status: "ok" });
+});
 
 app.use("/api/v1/auth",authRouter);
 app.use("/api/v1/persons",personRouter);
 app.use("/api/v1/tags", tagRouter);
 app.use("/api/v1/interactions", interactionRouter);
-app.use(cors({
-    origin:["http://localhost:3000", "http://localhost:3001","https://masterji-w4jb.onrender.com"],
-    methods:["GET","POST","PUT","DELETE"],
-    credentials:true
-}));
 
 app.use(errorHandler);
 app.listen(PORT,async()=>{
