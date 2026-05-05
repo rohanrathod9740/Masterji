@@ -41,6 +41,7 @@ export async function forwardJson(
       Accept: "application/json",
       ...(body ? { "Content-Type": "application/json" } : {}),
     },
+    credentials: "include",
     body: body ? JSON.stringify(body) : undefined,
     cache: "no-store",
   });
