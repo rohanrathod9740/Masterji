@@ -83,20 +83,23 @@ model Interaction {
   audioUrl   String?
   transcript String?
 
-  interactionDate DateTime
   createdAt       DateTime @default(now())
 
   commitments Commitment[]
 
-  @@index([personId, interactionDate(sort: Desc)])
+  @@index([personId, createdAt(sort: Desc)])
 }
 
 model PersonTag {
   id       String @id @default(uuid())
-  personId String
-  person   Person @relation(fields: [personId], references: [id], onDelete: Cascade)
 
-  tag String
+  personId String
+  tagId    String
+
+  person Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([personId, tagId]) // prevents duplicate tagging
 }
 
 model Person {
@@ -131,4 +134,16 @@ model User {
   commitments  Commitment[]
   cases        Case[]
   tasks        Task[]
+  tags         Tag[]   
+}
+
+model Tag {
+  id     String @id @default(uuid())
+  userId String
+  name   String
+
+  user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  persons PersonTag[]
+
+  @@unique([userId, name]) // prevents duplicate tags per user
 }

@@ -20,9 +20,9 @@ export const getPersonById = async (req, res) => {
 };
 
 export const createPerson = async (req, res) => {
-    const { name, age, gender } = req.body;
+    const { userId,name,contact,type,notes } = req.body;
     try {
-        const person = await prisma.person.create({ data: { name, phone, email,} });
+        const person = await prisma.person.create({ data: {userId,name,contact,type,notes} });
         res.status(200).json(person);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -46,6 +46,27 @@ export const editPersonById = async (req, res) => {
         const person = await prisma.person.update({ where: { id }, data: { name, age, gender } });
         res.status(200).json(person);
     } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const addTagToPerson = async (req, res) => {
+    const {personId} = req.body;
+    const {tagId} = req.body;
+
+    if (!tagId) {
+        return res.status(400).json({ error: "tagId is required" });
+    }
+
+    try {
+        const personTag = await prisma.personTag.create({
+            data: { personId, tagId }
+        });
+        res.status(200).json(personTag);
+    } catch (error) {
+        if (error.code === 'P2002') {
+            return res.status(400).json({ error: "Tag is already added to this person" });
+        }
         res.status(500).json({ error: error.message });
     }
 };
