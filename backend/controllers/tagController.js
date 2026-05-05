@@ -1,6 +1,6 @@
 import prisma from "../prisma/client.js";
 
-export const createTag = async (req, res) => {
+export const createTag = async (req, res, next) => {
     const { userId, name } = req.body;
     try {
         const tag = await prisma.tag.create({
@@ -8,11 +8,11 @@ export const createTag = async (req, res) => {
         });
         res.status(201).json(tag);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 };
 
-export const editTag = async (req, res) => {
+export const editTag = async (req, res, next) => {
     const { id } = req.params;
     const { name } = req.body;
     try {
@@ -22,11 +22,11 @@ export const editTag = async (req, res) => {
         });
         res.status(200).json(tag);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 };
 
-export const deleteTag = async (req, res) => {
+export const deleteTag = async (req, res, next) => {
     const { id } = req.params;
     try {
         const tag = await prisma.tag.delete({
@@ -34,11 +34,11 @@ export const deleteTag = async (req, res) => {
         });
         res.status(200).json(tag);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 };
 
-export const listTags = async (req, res) => {
+export const listTags = async (req, res, next) => {
     const { userId } = req.body;
 
     if (!userId) {
@@ -57,6 +57,6 @@ export const listTags = async (req, res) => {
         });
 
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        next(error);
     }
 };

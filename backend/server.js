@@ -6,6 +6,17 @@ import personRouter from "./routers/personRouter.js";
 import tagRouter from "./routers/tagRouter.js";
 import interactionRouter from "./routers/interactionRouter.js";
 import prisma from './prisma/client.js';
+import { errorHandler } from './middlewares/errorHandler.js';
+
+// Catch uncaught exceptions to prevent server crash
+process.on('uncaughtException', (err) => {
+    console.error('UNCAUGHT EXCEPTION! Shutting down...', err.name, err.message, err.stack);
+});
+
+// Catch unhandled promise rejections to prevent server crash
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('UNHANDLED REJECTION! Shutting down...', reason);
+});
 
 config()
 const app = express()
@@ -23,6 +34,8 @@ app.use(cors({
     methods:["GET","POST","PUT","DELETE"],
     credentials:true
 }));
+
+app.use(errorHandler);
 app.listen(PORT,async()=>{
         console.log(`Server is running on port ${PORT}`)
 })

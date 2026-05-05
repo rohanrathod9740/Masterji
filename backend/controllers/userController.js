@@ -2,8 +2,9 @@ import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
 import prisma from "../prisma/client.js";
 
-const registerUser = async (req, res) => {
-  const { name, email , phone, password } = req.body;
+const registerUser = async (req, res, next) => {
+  try {
+    const { name, email , phone, password } = req.body;
   // Check if user already exists
   const userExists = await prisma.user.findFirst({
     where: { OR: [{ email: email }, { phone: phone }] },
@@ -45,10 +46,14 @@ const registerUser = async (req, res) => {
       token,
     },
   });
+  } catch (error) {
+    next(error);
+  }
 };
 
-const loginUser = async (req, res) => {
-  const { email, password,phone } = req.body;
+const loginUser = async (req, res, next) => {
+  try {
+    const { email, password,phone } = req.body;
 
   // Check if user email exists in the table
   const user = await prisma.user.findFirst({
@@ -79,10 +84,14 @@ const loginUser = async (req, res) => {
       token,
     },
   });
+  } catch (error) {
+    next(error);
+  }
 };
 
-const logoutUser = async (req, res) => {
-  res.cookie("jwt", "", {
+const logoutUser = async (req, res, next) => {
+  try {
+    res.cookie("jwt", "", {
     httpOnly: true,
     expires: new Date(0),
   });
@@ -90,6 +99,9 @@ const logoutUser = async (req, res) => {
     status: "success",
     message: "Logged out successfully",
   });
+  } catch (error) {
+    next(error);
+  }
 };
 
 export { registerUser, loginUser, logoutUser };

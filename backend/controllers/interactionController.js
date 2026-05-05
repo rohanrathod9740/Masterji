@@ -1,6 +1,6 @@
 import prisma from "../prisma/client.js";
 
-export const createInteraction = async (req, res) => {
+export const createInteraction = async (req, res, next) => {
     const { userId, personId, type, notes, audioUrl, transcript } = req.body;
 
     if (!userId || !personId) {
@@ -23,11 +23,11 @@ export const createInteraction = async (req, res) => {
 
         res.status(201).json(interaction);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 };
 
-export const editInteraction = async (req, res) => {
+export const editInteraction = async (req, res, next) => {
     const { id } = req.params;
     const { type, notes, audioUrl, transcript, interactionDate } = req.body;
     
@@ -45,11 +45,11 @@ export const editInteraction = async (req, res) => {
         });
         res.status(200).json(interaction);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 };
 
-export const deleteInteraction = async (req, res) => {
+export const deleteInteraction = async (req, res, next) => {
     const { id } = req.params;
     try {
         const interaction = await prisma.interaction.delete({
@@ -57,20 +57,20 @@ export const deleteInteraction = async (req, res) => {
         });
         res.status(200).json(interaction);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 };
 
-export const listInteractions = async (req, res) => {
+export const listInteractions = async (req, res, next) => {
     try {
         const interactions = await prisma.interaction.findMany();
         res.status(200).json(interactions);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 };
 
-export const getInteractionById = async (req, res) => {
+export const getInteractionById = async (req, res, next) => {
     const { id } = req.params;
     try {
         const interaction = await prisma.interaction.findUnique({
@@ -78,6 +78,6 @@ export const getInteractionById = async (req, res) => {
         });
         res.status(200).json(interaction);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        next(error);
     }
 };
