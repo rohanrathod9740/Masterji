@@ -18,7 +18,11 @@ app.use("/api/v1/auth",authRouter);
 app.use("/api/v1/persons",personRouter);
 app.use("/api/v1/tags", tagRouter);
 app.use("/api/v1/interactions", interactionRouter);
-
+app.use(cors({
+    origin:["http://localhost:3000", "http://localhost:3001","https://masterji-w4jb.onrender.com"],
+    methods:["GET","POST","PUT","DELETE"],
+    credentials:true
+}));
 app.listen(PORT,async()=>{
         console.log(`Server is running on port ${PORT}`)
 })
