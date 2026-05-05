@@ -70,6 +70,7 @@ async function fetchJson(
         Accept: "application/json",
         ...(body ? { "Content-Type": "application/json" } : {}),
       },
+      credentials: "include",
       body:
         body && candidate.method !== "GET"
           ? JSON.stringify(body)

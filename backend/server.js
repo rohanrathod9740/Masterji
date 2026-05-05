@@ -25,26 +25,33 @@ const PORT = process.env.PORT || 5000
 app.use(cors({
     origin: function (origin, callback) {
         const allowedOrigins = [
-            process.env.FRONTEND_URL,
+            // Development origins
             'http://localhost:3000',
             'http://localhost:5173',
-            'https://masterji-w4jb.onrender.com'
+            // Production origins
+            'https://masterji-w4jb.onrender.com',
+            // Environment variable for dynamic configuration
+            process.env.FRONTEND_URL,
         ].filter(Boolean);
         
         // Remove trailing slashes for consistent comparison
         const normalizedOrigin = origin ? origin.replace(/\/$/, '') : '';
         const normalizedAllowed = allowedOrigins.map(url => url.replace(/\/$/, ''));
         
+        // Allow requests with no origin (like curl or server-to-server)
+        // or allow if origin is in the allowedOrigins list
         if (!origin || normalizedAllowed.includes(normalizedOrigin)) {
             callback(null, true);
         } else {
+            console.warn(`CORS rejected origin: ${origin}`);
             const err = new Error('Not allowed by CORS');
             err.statusCode = 403;
             callback(err);
         }
     },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    credentials: true
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json())
 
