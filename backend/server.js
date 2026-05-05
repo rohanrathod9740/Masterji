@@ -23,9 +23,28 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 app.use(cors({
-    origin: ["https://masterji-w4jb.onrender.com"],
-    methods:["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
-    credentials:true
+    origin: function (origin, callback) {
+        const allowedOrigins = [
+            process.env.FRONTEND_URL,
+            'http://localhost:3000',
+            'http://localhost:5173',
+            'https://masterji-w4jb.onrender.com'
+        ].filter(Boolean);
+        
+        // Remove trailing slashes for consistent comparison
+        const normalizedOrigin = origin ? origin.replace(/\/$/, '') : '';
+        const normalizedAllowed = allowedOrigins.map(url => url.replace(/\/$/, ''));
+        
+        if (!origin || normalizedAllowed.includes(normalizedOrigin)) {
+            callback(null, true);
+        } else {
+            const err = new Error('Not allowed by CORS');
+            err.statusCode = 403;
+            callback(err);
+        }
+    },
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    credentials: true
 }));
 app.use(express.json())
 
