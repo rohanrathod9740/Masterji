@@ -1,13 +1,16 @@
 import { request as httpRequest } from "node:http";
 import { request as httpsRequest } from "node:https";
 
-const DEFAULT_BACKEND_BASE_URL = process.env.BACKEND_API_BASE_URL;
-
 const BACKEND_BASE_URL =
   process.env.BACKEND_API_BASE_URL?.trim().replace(/\/$/, "") ||
-  DEFAULT_BACKEND_BASE_URL;
+  (typeof window === "undefined" ? "http://localhost:5000" : "");
 
 function buildBackendUrl(path: string) {
+  if (!BACKEND_BASE_URL) {
+    throw new Error(
+      "BACKEND_API_BASE_URL is not configured. Set the environment variable BACKEND_API_BASE_URL."
+    );
+  }
   return new URL(path, `${BACKEND_BASE_URL}/`);
 }
 
