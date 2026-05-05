@@ -23,9 +23,7 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN
-        ? process.env.CORS_ORIGIN.split(",").map((origin) => origin.trim())
-        : ["http://localhost:3000", "http://localhost:3001", "https://masterji-w4jb.onrender.com"],
+    origin: ["https://masterji-w4jb.onrender.com"],
     methods:["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
     credentials:true
 }));
