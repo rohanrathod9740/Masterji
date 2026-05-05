@@ -1,7 +1,7 @@
 import prisma from "../prisma/client.js";
 
 export const createInteraction = async (req, res) => {
-    const { userId, personId, type, notes, audioUrl } = req.body;
+    const { userId, personId, type, notes, audioUrl, transcript } = req.body;
 
     if (!userId || !personId) {
         return res.status(400).json({
@@ -14,9 +14,10 @@ export const createInteraction = async (req, res) => {
             data: {
                 userId,
                 personId,
-                ...(type && { type }),
-                ...(notes && { notes }),
-                ...(audioUrl && { audioUrl }),
+                type,
+                notes,
+                audioUrl,
+                transcript,
             }
         });
 
@@ -52,6 +53,27 @@ export const deleteInteraction = async (req, res) => {
     const { id } = req.params;
     try {
         const interaction = await prisma.interaction.delete({
+            where: { id }
+        });
+        res.status(200).json(interaction);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const listInteractions = async (req, res) => {
+    try {
+        const interactions = await prisma.interaction.findMany();
+        res.status(200).json(interactions);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+export const getInteractionById = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const interaction = await prisma.interaction.findUnique({
             where: { id }
         });
         res.status(200).json(interaction);
