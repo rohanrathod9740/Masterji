@@ -5,6 +5,12 @@
   "references": [
     {
       "path": "./apps/ayushman"
+    },
+    {
+      "path": "./apps/api-e2e"
+    },
+    {
+      "path": "./apps/api"
     }
   ]
 }

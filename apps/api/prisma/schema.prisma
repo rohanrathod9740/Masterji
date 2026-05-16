@@ -1,0 +1,151 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model Task {
+  id     String @id @default(uuid())
+  userId String
+
+  personId String?
+  caseId   String?
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  person Person? @relation(fields: [personId], references: [id], onDelete: SetNull)
+  case   Case?   @relation(fields: [caseId], references: [id], onDelete: SetNull)
+
+  title    String
+  remindAt DateTime
+  status   String   @default("pending")
+
+  createdAt DateTime @default(now())
+}
+
+model Case {
+  id       String @id @default(uuid())
+  userId   String
+  personId String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  person Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+
+  category         String?
+  problem          String?
+  diagnosis        String?
+  suggestedActions String?
+
+  followUpDate DateTime?
+  status       String    @default("active")
+
+  createdAt DateTime @default(now())
+
+  tasks Task[]
+}
+
+model Commitment {
+  id            String  @id @default(uuid())
+  userId        String
+  personId      String
+  interactionId String?
+
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  person      Person       @relation(fields: [personId], references: [id], onDelete: Cascade)
+  interaction Interaction? @relation(fields: [interactionId], references: [id], onDelete: SetNull)
+
+  title   String
+  dueDate DateTime
+  status  String   @default("pending")
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, dueDate])
+}
+
+model Interaction {
+  id       String @id @default(uuid())
+  userId   String
+  personId String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  person Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+
+  type  String?
+  notes String?
+
+  audioUrl   String?
+  transcript String?
+
+  createdAt       DateTime @default(now())
+
+  commitments Commitment[]
+
+  @@index([personId, createdAt(sort: Desc)])
+}
+
+model PersonTag {
+  id       String @id @default(uuid())
+
+  personId String
+  tagId    String
+
+  person Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([personId, tagId]) // prevents duplicate tagging
+}
+
+model Person {
+  id     String @id @default(uuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name  String
+  type  String?
+  contact String?
+  notes String?
+
+  createdAt DateTime @default(now())
+
+  tags         PersonTag[]
+  interactions Interaction[]
+  commitments  Commitment[]
+  cases        Case[]
+  tasks        Task[]
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String?
+  email     String   @unique
+  phone     String?  @unique
+  password  String   @map("password")
+  createdAt DateTime @default(now())
+
+  persons      Person[]
+  interactions Interaction[]
+  commitments  Commitment[]
+  cases        Case[]
+  tasks        Task[]
+  tags         Tag[]
+}
+
+model Tag {
+  id     String @id @default(uuid())
+  userId String
+  name   String
+
+  user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  persons PersonTag[]
+
+  @@unique([userId, name]) // prevents duplicate tags per user
+}
