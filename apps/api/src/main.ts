@@ -1,21 +1,34 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
+import express from "express";
+import { config } from "dotenv";
+import cors from "cors";
+import { checkDatabaseConnection } from "./lib/db";
 
-import express from 'express';
-import * as path from 'path';
+import userRouter from "./routers/userRouter"
+import personRouter from "./routers/personRouter"
+import tagRouter from "./routers/tagRouter"
+import interactionRouter from "./routers/interactionRouter"
+import { errorHandler } from "./middlewares/errorHandler";
+
+
+config();
 
 const app = express();
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+const PORT = process.env.PORT || 5000;
 
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to api Yashwnaht!' });
-});
+app.get("/",(req,res)=>{
+    res.send(`Server running at port ${PORT}`);
+})
 
-const port = process.env.PORT || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
+app.use(cors());
+app.use(express.json());
+app.use("/api/v1/auth",userRouter);
+app.use("/api/v1/persons",personRouter);
+app.use("/api/v1/tags", tagRouter);
+app.use("/api/v1/interactions", interactionRouter);
+app.use(errorHandler);
+
+app.listen(PORT, async () => {
+    await checkDatabaseConnection();
+    console.log(`Server listening at port ${PORT}`);
 });
-server.on('error', console.error);
