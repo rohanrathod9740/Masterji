@@ -9,7 +9,61 @@
 * 🟢 You can import this file directly.
 */
 
+export const PersonType = {
+  client: 'client',
+  shishya: 'shishya',
+  patient: 'patient',
+  friend: 'friend',
+  other: 'other'
+} as const
+
+export type PersonType = (typeof PersonType)[keyof typeof PersonType]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const InteractionType = {
+  conversation: 'conversation',
+  advice: 'advice',
+  meeting: 'meeting',
+  treatment: 'treatment',
+  proposal: 'proposal',
+  session: 'session'
+} as const
+
+export type InteractionType = (typeof InteractionType)[keyof typeof InteractionType]
+
+
+export const CaseCategory = {
+  health: 'health',
+  astrology: 'astrology',
+  business: 'business',
+  spiritual: 'spiritual'
+} as const
+
+export type CaseCategory = (typeof CaseCategory)[keyof typeof CaseCategory]
+
+
+export const CaseStatus = {
+  active: 'active',
+  resolved: 'resolved',
+  monitoring: 'monitoring'
+} as const
+
+export type CaseStatus = (typeof CaseStatus)[keyof typeof CaseStatus]
+
+
+export const CommitmentStatus = {
+  pending: 'pending',
+  done: 'done',
+  missed: 'missed'
+} as const
+
+export type CommitmentStatus = (typeof CommitmentStatus)[keyof typeof CommitmentStatus]
+
+
+export const TaskStatus = {
+  pending: 'pending',
+  done: 'done',
+  snoozed: 'snoozed'
+} as const
+
+export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]

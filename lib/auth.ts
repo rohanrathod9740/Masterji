@@ -2,7 +2,6 @@ import { User } from "@/prisma/migrations/client";
 import bcrypt from "bcryptjs"
 import jwt,{JwtPayload} from "jsonwebtoken"
 import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
 import { prisma } from "./db";
 
 const JWT_SECRET = process.env.JWT_SECRET

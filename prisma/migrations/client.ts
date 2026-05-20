@@ -31,8 +31,8 @@ export * from "./enums"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Tasks
- * const tasks = await prisma.task.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -42,42 +42,32 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model Task
+ * Model User
  * 
  */
-export type Task = Prisma.TaskModel
-/**
- * Model Case
- * 
- */
-export type Case = Prisma.CaseModel
-/**
- * Model Commitment
- * 
- */
-export type Commitment = Prisma.CommitmentModel
-/**
- * Model Interaction
- * 
- */
-export type Interaction = Prisma.InteractionModel
-/**
- * Model PersonTag
- * 
- */
-export type PersonTag = Prisma.PersonTagModel
+export type User = Prisma.UserModel
 /**
  * Model Person
  * 
  */
 export type Person = Prisma.PersonModel
 /**
- * Model User
+ * Model Interaction
  * 
  */
-export type User = Prisma.UserModel
+export type Interaction = Prisma.InteractionModel
 /**
- * Model Tag
+ * Model Commitment
  * 
  */
-export type Tag = Prisma.TagModel
+export type Commitment = Prisma.CommitmentModel
+/**
+ * Model Case
+ * 
+ */
+export type Case = Prisma.CaseModel
+/**
+ * Model Task
+ * 
+ */
+export type Task = Prisma.TaskModel

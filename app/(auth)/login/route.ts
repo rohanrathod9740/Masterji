@@ -1,41 +1,60 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { verifyPassword, generateToken } from "@/lib/auth";
+import { loginSchema } from "@/schemas/userSchema";
 
 export async function POST(request: NextRequest) {
   try {
-    const { userEmail,userPhone, userPassword } = await request.json();
+    const body = await request.json();
 
-    const email = userEmail?.trim().toLowerCase() || "";
-    const phone= userPhone?.trim().toLowerCase() || "";
-    const password = userPassword?.trim();
+    // validate request body
+    const result = loginSchema.safeParse(body);
 
-    if ((!email && !phone) || !password) {
+    if (!result.success) {
       return NextResponse.json(
         {
-          message: "Please enter email or phone and password",
+          success: false,
+          errors: result.error.flatten(),
         },
         { status: 400 }
       );
     }
 
-  const user = await prisma.user.findFirst({
-    where: {
-      OR: [
-        email ? { email } : {},
-        phone ? { phone } : {},
-          ],
-        },
-      });
+    // validated data
+    const {
+      userEmail,
+      userPhone,
+      password,
+    } = result.data;
+
+    // find user
+    const orConditions = [];
+
+    if (userEmail) {
+      orConditions.push({ email: userEmail });
+    }
+
+    if (userPhone) {
+      orConditions.push({ phone: userPhone });
+    }
+
+    const user = await prisma.user.findFirst({
+      where: {
+        OR: orConditions,
+      },
+    });
+
     if (!user) {
       return NextResponse.json(
         {
-          message: "Invalid email or password.",
+          success: false,
+          message: "Invalid credentials",
         },
         { status: 401 }
       );
     }
 
+    // verify password
     const isPasswordValid = await verifyPassword(
       password,
       user.password
@@ -44,32 +63,43 @@ export async function POST(request: NextRequest) {
     if (!isPasswordValid) {
       return NextResponse.json(
         {
-          message: "Invalid email or password.",
+          success: false,
+          message: "Invalid credentials",
         },
         { status: 401 }
       );
     }
 
+    // generate jwt
     const token = generateToken(user.id);
 
-    const response = NextResponse.json({
-      message: "Login successful",
-    });
+    // create response
+    const response = NextResponse.json(
+      {
+        success: true,
+        message: "Login successful",
+      },
+      { status: 200 }
+    );
 
+    // set cookie
     response.cookies.set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 60 * 60 * 24,
+      path: "/",
     });
 
     return response;
+
   } catch (error) {
-    console.log("error while logging in user", error);
+    console.error("Login error:", error);
 
     return NextResponse.json(
       {
-        error: "Something went wrong",
+        success: false,
+        message: "Internal server error",
       },
       { status: 500 }
     );

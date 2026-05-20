@@ -1,72 +1,98 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { generateToken, hashPassword } from "@/lib/auth";
+import { createUserSchema } from "@/schemas/userSchema";
+import { hashPassword, generateToken} from "@/lib/auth";
 
 export async function POST(request: NextRequest) {
   try {
-    const { userName, userEmail, userPhone, userPassword } =
-      await request.json();
+    // parse request body
+    const body = await request.json();
 
-    const name = userName;
-    const email = userEmail.trim().toLowerCase();
-    const password = userPassword.trim();
-    const phone = userPhone.trim();
+    // validate request body
+    const result = createUserSchema.safeParse(body);
 
-    if (!name || !email || !password || !phone) {
+    // validation failed
+    if (!result.success) {
       return NextResponse.json(
         {
-          message: "Please fill all the fields.",
+          success: false,
+          errors: result.error.flatten(),
         },
         { status: 400 }
       );
     }
 
+    // validated + transformed data
+    const {
+      userName,
+      userEmail,
+      userPhone,
+      userPassword,
+    } = result.data;
+
+    // check existing user
     const existingUser = await prisma.user.findFirst({
       where: {
-        OR: [{ email }, { phone }],
+        OR: [
+          { email: userEmail },
+          { phone: userPhone },
+        ],
       },
     });
 
     if (existingUser) {
       return NextResponse.json(
         {
-          message: "User already registered with this Email or Phone",
+          success: false,
+          message: "User already exists",
         },
         { status: 409 }
       );
     }
 
-    const hashedPassword = await hashPassword(password);
+    // hash password
+    const hashedPassword = await hashPassword(userPassword);
 
+    // create user
     const user = await prisma.user.create({
       data: {
-        name,
-        email,
-        phone,
+        name: userName,
+        email: userEmail,
+        phone: userPhone,
         password: hashedPassword,
       },
     });
 
+    // generate jwt
     const token = generateToken(user.id);
 
-    const response = NextResponse.json({
-      message: "User created successfully",
-    });
+    // create response
+    const response = NextResponse.json(
+      {
+        success: true,
+        message: "User created successfully",
+      },
+      { status: 201 }
+    );
 
+    // set cookie
     response.cookies.set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 24,
+      maxAge: 60 * 60 * 24, // 1 day
+      path: "/",
     });
 
     return response;
+
   } catch (error) {
-    console.log("error while registering user", error);
+    console.error("Registration error:", error);
 
     return NextResponse.json(
       {
-        error: "Something went wrong",
+        success: false,
+        message: "Internal server error",
       },
       { status: 500 }
     );

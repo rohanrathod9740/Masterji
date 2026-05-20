@@ -28,10 +28,11 @@ export type InteractionMinAggregateOutputType = {
   id: string | null
   userId: string | null
   personId: string | null
-  type: string | null
+  type: $Enums.InteractionType | null
   notes: string | null
   audioUrl: string | null
   transcript: string | null
+  interactionDate: Date | null
   createdAt: Date | null
 }
 
@@ -39,10 +40,11 @@ export type InteractionMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   personId: string | null
-  type: string | null
+  type: $Enums.InteractionType | null
   notes: string | null
   audioUrl: string | null
   transcript: string | null
+  interactionDate: Date | null
   createdAt: Date | null
 }
 
@@ -54,6 +56,7 @@ export type InteractionCountAggregateOutputType = {
   notes: number
   audioUrl: number
   transcript: number
+  interactionDate: number
   createdAt: number
   _all: number
 }
@@ -67,6 +70,7 @@ export type InteractionMinAggregateInputType = {
   notes?: true
   audioUrl?: true
   transcript?: true
+  interactionDate?: true
   createdAt?: true
 }
 
@@ -78,6 +82,7 @@ export type InteractionMaxAggregateInputType = {
   notes?: true
   audioUrl?: true
   transcript?: true
+  interactionDate?: true
   createdAt?: true
 }
 
@@ -89,6 +94,7 @@ export type InteractionCountAggregateInputType = {
   notes?: true
   audioUrl?: true
   transcript?: true
+  interactionDate?: true
   createdAt?: true
   _all?: true
 }
@@ -169,10 +175,11 @@ export type InteractionGroupByOutputType = {
   id: string
   userId: string
   personId: string
-  type: string | null
+  type: $Enums.InteractionType | null
   notes: string | null
   audioUrl: string | null
   transcript: string | null
+  interactionDate: Date
   createdAt: Date
   _count: InteractionCountAggregateOutputType | null
   _min: InteractionMinAggregateOutputType | null
@@ -201,10 +208,11 @@ export type InteractionWhereInput = {
   id?: Prisma.StringFilter<"Interaction"> | string
   userId?: Prisma.StringFilter<"Interaction"> | string
   personId?: Prisma.StringFilter<"Interaction"> | string
-  type?: Prisma.StringNullableFilter<"Interaction"> | string | null
+  type?: Prisma.EnumInteractionTypeNullableFilter<"Interaction"> | $Enums.InteractionType | null
   notes?: Prisma.StringNullableFilter<"Interaction"> | string | null
   audioUrl?: Prisma.StringNullableFilter<"Interaction"> | string | null
   transcript?: Prisma.StringNullableFilter<"Interaction"> | string | null
+  interactionDate?: Prisma.DateTimeFilter<"Interaction"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Interaction"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
@@ -219,6 +227,7 @@ export type InteractionOrderByWithRelationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   audioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   transcript?: Prisma.SortOrderInput | Prisma.SortOrder
+  interactionDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   person?: Prisma.PersonOrderByWithRelationInput
@@ -232,10 +241,11 @@ export type InteractionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.InteractionWhereInput | Prisma.InteractionWhereInput[]
   userId?: Prisma.StringFilter<"Interaction"> | string
   personId?: Prisma.StringFilter<"Interaction"> | string
-  type?: Prisma.StringNullableFilter<"Interaction"> | string | null
+  type?: Prisma.EnumInteractionTypeNullableFilter<"Interaction"> | $Enums.InteractionType | null
   notes?: Prisma.StringNullableFilter<"Interaction"> | string | null
   audioUrl?: Prisma.StringNullableFilter<"Interaction"> | string | null
   transcript?: Prisma.StringNullableFilter<"Interaction"> | string | null
+  interactionDate?: Prisma.DateTimeFilter<"Interaction"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Interaction"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
@@ -250,6 +260,7 @@ export type InteractionOrderByWithAggregationInput = {
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   audioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   transcript?: Prisma.SortOrderInput | Prisma.SortOrder
+  interactionDate?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.InteractionCountOrderByAggregateInput
   _max?: Prisma.InteractionMaxOrderByAggregateInput
@@ -263,19 +274,21 @@ export type InteractionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Interaction"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Interaction"> | string
   personId?: Prisma.StringWithAggregatesFilter<"Interaction"> | string
-  type?: Prisma.StringNullableWithAggregatesFilter<"Interaction"> | string | null
+  type?: Prisma.EnumInteractionTypeNullableWithAggregatesFilter<"Interaction"> | $Enums.InteractionType | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Interaction"> | string | null
   audioUrl?: Prisma.StringNullableWithAggregatesFilter<"Interaction"> | string | null
   transcript?: Prisma.StringNullableWithAggregatesFilter<"Interaction"> | string | null
+  interactionDate?: Prisma.DateTimeWithAggregatesFilter<"Interaction"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Interaction"> | Date | string
 }
 
 export type InteractionCreateInput = {
   id?: string
-  type?: string | null
+  type?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
+  interactionDate?: Date | string
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutInteractionsInput
   person: Prisma.PersonCreateNestedOneWithoutInteractionsInput
@@ -286,20 +299,22 @@ export type InteractionUncheckedCreateInput = {
   id?: string
   userId: string
   personId: string
-  type?: string | null
+  type?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
+  interactionDate?: Date | string
   createdAt?: Date | string
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutInteractionInput
 }
 
 export type InteractionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutInteractionsNestedInput
   person?: Prisma.PersonUpdateOneRequiredWithoutInteractionsNestedInput
@@ -310,10 +325,11 @@ export type InteractionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutInteractionNestedInput
 }
@@ -322,19 +338,21 @@ export type InteractionCreateManyInput = {
   id?: string
   userId: string
   personId: string
-  type?: string | null
+  type?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
+  interactionDate?: Date | string
   createdAt?: Date | string
 }
 
 export type InteractionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -342,49 +360,12 @@ export type InteractionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type InteractionNullableScalarRelationFilter = {
-  is?: Prisma.InteractionWhereInput | null
-  isNot?: Prisma.InteractionWhereInput | null
-}
-
-export type InteractionCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
-  audioUrl?: Prisma.SortOrder
-  transcript?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-}
-
-export type InteractionMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
-  audioUrl?: Prisma.SortOrder
-  transcript?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-}
-
-export type InteractionMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
-  audioUrl?: Prisma.SortOrder
-  transcript?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type InteractionListRelationFilter = {
@@ -397,62 +378,45 @@ export type InteractionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type InteractionCreateNestedOneWithoutCommitmentsInput = {
-  create?: Prisma.XOR<Prisma.InteractionCreateWithoutCommitmentsInput, Prisma.InteractionUncheckedCreateWithoutCommitmentsInput>
-  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutCommitmentsInput
-  connect?: Prisma.InteractionWhereUniqueInput
+export type InteractionCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  personId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  audioUrl?: Prisma.SortOrder
+  transcript?: Prisma.SortOrder
+  interactionDate?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
-export type InteractionUpdateOneWithoutCommitmentsNestedInput = {
-  create?: Prisma.XOR<Prisma.InteractionCreateWithoutCommitmentsInput, Prisma.InteractionUncheckedCreateWithoutCommitmentsInput>
-  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutCommitmentsInput
-  upsert?: Prisma.InteractionUpsertWithoutCommitmentsInput
-  disconnect?: Prisma.InteractionWhereInput | boolean
-  delete?: Prisma.InteractionWhereInput | boolean
-  connect?: Prisma.InteractionWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.InteractionUpdateToOneWithWhereWithoutCommitmentsInput, Prisma.InteractionUpdateWithoutCommitmentsInput>, Prisma.InteractionUncheckedUpdateWithoutCommitmentsInput>
+export type InteractionMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  personId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  audioUrl?: Prisma.SortOrder
+  transcript?: Prisma.SortOrder
+  interactionDate?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
-export type InteractionCreateNestedManyWithoutPersonInput = {
-  create?: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput> | Prisma.InteractionCreateWithoutPersonInput[] | Prisma.InteractionUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutPersonInput | Prisma.InteractionCreateOrConnectWithoutPersonInput[]
-  createMany?: Prisma.InteractionCreateManyPersonInputEnvelope
-  connect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
+export type InteractionMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  personId?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  audioUrl?: Prisma.SortOrder
+  transcript?: Prisma.SortOrder
+  interactionDate?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
-export type InteractionUncheckedCreateNestedManyWithoutPersonInput = {
-  create?: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput> | Prisma.InteractionCreateWithoutPersonInput[] | Prisma.InteractionUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutPersonInput | Prisma.InteractionCreateOrConnectWithoutPersonInput[]
-  createMany?: Prisma.InteractionCreateManyPersonInputEnvelope
-  connect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
-}
-
-export type InteractionUpdateManyWithoutPersonNestedInput = {
-  create?: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput> | Prisma.InteractionCreateWithoutPersonInput[] | Prisma.InteractionUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutPersonInput | Prisma.InteractionCreateOrConnectWithoutPersonInput[]
-  upsert?: Prisma.InteractionUpsertWithWhereUniqueWithoutPersonInput | Prisma.InteractionUpsertWithWhereUniqueWithoutPersonInput[]
-  createMany?: Prisma.InteractionCreateManyPersonInputEnvelope
-  set?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
-  disconnect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
-  delete?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
-  connect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
-  update?: Prisma.InteractionUpdateWithWhereUniqueWithoutPersonInput | Prisma.InteractionUpdateWithWhereUniqueWithoutPersonInput[]
-  updateMany?: Prisma.InteractionUpdateManyWithWhereWithoutPersonInput | Prisma.InteractionUpdateManyWithWhereWithoutPersonInput[]
-  deleteMany?: Prisma.InteractionScalarWhereInput | Prisma.InteractionScalarWhereInput[]
-}
-
-export type InteractionUncheckedUpdateManyWithoutPersonNestedInput = {
-  create?: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput> | Prisma.InteractionCreateWithoutPersonInput[] | Prisma.InteractionUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutPersonInput | Prisma.InteractionCreateOrConnectWithoutPersonInput[]
-  upsert?: Prisma.InteractionUpsertWithWhereUniqueWithoutPersonInput | Prisma.InteractionUpsertWithWhereUniqueWithoutPersonInput[]
-  createMany?: Prisma.InteractionCreateManyPersonInputEnvelope
-  set?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
-  disconnect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
-  delete?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
-  connect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
-  update?: Prisma.InteractionUpdateWithWhereUniqueWithoutPersonInput | Prisma.InteractionUpdateWithWhereUniqueWithoutPersonInput[]
-  updateMany?: Prisma.InteractionUpdateManyWithWhereWithoutPersonInput | Prisma.InteractionUpdateManyWithWhereWithoutPersonInput[]
-  deleteMany?: Prisma.InteractionScalarWhereInput | Prisma.InteractionScalarWhereInput[]
+export type InteractionNullableScalarRelationFilter = {
+  is?: Prisma.InteractionWhereInput | null
+  isNot?: Prisma.InteractionWhereInput | null
 }
 
 export type InteractionCreateNestedManyWithoutUserInput = {
@@ -497,134 +461,75 @@ export type InteractionUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.InteractionScalarWhereInput | Prisma.InteractionScalarWhereInput[]
 }
 
-export type InteractionCreateWithoutCommitmentsInput = {
-  id?: string
-  type?: string | null
-  notes?: string | null
-  audioUrl?: string | null
-  transcript?: string | null
-  createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutInteractionsInput
-  person: Prisma.PersonCreateNestedOneWithoutInteractionsInput
+export type InteractionCreateNestedManyWithoutPersonInput = {
+  create?: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput> | Prisma.InteractionCreateWithoutPersonInput[] | Prisma.InteractionUncheckedCreateWithoutPersonInput[]
+  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutPersonInput | Prisma.InteractionCreateOrConnectWithoutPersonInput[]
+  createMany?: Prisma.InteractionCreateManyPersonInputEnvelope
+  connect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
 }
 
-export type InteractionUncheckedCreateWithoutCommitmentsInput = {
-  id?: string
-  userId: string
-  personId: string
-  type?: string | null
-  notes?: string | null
-  audioUrl?: string | null
-  transcript?: string | null
-  createdAt?: Date | string
+export type InteractionUncheckedCreateNestedManyWithoutPersonInput = {
+  create?: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput> | Prisma.InteractionCreateWithoutPersonInput[] | Prisma.InteractionUncheckedCreateWithoutPersonInput[]
+  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutPersonInput | Prisma.InteractionCreateOrConnectWithoutPersonInput[]
+  createMany?: Prisma.InteractionCreateManyPersonInputEnvelope
+  connect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
 }
 
-export type InteractionCreateOrConnectWithoutCommitmentsInput = {
-  where: Prisma.InteractionWhereUniqueInput
-  create: Prisma.XOR<Prisma.InteractionCreateWithoutCommitmentsInput, Prisma.InteractionUncheckedCreateWithoutCommitmentsInput>
+export type InteractionUpdateManyWithoutPersonNestedInput = {
+  create?: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput> | Prisma.InteractionCreateWithoutPersonInput[] | Prisma.InteractionUncheckedCreateWithoutPersonInput[]
+  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutPersonInput | Prisma.InteractionCreateOrConnectWithoutPersonInput[]
+  upsert?: Prisma.InteractionUpsertWithWhereUniqueWithoutPersonInput | Prisma.InteractionUpsertWithWhereUniqueWithoutPersonInput[]
+  createMany?: Prisma.InteractionCreateManyPersonInputEnvelope
+  set?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
+  disconnect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
+  delete?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
+  connect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
+  update?: Prisma.InteractionUpdateWithWhereUniqueWithoutPersonInput | Prisma.InteractionUpdateWithWhereUniqueWithoutPersonInput[]
+  updateMany?: Prisma.InteractionUpdateManyWithWhereWithoutPersonInput | Prisma.InteractionUpdateManyWithWhereWithoutPersonInput[]
+  deleteMany?: Prisma.InteractionScalarWhereInput | Prisma.InteractionScalarWhereInput[]
 }
 
-export type InteractionUpsertWithoutCommitmentsInput = {
-  update: Prisma.XOR<Prisma.InteractionUpdateWithoutCommitmentsInput, Prisma.InteractionUncheckedUpdateWithoutCommitmentsInput>
-  create: Prisma.XOR<Prisma.InteractionCreateWithoutCommitmentsInput, Prisma.InteractionUncheckedCreateWithoutCommitmentsInput>
-  where?: Prisma.InteractionWhereInput
+export type InteractionUncheckedUpdateManyWithoutPersonNestedInput = {
+  create?: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput> | Prisma.InteractionCreateWithoutPersonInput[] | Prisma.InteractionUncheckedCreateWithoutPersonInput[]
+  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutPersonInput | Prisma.InteractionCreateOrConnectWithoutPersonInput[]
+  upsert?: Prisma.InteractionUpsertWithWhereUniqueWithoutPersonInput | Prisma.InteractionUpsertWithWhereUniqueWithoutPersonInput[]
+  createMany?: Prisma.InteractionCreateManyPersonInputEnvelope
+  set?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
+  disconnect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
+  delete?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
+  connect?: Prisma.InteractionWhereUniqueInput | Prisma.InteractionWhereUniqueInput[]
+  update?: Prisma.InteractionUpdateWithWhereUniqueWithoutPersonInput | Prisma.InteractionUpdateWithWhereUniqueWithoutPersonInput[]
+  updateMany?: Prisma.InteractionUpdateManyWithWhereWithoutPersonInput | Prisma.InteractionUpdateManyWithWhereWithoutPersonInput[]
+  deleteMany?: Prisma.InteractionScalarWhereInput | Prisma.InteractionScalarWhereInput[]
 }
 
-export type InteractionUpdateToOneWithWhereWithoutCommitmentsInput = {
-  where?: Prisma.InteractionWhereInput
-  data: Prisma.XOR<Prisma.InteractionUpdateWithoutCommitmentsInput, Prisma.InteractionUncheckedUpdateWithoutCommitmentsInput>
+export type NullableEnumInteractionTypeFieldUpdateOperationsInput = {
+  set?: $Enums.InteractionType | null
 }
 
-export type InteractionUpdateWithoutCommitmentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutInteractionsNestedInput
-  person?: Prisma.PersonUpdateOneRequiredWithoutInteractionsNestedInput
+export type InteractionCreateNestedOneWithoutCommitmentsInput = {
+  create?: Prisma.XOR<Prisma.InteractionCreateWithoutCommitmentsInput, Prisma.InteractionUncheckedCreateWithoutCommitmentsInput>
+  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutCommitmentsInput
+  connect?: Prisma.InteractionWhereUniqueInput
 }
 
-export type InteractionUncheckedUpdateWithoutCommitmentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type InteractionCreateWithoutPersonInput = {
-  id?: string
-  type?: string | null
-  notes?: string | null
-  audioUrl?: string | null
-  transcript?: string | null
-  createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutInteractionsInput
-  commitments?: Prisma.CommitmentCreateNestedManyWithoutInteractionInput
-}
-
-export type InteractionUncheckedCreateWithoutPersonInput = {
-  id?: string
-  userId: string
-  type?: string | null
-  notes?: string | null
-  audioUrl?: string | null
-  transcript?: string | null
-  createdAt?: Date | string
-  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutInteractionInput
-}
-
-export type InteractionCreateOrConnectWithoutPersonInput = {
-  where: Prisma.InteractionWhereUniqueInput
-  create: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput>
-}
-
-export type InteractionCreateManyPersonInputEnvelope = {
-  data: Prisma.InteractionCreateManyPersonInput | Prisma.InteractionCreateManyPersonInput[]
-  skipDuplicates?: boolean
-}
-
-export type InteractionUpsertWithWhereUniqueWithoutPersonInput = {
-  where: Prisma.InteractionWhereUniqueInput
-  update: Prisma.XOR<Prisma.InteractionUpdateWithoutPersonInput, Prisma.InteractionUncheckedUpdateWithoutPersonInput>
-  create: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput>
-}
-
-export type InteractionUpdateWithWhereUniqueWithoutPersonInput = {
-  where: Prisma.InteractionWhereUniqueInput
-  data: Prisma.XOR<Prisma.InteractionUpdateWithoutPersonInput, Prisma.InteractionUncheckedUpdateWithoutPersonInput>
-}
-
-export type InteractionUpdateManyWithWhereWithoutPersonInput = {
-  where: Prisma.InteractionScalarWhereInput
-  data: Prisma.XOR<Prisma.InteractionUpdateManyMutationInput, Prisma.InteractionUncheckedUpdateManyWithoutPersonInput>
-}
-
-export type InteractionScalarWhereInput = {
-  AND?: Prisma.InteractionScalarWhereInput | Prisma.InteractionScalarWhereInput[]
-  OR?: Prisma.InteractionScalarWhereInput[]
-  NOT?: Prisma.InteractionScalarWhereInput | Prisma.InteractionScalarWhereInput[]
-  id?: Prisma.StringFilter<"Interaction"> | string
-  userId?: Prisma.StringFilter<"Interaction"> | string
-  personId?: Prisma.StringFilter<"Interaction"> | string
-  type?: Prisma.StringNullableFilter<"Interaction"> | string | null
-  notes?: Prisma.StringNullableFilter<"Interaction"> | string | null
-  audioUrl?: Prisma.StringNullableFilter<"Interaction"> | string | null
-  transcript?: Prisma.StringNullableFilter<"Interaction"> | string | null
-  createdAt?: Prisma.DateTimeFilter<"Interaction"> | Date | string
+export type InteractionUpdateOneWithoutCommitmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.InteractionCreateWithoutCommitmentsInput, Prisma.InteractionUncheckedCreateWithoutCommitmentsInput>
+  connectOrCreate?: Prisma.InteractionCreateOrConnectWithoutCommitmentsInput
+  upsert?: Prisma.InteractionUpsertWithoutCommitmentsInput
+  disconnect?: Prisma.InteractionWhereInput | boolean
+  delete?: Prisma.InteractionWhereInput | boolean
+  connect?: Prisma.InteractionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InteractionUpdateToOneWithWhereWithoutCommitmentsInput, Prisma.InteractionUpdateWithoutCommitmentsInput>, Prisma.InteractionUncheckedUpdateWithoutCommitmentsInput>
 }
 
 export type InteractionCreateWithoutUserInput = {
   id?: string
-  type?: string | null
+  type?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
+  interactionDate?: Date | string
   createdAt?: Date | string
   person: Prisma.PersonCreateNestedOneWithoutInteractionsInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutInteractionInput
@@ -633,10 +538,11 @@ export type InteractionCreateWithoutUserInput = {
 export type InteractionUncheckedCreateWithoutUserInput = {
   id?: string
   personId: string
-  type?: string | null
+  type?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
+  interactionDate?: Date | string
   createdAt?: Date | string
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutInteractionInput
 }
@@ -667,64 +573,153 @@ export type InteractionUpdateManyWithWhereWithoutUserInput = {
   data: Prisma.XOR<Prisma.InteractionUpdateManyMutationInput, Prisma.InteractionUncheckedUpdateManyWithoutUserInput>
 }
 
-export type InteractionCreateManyPersonInput = {
+export type InteractionScalarWhereInput = {
+  AND?: Prisma.InteractionScalarWhereInput | Prisma.InteractionScalarWhereInput[]
+  OR?: Prisma.InteractionScalarWhereInput[]
+  NOT?: Prisma.InteractionScalarWhereInput | Prisma.InteractionScalarWhereInput[]
+  id?: Prisma.StringFilter<"Interaction"> | string
+  userId?: Prisma.StringFilter<"Interaction"> | string
+  personId?: Prisma.StringFilter<"Interaction"> | string
+  type?: Prisma.EnumInteractionTypeNullableFilter<"Interaction"> | $Enums.InteractionType | null
+  notes?: Prisma.StringNullableFilter<"Interaction"> | string | null
+  audioUrl?: Prisma.StringNullableFilter<"Interaction"> | string | null
+  transcript?: Prisma.StringNullableFilter<"Interaction"> | string | null
+  interactionDate?: Prisma.DateTimeFilter<"Interaction"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Interaction"> | Date | string
+}
+
+export type InteractionCreateWithoutPersonInput = {
   id?: string
-  userId: string
-  type?: string | null
+  type?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
+  interactionDate?: Date | string
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutInteractionsInput
+  commitments?: Prisma.CommitmentCreateNestedManyWithoutInteractionInput
+}
+
+export type InteractionUncheckedCreateWithoutPersonInput = {
+  id?: string
+  userId: string
+  type?: $Enums.InteractionType | null
+  notes?: string | null
+  audioUrl?: string | null
+  transcript?: string | null
+  interactionDate?: Date | string
+  createdAt?: Date | string
+  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutInteractionInput
+}
+
+export type InteractionCreateOrConnectWithoutPersonInput = {
+  where: Prisma.InteractionWhereUniqueInput
+  create: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput>
+}
+
+export type InteractionCreateManyPersonInputEnvelope = {
+  data: Prisma.InteractionCreateManyPersonInput | Prisma.InteractionCreateManyPersonInput[]
+  skipDuplicates?: boolean
+}
+
+export type InteractionUpsertWithWhereUniqueWithoutPersonInput = {
+  where: Prisma.InteractionWhereUniqueInput
+  update: Prisma.XOR<Prisma.InteractionUpdateWithoutPersonInput, Prisma.InteractionUncheckedUpdateWithoutPersonInput>
+  create: Prisma.XOR<Prisma.InteractionCreateWithoutPersonInput, Prisma.InteractionUncheckedCreateWithoutPersonInput>
+}
+
+export type InteractionUpdateWithWhereUniqueWithoutPersonInput = {
+  where: Prisma.InteractionWhereUniqueInput
+  data: Prisma.XOR<Prisma.InteractionUpdateWithoutPersonInput, Prisma.InteractionUncheckedUpdateWithoutPersonInput>
+}
+
+export type InteractionUpdateManyWithWhereWithoutPersonInput = {
+  where: Prisma.InteractionScalarWhereInput
+  data: Prisma.XOR<Prisma.InteractionUpdateManyMutationInput, Prisma.InteractionUncheckedUpdateManyWithoutPersonInput>
+}
+
+export type InteractionCreateWithoutCommitmentsInput = {
+  id?: string
+  type?: $Enums.InteractionType | null
+  notes?: string | null
+  audioUrl?: string | null
+  transcript?: string | null
+  interactionDate?: Date | string
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutInteractionsInput
+  person: Prisma.PersonCreateNestedOneWithoutInteractionsInput
+}
+
+export type InteractionUncheckedCreateWithoutCommitmentsInput = {
+  id?: string
+  userId: string
+  personId: string
+  type?: $Enums.InteractionType | null
+  notes?: string | null
+  audioUrl?: string | null
+  transcript?: string | null
+  interactionDate?: Date | string
   createdAt?: Date | string
 }
 
-export type InteractionUpdateWithoutPersonInput = {
+export type InteractionCreateOrConnectWithoutCommitmentsInput = {
+  where: Prisma.InteractionWhereUniqueInput
+  create: Prisma.XOR<Prisma.InteractionCreateWithoutCommitmentsInput, Prisma.InteractionUncheckedCreateWithoutCommitmentsInput>
+}
+
+export type InteractionUpsertWithoutCommitmentsInput = {
+  update: Prisma.XOR<Prisma.InteractionUpdateWithoutCommitmentsInput, Prisma.InteractionUncheckedUpdateWithoutCommitmentsInput>
+  create: Prisma.XOR<Prisma.InteractionCreateWithoutCommitmentsInput, Prisma.InteractionUncheckedCreateWithoutCommitmentsInput>
+  where?: Prisma.InteractionWhereInput
+}
+
+export type InteractionUpdateToOneWithWhereWithoutCommitmentsInput = {
+  where?: Prisma.InteractionWhereInput
+  data: Prisma.XOR<Prisma.InteractionUpdateWithoutCommitmentsInput, Prisma.InteractionUncheckedUpdateWithoutCommitmentsInput>
+}
+
+export type InteractionUpdateWithoutCommitmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutInteractionsNestedInput
-  commitments?: Prisma.CommitmentUpdateManyWithoutInteractionNestedInput
+  person?: Prisma.PersonUpdateOneRequiredWithoutInteractionsNestedInput
 }
 
-export type InteractionUncheckedUpdateWithoutPersonInput = {
+export type InteractionUncheckedUpdateWithoutCommitmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  personId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutInteractionNestedInput
-}
-
-export type InteractionUncheckedUpdateManyWithoutPersonInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type InteractionCreateManyUserInput = {
   id?: string
   personId: string
-  type?: string | null
+  type?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
+  interactionDate?: Date | string
   createdAt?: Date | string
 }
 
 export type InteractionUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   person?: Prisma.PersonUpdateOneRequiredWithoutInteractionsNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutInteractionNestedInput
@@ -733,10 +728,11 @@ export type InteractionUpdateWithoutUserInput = {
 export type InteractionUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutInteractionNestedInput
 }
@@ -744,10 +740,57 @@ export type InteractionUncheckedUpdateWithoutUserInput = {
 export type InteractionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type InteractionCreateManyPersonInput = {
+  id?: string
+  userId: string
+  type?: $Enums.InteractionType | null
+  notes?: string | null
+  audioUrl?: string | null
+  transcript?: string | null
+  interactionDate?: Date | string
+  createdAt?: Date | string
+}
+
+export type InteractionUpdateWithoutPersonInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutInteractionsNestedInput
+  commitments?: Prisma.CommitmentUpdateManyWithoutInteractionNestedInput
+}
+
+export type InteractionUncheckedUpdateWithoutPersonInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutInteractionNestedInput
+}
+
+export type InteractionUncheckedUpdateManyWithoutPersonInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -790,6 +833,7 @@ export type InteractionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   notes?: boolean
   audioUrl?: boolean
   transcript?: boolean
+  interactionDate?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
@@ -805,6 +849,7 @@ export type InteractionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   notes?: boolean
   audioUrl?: boolean
   transcript?: boolean
+  interactionDate?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
@@ -818,6 +863,7 @@ export type InteractionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   notes?: boolean
   audioUrl?: boolean
   transcript?: boolean
+  interactionDate?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
@@ -831,10 +877,11 @@ export type InteractionSelectScalar = {
   notes?: boolean
   audioUrl?: boolean
   transcript?: boolean
+  interactionDate?: boolean
   createdAt?: boolean
 }
 
-export type InteractionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "personId" | "type" | "notes" | "audioUrl" | "transcript" | "createdAt", ExtArgs["result"]["interaction"]>
+export type InteractionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "personId" | "type" | "notes" | "audioUrl" | "transcript" | "interactionDate" | "createdAt", ExtArgs["result"]["interaction"]>
 export type InteractionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
@@ -861,10 +908,11 @@ export type $InteractionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     id: string
     userId: string
     personId: string
-    type: string | null
+    type: $Enums.InteractionType | null
     notes: string | null
     audioUrl: string | null
     transcript: string | null
+    interactionDate: Date
     createdAt: Date
   }, ExtArgs["result"]["interaction"]>
   composites: {}
@@ -1295,10 +1343,11 @@ export interface InteractionFieldRefs {
   readonly id: Prisma.FieldRef<"Interaction", 'String'>
   readonly userId: Prisma.FieldRef<"Interaction", 'String'>
   readonly personId: Prisma.FieldRef<"Interaction", 'String'>
-  readonly type: Prisma.FieldRef<"Interaction", 'String'>
+  readonly type: Prisma.FieldRef<"Interaction", 'InteractionType'>
   readonly notes: Prisma.FieldRef<"Interaction", 'String'>
   readonly audioUrl: Prisma.FieldRef<"Interaction", 'String'>
   readonly transcript: Prisma.FieldRef<"Interaction", 'String'>
+  readonly interactionDate: Prisma.FieldRef<"Interaction", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Interaction", 'DateTime'>
 }
     

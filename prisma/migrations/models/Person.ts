@@ -28,8 +28,9 @@ export type PersonMinAggregateOutputType = {
   id: string | null
   userId: string | null
   name: string | null
-  type: string | null
-  contact: string | null
+  type: $Enums.PersonType | null
+  phone: string | null
+  email: string | null
   notes: string | null
   createdAt: Date | null
 }
@@ -38,8 +39,9 @@ export type PersonMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   name: string | null
-  type: string | null
-  contact: string | null
+  type: $Enums.PersonType | null
+  phone: string | null
+  email: string | null
   notes: string | null
   createdAt: Date | null
 }
@@ -49,8 +51,10 @@ export type PersonCountAggregateOutputType = {
   userId: number
   name: number
   type: number
-  contact: number
+  phone: number
+  email: number
   notes: number
+  tags: number
   createdAt: number
   _all: number
 }
@@ -61,7 +65,8 @@ export type PersonMinAggregateInputType = {
   userId?: true
   name?: true
   type?: true
-  contact?: true
+  phone?: true
+  email?: true
   notes?: true
   createdAt?: true
 }
@@ -71,7 +76,8 @@ export type PersonMaxAggregateInputType = {
   userId?: true
   name?: true
   type?: true
-  contact?: true
+  phone?: true
+  email?: true
   notes?: true
   createdAt?: true
 }
@@ -81,8 +87,10 @@ export type PersonCountAggregateInputType = {
   userId?: true
   name?: true
   type?: true
-  contact?: true
+  phone?: true
+  email?: true
   notes?: true
+  tags?: true
   createdAt?: true
   _all?: true
 }
@@ -163,9 +171,11 @@ export type PersonGroupByOutputType = {
   id: string
   userId: string
   name: string
-  type: string | null
-  contact: string | null
+  type: $Enums.PersonType | null
+  phone: string | null
+  email: string | null
   notes: string | null
+  tags: string[]
   createdAt: Date
   _count: PersonCountAggregateOutputType | null
   _min: PersonMinAggregateOutputType | null
@@ -194,12 +204,13 @@ export type PersonWhereInput = {
   id?: Prisma.StringFilter<"Person"> | string
   userId?: Prisma.StringFilter<"Person"> | string
   name?: Prisma.StringFilter<"Person"> | string
-  type?: Prisma.StringNullableFilter<"Person"> | string | null
-  contact?: Prisma.StringNullableFilter<"Person"> | string | null
+  type?: Prisma.EnumPersonTypeNullableFilter<"Person"> | $Enums.PersonType | null
+  phone?: Prisma.StringNullableFilter<"Person"> | string | null
+  email?: Prisma.StringNullableFilter<"Person"> | string | null
   notes?: Prisma.StringNullableFilter<"Person"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  tags?: Prisma.PersonTagListRelationFilter
   interactions?: Prisma.InteractionListRelationFilter
   commitments?: Prisma.CommitmentListRelationFilter
   cases?: Prisma.CaseListRelationFilter
@@ -211,11 +222,12 @@ export type PersonOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrderInput | Prisma.SortOrder
-  contact?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  tags?: Prisma.PersonTagOrderByRelationAggregateInput
   interactions?: Prisma.InteractionOrderByRelationAggregateInput
   commitments?: Prisma.CommitmentOrderByRelationAggregateInput
   cases?: Prisma.CaseOrderByRelationAggregateInput
@@ -229,12 +241,13 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.PersonWhereInput | Prisma.PersonWhereInput[]
   userId?: Prisma.StringFilter<"Person"> | string
   name?: Prisma.StringFilter<"Person"> | string
-  type?: Prisma.StringNullableFilter<"Person"> | string | null
-  contact?: Prisma.StringNullableFilter<"Person"> | string | null
+  type?: Prisma.EnumPersonTypeNullableFilter<"Person"> | $Enums.PersonType | null
+  phone?: Prisma.StringNullableFilter<"Person"> | string | null
+  email?: Prisma.StringNullableFilter<"Person"> | string | null
   notes?: Prisma.StringNullableFilter<"Person"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  tags?: Prisma.PersonTagListRelationFilter
   interactions?: Prisma.InteractionListRelationFilter
   commitments?: Prisma.CommitmentListRelationFilter
   cases?: Prisma.CaseListRelationFilter
@@ -246,8 +259,10 @@ export type PersonOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   type?: Prisma.SortOrderInput | Prisma.SortOrder
-  contact?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  email?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.PersonCountOrderByAggregateInput
   _max?: Prisma.PersonMaxOrderByAggregateInput
@@ -261,21 +276,24 @@ export type PersonScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Person"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Person"> | string
   name?: Prisma.StringWithAggregatesFilter<"Person"> | string
-  type?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
-  contact?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
+  type?: Prisma.EnumPersonTypeNullableWithAggregatesFilter<"Person"> | $Enums.PersonType | null
+  phone?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
+  email?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
 }
 
 export type PersonCreateInput = {
   id?: string
   name: string
-  type?: string | null
-  contact?: string | null
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
   notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPersonsInput
-  tags?: Prisma.PersonTagCreateNestedManyWithoutPersonInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutPersonInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutPersonInput
   cases?: Prisma.CaseCreateNestedManyWithoutPersonInput
@@ -286,11 +304,12 @@ export type PersonUncheckedCreateInput = {
   id?: string
   userId: string
   name: string
-  type?: string | null
-  contact?: string | null
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
   notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
-  tags?: Prisma.PersonTagUncheckedCreateNestedManyWithoutPersonInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutPersonInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutPersonInput
@@ -300,12 +319,13 @@ export type PersonUncheckedCreateInput = {
 export type PersonUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
-  tags?: Prisma.PersonTagUpdateManyWithoutPersonNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutPersonNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutPersonNestedInput
   cases?: Prisma.CaseUpdateManyWithoutPersonNestedInput
@@ -316,11 +336,12 @@ export type PersonUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.PersonTagUncheckedUpdateManyWithoutPersonNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutPersonNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutPersonNestedInput
@@ -331,18 +352,22 @@ export type PersonCreateManyInput = {
   id?: string
   userId: string
   name: string
-  type?: string | null
-  contact?: string | null
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
   notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
 export type PersonUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -350,50 +375,12 @@ export type PersonUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type PersonNullableScalarRelationFilter = {
-  is?: Prisma.PersonWhereInput | null
-  isNot?: Prisma.PersonWhereInput | null
-}
-
-export type PersonScalarRelationFilter = {
-  is?: Prisma.PersonWhereInput
-  isNot?: Prisma.PersonWhereInput
-}
-
-export type PersonCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  contact?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-}
-
-export type PersonMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  contact?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-}
-
-export type PersonMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  contact?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
 }
 
 export type PersonListRelationFilter = {
@@ -406,76 +393,56 @@ export type PersonOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type PersonCreateNestedOneWithoutTasksInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutTasksInput
-  connect?: Prisma.PersonWhereUniqueInput
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
-export type PersonUpdateOneWithoutTasksNestedInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutTasksInput
-  upsert?: Prisma.PersonUpsertWithoutTasksInput
-  disconnect?: Prisma.PersonWhereInput | boolean
-  delete?: Prisma.PersonWhereInput | boolean
-  connect?: Prisma.PersonWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutTasksInput, Prisma.PersonUpdateWithoutTasksInput>, Prisma.PersonUncheckedUpdateWithoutTasksInput>
+export type PersonCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  tags?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
-export type PersonCreateNestedOneWithoutCasesInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutCasesInput, Prisma.PersonUncheckedCreateWithoutCasesInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCasesInput
-  connect?: Prisma.PersonWhereUniqueInput
+export type PersonMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
-export type PersonUpdateOneRequiredWithoutCasesNestedInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutCasesInput, Prisma.PersonUncheckedCreateWithoutCasesInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCasesInput
-  upsert?: Prisma.PersonUpsertWithoutCasesInput
-  connect?: Prisma.PersonWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCasesInput, Prisma.PersonUpdateWithoutCasesInput>, Prisma.PersonUncheckedUpdateWithoutCasesInput>
+export type PersonMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  notes?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
 }
 
-export type PersonCreateNestedOneWithoutCommitmentsInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutCommitmentsInput, Prisma.PersonUncheckedCreateWithoutCommitmentsInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCommitmentsInput
-  connect?: Prisma.PersonWhereUniqueInput
+export type PersonScalarRelationFilter = {
+  is?: Prisma.PersonWhereInput
+  isNot?: Prisma.PersonWhereInput
 }
 
-export type PersonUpdateOneRequiredWithoutCommitmentsNestedInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutCommitmentsInput, Prisma.PersonUncheckedCreateWithoutCommitmentsInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCommitmentsInput
-  upsert?: Prisma.PersonUpsertWithoutCommitmentsInput
-  connect?: Prisma.PersonWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCommitmentsInput, Prisma.PersonUpdateWithoutCommitmentsInput>, Prisma.PersonUncheckedUpdateWithoutCommitmentsInput>
-}
-
-export type PersonCreateNestedOneWithoutInteractionsInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutInteractionsInput, Prisma.PersonUncheckedCreateWithoutInteractionsInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutInteractionsInput
-  connect?: Prisma.PersonWhereUniqueInput
-}
-
-export type PersonUpdateOneRequiredWithoutInteractionsNestedInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutInteractionsInput, Prisma.PersonUncheckedCreateWithoutInteractionsInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutInteractionsInput
-  upsert?: Prisma.PersonUpsertWithoutInteractionsInput
-  connect?: Prisma.PersonWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutInteractionsInput, Prisma.PersonUpdateWithoutInteractionsInput>, Prisma.PersonUncheckedUpdateWithoutInteractionsInput>
-}
-
-export type PersonCreateNestedOneWithoutTagsInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutTagsInput, Prisma.PersonUncheckedCreateWithoutTagsInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutTagsInput
-  connect?: Prisma.PersonWhereUniqueInput
-}
-
-export type PersonUpdateOneRequiredWithoutTagsNestedInput = {
-  create?: Prisma.XOR<Prisma.PersonCreateWithoutTagsInput, Prisma.PersonUncheckedCreateWithoutTagsInput>
-  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutTagsInput
-  upsert?: Prisma.PersonUpsertWithoutTagsInput
-  connect?: Prisma.PersonWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutTagsInput, Prisma.PersonUpdateWithoutTagsInput>, Prisma.PersonUncheckedUpdateWithoutTagsInput>
+export type PersonNullableScalarRelationFilter = {
+  is?: Prisma.PersonWhereInput | null
+  isNot?: Prisma.PersonWhereInput | null
 }
 
 export type PersonCreateNestedManyWithoutUserInput = {
@@ -520,374 +487,86 @@ export type PersonUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.PersonScalarWhereInput | Prisma.PersonScalarWhereInput[]
 }
 
-export type PersonCreateWithoutTasksInput = {
-  id?: string
-  name: string
-  type?: string | null
-  contact?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPersonsInput
-  tags?: Prisma.PersonTagCreateNestedManyWithoutPersonInput
-  interactions?: Prisma.InteractionCreateNestedManyWithoutPersonInput
-  commitments?: Prisma.CommitmentCreateNestedManyWithoutPersonInput
-  cases?: Prisma.CaseCreateNestedManyWithoutPersonInput
+export type PersonCreatetagsInput = {
+  set: string[]
 }
 
-export type PersonUncheckedCreateWithoutTasksInput = {
-  id?: string
-  userId: string
-  name: string
-  type?: string | null
-  contact?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  tags?: Prisma.PersonTagUncheckedCreateNestedManyWithoutPersonInput
-  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
-  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutPersonInput
-  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutPersonInput
+export type NullableEnumPersonTypeFieldUpdateOperationsInput = {
+  set?: $Enums.PersonType | null
 }
 
-export type PersonCreateOrConnectWithoutTasksInput = {
-  where: Prisma.PersonWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+export type PersonUpdatetagsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
-export type PersonUpsertWithoutTasksInput = {
-  update: Prisma.XOR<Prisma.PersonUpdateWithoutTasksInput, Prisma.PersonUncheckedUpdateWithoutTasksInput>
-  create: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
-  where?: Prisma.PersonWhereInput
+export type PersonCreateNestedOneWithoutInteractionsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutInteractionsInput, Prisma.PersonUncheckedCreateWithoutInteractionsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutInteractionsInput
+  connect?: Prisma.PersonWhereUniqueInput
 }
 
-export type PersonUpdateToOneWithWhereWithoutTasksInput = {
-  where?: Prisma.PersonWhereInput
-  data: Prisma.XOR<Prisma.PersonUpdateWithoutTasksInput, Prisma.PersonUncheckedUpdateWithoutTasksInput>
+export type PersonUpdateOneRequiredWithoutInteractionsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutInteractionsInput, Prisma.PersonUncheckedCreateWithoutInteractionsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutInteractionsInput
+  upsert?: Prisma.PersonUpsertWithoutInteractionsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutInteractionsInput, Prisma.PersonUpdateWithoutInteractionsInput>, Prisma.PersonUncheckedUpdateWithoutInteractionsInput>
 }
 
-export type PersonUpdateWithoutTasksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
-  tags?: Prisma.PersonTagUpdateManyWithoutPersonNestedInput
-  interactions?: Prisma.InteractionUpdateManyWithoutPersonNestedInput
-  commitments?: Prisma.CommitmentUpdateManyWithoutPersonNestedInput
-  cases?: Prisma.CaseUpdateManyWithoutPersonNestedInput
+export type PersonCreateNestedOneWithoutCommitmentsInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCommitmentsInput, Prisma.PersonUncheckedCreateWithoutCommitmentsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCommitmentsInput
+  connect?: Prisma.PersonWhereUniqueInput
 }
 
-export type PersonUncheckedUpdateWithoutTasksInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.PersonTagUncheckedUpdateManyWithoutPersonNestedInput
-  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
-  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutPersonNestedInput
-  cases?: Prisma.CaseUncheckedUpdateManyWithoutPersonNestedInput
+export type PersonUpdateOneRequiredWithoutCommitmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCommitmentsInput, Prisma.PersonUncheckedCreateWithoutCommitmentsInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCommitmentsInput
+  upsert?: Prisma.PersonUpsertWithoutCommitmentsInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCommitmentsInput, Prisma.PersonUpdateWithoutCommitmentsInput>, Prisma.PersonUncheckedUpdateWithoutCommitmentsInput>
 }
 
-export type PersonCreateWithoutCasesInput = {
-  id?: string
-  name: string
-  type?: string | null
-  contact?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPersonsInput
-  tags?: Prisma.PersonTagCreateNestedManyWithoutPersonInput
-  interactions?: Prisma.InteractionCreateNestedManyWithoutPersonInput
-  commitments?: Prisma.CommitmentCreateNestedManyWithoutPersonInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+export type PersonCreateNestedOneWithoutCasesInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCasesInput, Prisma.PersonUncheckedCreateWithoutCasesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCasesInput
+  connect?: Prisma.PersonWhereUniqueInput
 }
 
-export type PersonUncheckedCreateWithoutCasesInput = {
-  id?: string
-  userId: string
-  name: string
-  type?: string | null
-  contact?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  tags?: Prisma.PersonTagUncheckedCreateNestedManyWithoutPersonInput
-  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
-  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutPersonInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+export type PersonUpdateOneRequiredWithoutCasesNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutCasesInput, Prisma.PersonUncheckedCreateWithoutCasesInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutCasesInput
+  upsert?: Prisma.PersonUpsertWithoutCasesInput
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutCasesInput, Prisma.PersonUpdateWithoutCasesInput>, Prisma.PersonUncheckedUpdateWithoutCasesInput>
 }
 
-export type PersonCreateOrConnectWithoutCasesInput = {
-  where: Prisma.PersonWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonCreateWithoutCasesInput, Prisma.PersonUncheckedCreateWithoutCasesInput>
+export type PersonCreateNestedOneWithoutTasksInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutTasksInput
+  connect?: Prisma.PersonWhereUniqueInput
 }
 
-export type PersonUpsertWithoutCasesInput = {
-  update: Prisma.XOR<Prisma.PersonUpdateWithoutCasesInput, Prisma.PersonUncheckedUpdateWithoutCasesInput>
-  create: Prisma.XOR<Prisma.PersonCreateWithoutCasesInput, Prisma.PersonUncheckedCreateWithoutCasesInput>
-  where?: Prisma.PersonWhereInput
-}
-
-export type PersonUpdateToOneWithWhereWithoutCasesInput = {
-  where?: Prisma.PersonWhereInput
-  data: Prisma.XOR<Prisma.PersonUpdateWithoutCasesInput, Prisma.PersonUncheckedUpdateWithoutCasesInput>
-}
-
-export type PersonUpdateWithoutCasesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
-  tags?: Prisma.PersonTagUpdateManyWithoutPersonNestedInput
-  interactions?: Prisma.InteractionUpdateManyWithoutPersonNestedInput
-  commitments?: Prisma.CommitmentUpdateManyWithoutPersonNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
-}
-
-export type PersonUncheckedUpdateWithoutCasesInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.PersonTagUncheckedUpdateManyWithoutPersonNestedInput
-  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
-  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutPersonNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
-}
-
-export type PersonCreateWithoutCommitmentsInput = {
-  id?: string
-  name: string
-  type?: string | null
-  contact?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPersonsInput
-  tags?: Prisma.PersonTagCreateNestedManyWithoutPersonInput
-  interactions?: Prisma.InteractionCreateNestedManyWithoutPersonInput
-  cases?: Prisma.CaseCreateNestedManyWithoutPersonInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
-}
-
-export type PersonUncheckedCreateWithoutCommitmentsInput = {
-  id?: string
-  userId: string
-  name: string
-  type?: string | null
-  contact?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  tags?: Prisma.PersonTagUncheckedCreateNestedManyWithoutPersonInput
-  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
-  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutPersonInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
-}
-
-export type PersonCreateOrConnectWithoutCommitmentsInput = {
-  where: Prisma.PersonWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonCreateWithoutCommitmentsInput, Prisma.PersonUncheckedCreateWithoutCommitmentsInput>
-}
-
-export type PersonUpsertWithoutCommitmentsInput = {
-  update: Prisma.XOR<Prisma.PersonUpdateWithoutCommitmentsInput, Prisma.PersonUncheckedUpdateWithoutCommitmentsInput>
-  create: Prisma.XOR<Prisma.PersonCreateWithoutCommitmentsInput, Prisma.PersonUncheckedCreateWithoutCommitmentsInput>
-  where?: Prisma.PersonWhereInput
-}
-
-export type PersonUpdateToOneWithWhereWithoutCommitmentsInput = {
-  where?: Prisma.PersonWhereInput
-  data: Prisma.XOR<Prisma.PersonUpdateWithoutCommitmentsInput, Prisma.PersonUncheckedUpdateWithoutCommitmentsInput>
-}
-
-export type PersonUpdateWithoutCommitmentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
-  tags?: Prisma.PersonTagUpdateManyWithoutPersonNestedInput
-  interactions?: Prisma.InteractionUpdateManyWithoutPersonNestedInput
-  cases?: Prisma.CaseUpdateManyWithoutPersonNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
-}
-
-export type PersonUncheckedUpdateWithoutCommitmentsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.PersonTagUncheckedUpdateManyWithoutPersonNestedInput
-  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
-  cases?: Prisma.CaseUncheckedUpdateManyWithoutPersonNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
-}
-
-export type PersonCreateWithoutInteractionsInput = {
-  id?: string
-  name: string
-  type?: string | null
-  contact?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPersonsInput
-  tags?: Prisma.PersonTagCreateNestedManyWithoutPersonInput
-  commitments?: Prisma.CommitmentCreateNestedManyWithoutPersonInput
-  cases?: Prisma.CaseCreateNestedManyWithoutPersonInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
-}
-
-export type PersonUncheckedCreateWithoutInteractionsInput = {
-  id?: string
-  userId: string
-  name: string
-  type?: string | null
-  contact?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  tags?: Prisma.PersonTagUncheckedCreateNestedManyWithoutPersonInput
-  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutPersonInput
-  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutPersonInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
-}
-
-export type PersonCreateOrConnectWithoutInteractionsInput = {
-  where: Prisma.PersonWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonCreateWithoutInteractionsInput, Prisma.PersonUncheckedCreateWithoutInteractionsInput>
-}
-
-export type PersonUpsertWithoutInteractionsInput = {
-  update: Prisma.XOR<Prisma.PersonUpdateWithoutInteractionsInput, Prisma.PersonUncheckedUpdateWithoutInteractionsInput>
-  create: Prisma.XOR<Prisma.PersonCreateWithoutInteractionsInput, Prisma.PersonUncheckedCreateWithoutInteractionsInput>
-  where?: Prisma.PersonWhereInput
-}
-
-export type PersonUpdateToOneWithWhereWithoutInteractionsInput = {
-  where?: Prisma.PersonWhereInput
-  data: Prisma.XOR<Prisma.PersonUpdateWithoutInteractionsInput, Prisma.PersonUncheckedUpdateWithoutInteractionsInput>
-}
-
-export type PersonUpdateWithoutInteractionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
-  tags?: Prisma.PersonTagUpdateManyWithoutPersonNestedInput
-  commitments?: Prisma.CommitmentUpdateManyWithoutPersonNestedInput
-  cases?: Prisma.CaseUpdateManyWithoutPersonNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
-}
-
-export type PersonUncheckedUpdateWithoutInteractionsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.PersonTagUncheckedUpdateManyWithoutPersonNestedInput
-  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutPersonNestedInput
-  cases?: Prisma.CaseUncheckedUpdateManyWithoutPersonNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
-}
-
-export type PersonCreateWithoutTagsInput = {
-  id?: string
-  name: string
-  type?: string | null
-  contact?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutPersonsInput
-  interactions?: Prisma.InteractionCreateNestedManyWithoutPersonInput
-  commitments?: Prisma.CommitmentCreateNestedManyWithoutPersonInput
-  cases?: Prisma.CaseCreateNestedManyWithoutPersonInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
-}
-
-export type PersonUncheckedCreateWithoutTagsInput = {
-  id?: string
-  userId: string
-  name: string
-  type?: string | null
-  contact?: string | null
-  notes?: string | null
-  createdAt?: Date | string
-  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
-  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutPersonInput
-  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutPersonInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
-}
-
-export type PersonCreateOrConnectWithoutTagsInput = {
-  where: Prisma.PersonWhereUniqueInput
-  create: Prisma.XOR<Prisma.PersonCreateWithoutTagsInput, Prisma.PersonUncheckedCreateWithoutTagsInput>
-}
-
-export type PersonUpsertWithoutTagsInput = {
-  update: Prisma.XOR<Prisma.PersonUpdateWithoutTagsInput, Prisma.PersonUncheckedUpdateWithoutTagsInput>
-  create: Prisma.XOR<Prisma.PersonCreateWithoutTagsInput, Prisma.PersonUncheckedCreateWithoutTagsInput>
-  where?: Prisma.PersonWhereInput
-}
-
-export type PersonUpdateToOneWithWhereWithoutTagsInput = {
-  where?: Prisma.PersonWhereInput
-  data: Prisma.XOR<Prisma.PersonUpdateWithoutTagsInput, Prisma.PersonUncheckedUpdateWithoutTagsInput>
-}
-
-export type PersonUpdateWithoutTagsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
-  interactions?: Prisma.InteractionUpdateManyWithoutPersonNestedInput
-  commitments?: Prisma.CommitmentUpdateManyWithoutPersonNestedInput
-  cases?: Prisma.CaseUpdateManyWithoutPersonNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
-}
-
-export type PersonUncheckedUpdateWithoutTagsInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
-  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutPersonNestedInput
-  cases?: Prisma.CaseUncheckedUpdateManyWithoutPersonNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+export type PersonUpdateOneWithoutTasksNestedInput = {
+  create?: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+  connectOrCreate?: Prisma.PersonCreateOrConnectWithoutTasksInput
+  upsert?: Prisma.PersonUpsertWithoutTasksInput
+  disconnect?: Prisma.PersonWhereInput | boolean
+  delete?: Prisma.PersonWhereInput | boolean
+  connect?: Prisma.PersonWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.PersonUpdateToOneWithWhereWithoutTasksInput, Prisma.PersonUpdateWithoutTasksInput>, Prisma.PersonUncheckedUpdateWithoutTasksInput>
 }
 
 export type PersonCreateWithoutUserInput = {
   id?: string
   name: string
-  type?: string | null
-  contact?: string | null
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
   notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
-  tags?: Prisma.PersonTagCreateNestedManyWithoutPersonInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutPersonInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutPersonInput
   cases?: Prisma.CaseCreateNestedManyWithoutPersonInput
@@ -897,11 +576,12 @@ export type PersonCreateWithoutUserInput = {
 export type PersonUncheckedCreateWithoutUserInput = {
   id?: string
   name: string
-  type?: string | null
-  contact?: string | null
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
   notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
-  tags?: Prisma.PersonTagUncheckedCreateNestedManyWithoutPersonInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutPersonInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutPersonInput
@@ -941,29 +621,338 @@ export type PersonScalarWhereInput = {
   id?: Prisma.StringFilter<"Person"> | string
   userId?: Prisma.StringFilter<"Person"> | string
   name?: Prisma.StringFilter<"Person"> | string
-  type?: Prisma.StringNullableFilter<"Person"> | string | null
-  contact?: Prisma.StringNullableFilter<"Person"> | string | null
+  type?: Prisma.EnumPersonTypeNullableFilter<"Person"> | $Enums.PersonType | null
+  phone?: Prisma.StringNullableFilter<"Person"> | string | null
+  email?: Prisma.StringNullableFilter<"Person"> | string | null
   notes?: Prisma.StringNullableFilter<"Person"> | string | null
+  tags?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
+}
+
+export type PersonCreateWithoutInteractionsInput = {
+  id?: string
+  name: string
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
+  notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutPersonsInput
+  commitments?: Prisma.CommitmentCreateNestedManyWithoutPersonInput
+  cases?: Prisma.CaseCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutInteractionsInput = {
+  id?: string
+  userId: string
+  name: string
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
+  notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
+  createdAt?: Date | string
+  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutPersonInput
+  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutInteractionsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutInteractionsInput, Prisma.PersonUncheckedCreateWithoutInteractionsInput>
+}
+
+export type PersonUpsertWithoutInteractionsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutInteractionsInput, Prisma.PersonUncheckedUpdateWithoutInteractionsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutInteractionsInput, Prisma.PersonUncheckedCreateWithoutInteractionsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutInteractionsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutInteractionsInput, Prisma.PersonUncheckedUpdateWithoutInteractionsInput>
+}
+
+export type PersonUpdateWithoutInteractionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
+  commitments?: Prisma.CommitmentUpdateManyWithoutPersonNestedInput
+  cases?: Prisma.CaseUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutInteractionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutPersonNestedInput
+  cases?: Prisma.CaseUncheckedUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutCommitmentsInput = {
+  id?: string
+  name: string
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
+  notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutPersonsInput
+  interactions?: Prisma.InteractionCreateNestedManyWithoutPersonInput
+  cases?: Prisma.CaseCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutCommitmentsInput = {
+  id?: string
+  userId: string
+  name: string
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
+  notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
+  createdAt?: Date | string
+  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
+  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutCommitmentsInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCommitmentsInput, Prisma.PersonUncheckedCreateWithoutCommitmentsInput>
+}
+
+export type PersonUpsertWithoutCommitmentsInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutCommitmentsInput, Prisma.PersonUncheckedUpdateWithoutCommitmentsInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCommitmentsInput, Prisma.PersonUncheckedCreateWithoutCommitmentsInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutCommitmentsInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutCommitmentsInput, Prisma.PersonUncheckedUpdateWithoutCommitmentsInput>
+}
+
+export type PersonUpdateWithoutCommitmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
+  interactions?: Prisma.InteractionUpdateManyWithoutPersonNestedInput
+  cases?: Prisma.CaseUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutCommitmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
+  cases?: Prisma.CaseUncheckedUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutCasesInput = {
+  id?: string
+  name: string
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
+  notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutPersonsInput
+  interactions?: Prisma.InteractionCreateNestedManyWithoutPersonInput
+  commitments?: Prisma.CommitmentCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutCasesInput = {
+  id?: string
+  userId: string
+  name: string
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
+  notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
+  createdAt?: Date | string
+  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
+  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutPersonInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutCasesInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCasesInput, Prisma.PersonUncheckedCreateWithoutCasesInput>
+}
+
+export type PersonUpsertWithoutCasesInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutCasesInput, Prisma.PersonUncheckedUpdateWithoutCasesInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutCasesInput, Prisma.PersonUncheckedCreateWithoutCasesInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutCasesInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutCasesInput, Prisma.PersonUncheckedUpdateWithoutCasesInput>
+}
+
+export type PersonUpdateWithoutCasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
+  interactions?: Prisma.InteractionUpdateManyWithoutPersonNestedInput
+  commitments?: Prisma.CommitmentUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutCasesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
+  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutPersonNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonCreateWithoutTasksInput = {
+  id?: string
+  name: string
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
+  notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutPersonsInput
+  interactions?: Prisma.InteractionCreateNestedManyWithoutPersonInput
+  commitments?: Prisma.CommitmentCreateNestedManyWithoutPersonInput
+  cases?: Prisma.CaseCreateNestedManyWithoutPersonInput
+}
+
+export type PersonUncheckedCreateWithoutTasksInput = {
+  id?: string
+  userId: string
+  name: string
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
+  notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
+  createdAt?: Date | string
+  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
+  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutPersonInput
+  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutPersonInput
+}
+
+export type PersonCreateOrConnectWithoutTasksInput = {
+  where: Prisma.PersonWhereUniqueInput
+  create: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+}
+
+export type PersonUpsertWithoutTasksInput = {
+  update: Prisma.XOR<Prisma.PersonUpdateWithoutTasksInput, Prisma.PersonUncheckedUpdateWithoutTasksInput>
+  create: Prisma.XOR<Prisma.PersonCreateWithoutTasksInput, Prisma.PersonUncheckedCreateWithoutTasksInput>
+  where?: Prisma.PersonWhereInput
+}
+
+export type PersonUpdateToOneWithWhereWithoutTasksInput = {
+  where?: Prisma.PersonWhereInput
+  data: Prisma.XOR<Prisma.PersonUpdateWithoutTasksInput, Prisma.PersonUncheckedUpdateWithoutTasksInput>
+}
+
+export type PersonUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
+  interactions?: Prisma.InteractionUpdateManyWithoutPersonNestedInput
+  commitments?: Prisma.CommitmentUpdateManyWithoutPersonNestedInput
+  cases?: Prisma.CaseUpdateManyWithoutPersonNestedInput
+}
+
+export type PersonUncheckedUpdateWithoutTasksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
+  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutPersonNestedInput
+  cases?: Prisma.CaseUncheckedUpdateManyWithoutPersonNestedInput
 }
 
 export type PersonCreateManyUserInput = {
   id?: string
   name: string
-  type?: string | null
-  contact?: string | null
+  type?: $Enums.PersonType | null
+  phone?: string | null
+  email?: string | null
   notes?: string | null
+  tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
 }
 
 export type PersonUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.PersonTagUpdateManyWithoutPersonNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutPersonNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutPersonNestedInput
   cases?: Prisma.CaseUpdateManyWithoutPersonNestedInput
@@ -973,11 +962,12 @@ export type PersonUpdateWithoutUserInput = {
 export type PersonUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tags?: Prisma.PersonTagUncheckedUpdateManyWithoutPersonNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutPersonNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutPersonNestedInput
@@ -987,9 +977,11 @@ export type PersonUncheckedUpdateWithoutUserInput = {
 export type PersonUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  contact?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -999,7 +991,6 @@ export type PersonUncheckedUpdateManyWithoutUserInput = {
  */
 
 export type PersonCountOutputType = {
-  tags: number
   interactions: number
   commitments: number
   cases: number
@@ -1007,7 +998,6 @@ export type PersonCountOutputType = {
 }
 
 export type PersonCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tags?: boolean | PersonCountOutputTypeCountTagsArgs
   interactions?: boolean | PersonCountOutputTypeCountInteractionsArgs
   commitments?: boolean | PersonCountOutputTypeCountCommitmentsArgs
   cases?: boolean | PersonCountOutputTypeCountCasesArgs
@@ -1022,13 +1012,6 @@ export type PersonCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
    * Select specific fields to fetch from the PersonCountOutputType
    */
   select?: Prisma.PersonCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * PersonCountOutputType without action
- */
-export type PersonCountOutputTypeCountTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PersonTagWhereInput
 }
 
 /**
@@ -1065,11 +1048,12 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   userId?: boolean
   name?: boolean
   type?: boolean
-  contact?: boolean
+  phone?: boolean
+  email?: boolean
   notes?: boolean
+  tags?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  tags?: boolean | Prisma.Person$tagsArgs<ExtArgs>
   interactions?: boolean | Prisma.Person$interactionsArgs<ExtArgs>
   commitments?: boolean | Prisma.Person$commitmentsArgs<ExtArgs>
   cases?: boolean | Prisma.Person$casesArgs<ExtArgs>
@@ -1082,8 +1066,10 @@ export type PersonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   userId?: boolean
   name?: boolean
   type?: boolean
-  contact?: boolean
+  phone?: boolean
+  email?: boolean
   notes?: boolean
+  tags?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
@@ -1093,8 +1079,10 @@ export type PersonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   userId?: boolean
   name?: boolean
   type?: boolean
-  contact?: boolean
+  phone?: boolean
+  email?: boolean
   notes?: boolean
+  tags?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["person"]>
@@ -1104,15 +1092,16 @@ export type PersonSelectScalar = {
   userId?: boolean
   name?: boolean
   type?: boolean
-  contact?: boolean
+  phone?: boolean
+  email?: boolean
   notes?: boolean
+  tags?: boolean
   createdAt?: boolean
 }
 
-export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "type" | "contact" | "notes" | "createdAt", ExtArgs["result"]["person"]>
+export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "type" | "phone" | "email" | "notes" | "tags" | "createdAt", ExtArgs["result"]["person"]>
 export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  tags?: boolean | Prisma.Person$tagsArgs<ExtArgs>
   interactions?: boolean | Prisma.Person$interactionsArgs<ExtArgs>
   commitments?: boolean | Prisma.Person$commitmentsArgs<ExtArgs>
   cases?: boolean | Prisma.Person$casesArgs<ExtArgs>
@@ -1130,7 +1119,6 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name: "Person"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    tags: Prisma.$PersonTagPayload<ExtArgs>[]
     interactions: Prisma.$InteractionPayload<ExtArgs>[]
     commitments: Prisma.$CommitmentPayload<ExtArgs>[]
     cases: Prisma.$CasePayload<ExtArgs>[]
@@ -1140,9 +1128,11 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id: string
     userId: string
     name: string
-    type: string | null
-    contact: string | null
+    type: $Enums.PersonType | null
+    phone: string | null
+    email: string | null
     notes: string | null
+    tags: string[]
     createdAt: Date
   }, ExtArgs["result"]["person"]>
   composites: {}
@@ -1539,7 +1529,6 @@ readonly fields: PersonFieldRefs;
 export interface Prisma__PersonClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  tags<T extends Prisma.Person$tagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PersonTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   interactions<T extends Prisma.Person$interactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$interactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   commitments<T extends Prisma.Person$commitmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$commitmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommitmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cases<T extends Prisma.Person$casesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Person$casesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1576,9 +1565,11 @@ export interface PersonFieldRefs {
   readonly id: Prisma.FieldRef<"Person", 'String'>
   readonly userId: Prisma.FieldRef<"Person", 'String'>
   readonly name: Prisma.FieldRef<"Person", 'String'>
-  readonly type: Prisma.FieldRef<"Person", 'String'>
-  readonly contact: Prisma.FieldRef<"Person", 'String'>
+  readonly type: Prisma.FieldRef<"Person", 'PersonType'>
+  readonly phone: Prisma.FieldRef<"Person", 'String'>
+  readonly email: Prisma.FieldRef<"Person", 'String'>
   readonly notes: Prisma.FieldRef<"Person", 'String'>
+  readonly tags: Prisma.FieldRef<"Person", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Person", 'DateTime'>
 }
     
@@ -1978,30 +1969,6 @@ export type PersonDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many People to delete.
    */
   limit?: number
-}
-
-/**
- * Person.tags
- */
-export type Person$tagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the PersonTag
-   */
-  select?: Prisma.PersonTagSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the PersonTag
-   */
-  omit?: Prisma.PersonTagOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.PersonTagInclude<ExtArgs> | null
-  where?: Prisma.PersonTagWhereInput
-  orderBy?: Prisma.PersonTagOrderByWithRelationInput | Prisma.PersonTagOrderByWithRelationInput[]
-  cursor?: Prisma.PersonTagWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.PersonTagScalarFieldEnum | Prisma.PersonTagScalarFieldEnum[]
 }
 
 /**

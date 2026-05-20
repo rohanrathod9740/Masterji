@@ -51,14 +51,12 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Task: 'Task',
-  Case: 'Case',
-  Commitment: 'Commitment',
-  Interaction: 'Interaction',
-  PersonTag: 'PersonTag',
-  Person: 'Person',
   User: 'User',
-  Tag: 'Tag'
+  Person: 'Person',
+  Interaction: 'Interaction',
+  Commitment: 'Commitment',
+  Case: 'Case',
+  Task: 'Task'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -77,18 +75,60 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const TaskScalarFieldEnum = {
+export const UserScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  password: 'password',
+  createdAt: 'createdAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const PersonScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  type: 'type',
+  phone: 'phone',
+  email: 'email',
+  notes: 'notes',
+  tags: 'tags',
+  createdAt: 'createdAt'
+} as const
+
+export type PersonScalarFieldEnum = (typeof PersonScalarFieldEnum)[keyof typeof PersonScalarFieldEnum]
+
+
+export const InteractionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   personId: 'personId',
-  caseId: 'caseId',
+  type: 'type',
+  notes: 'notes',
+  audioUrl: 'audioUrl',
+  transcript: 'transcript',
+  interactionDate: 'interactionDate',
+  createdAt: 'createdAt'
+} as const
+
+export type InteractionScalarFieldEnum = (typeof InteractionScalarFieldEnum)[keyof typeof InteractionScalarFieldEnum]
+
+
+export const CommitmentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  personId: 'personId',
+  interactionId: 'interactionId',
   title: 'title',
-  remindAt: 'remindAt',
+  dueDate: 'dueDate',
   status: 'status',
   createdAt: 'createdAt'
 } as const
 
-export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+export type CommitmentScalarFieldEnum = (typeof CommitmentScalarFieldEnum)[keyof typeof CommitmentScalarFieldEnum]
 
 
 export const CaseScalarFieldEnum = {
@@ -107,75 +147,18 @@ export const CaseScalarFieldEnum = {
 export type CaseScalarFieldEnum = (typeof CaseScalarFieldEnum)[keyof typeof CaseScalarFieldEnum]
 
 
-export const CommitmentScalarFieldEnum = {
+export const TaskScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   personId: 'personId',
-  interactionId: 'interactionId',
+  caseId: 'caseId',
   title: 'title',
-  dueDate: 'dueDate',
+  remindAt: 'remindAt',
   status: 'status',
   createdAt: 'createdAt'
 } as const
 
-export type CommitmentScalarFieldEnum = (typeof CommitmentScalarFieldEnum)[keyof typeof CommitmentScalarFieldEnum]
-
-
-export const InteractionScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  personId: 'personId',
-  type: 'type',
-  notes: 'notes',
-  audioUrl: 'audioUrl',
-  transcript: 'transcript',
-  createdAt: 'createdAt'
-} as const
-
-export type InteractionScalarFieldEnum = (typeof InteractionScalarFieldEnum)[keyof typeof InteractionScalarFieldEnum]
-
-
-export const PersonTagScalarFieldEnum = {
-  id: 'id',
-  personId: 'personId',
-  tagId: 'tagId'
-} as const
-
-export type PersonTagScalarFieldEnum = (typeof PersonTagScalarFieldEnum)[keyof typeof PersonTagScalarFieldEnum]
-
-
-export const PersonScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  name: 'name',
-  type: 'type',
-  contact: 'contact',
-  notes: 'notes',
-  createdAt: 'createdAt'
-} as const
-
-export type PersonScalarFieldEnum = (typeof PersonScalarFieldEnum)[keyof typeof PersonScalarFieldEnum]
-
-
-export const UserScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  email: 'email',
-  phone: 'phone',
-  password: 'password',
-  createdAt: 'createdAt'
-} as const
-
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
-export const TagScalarFieldEnum = {
-  id: 'id',
-  userId: 'userId',
-  name: 'name'
-} as const
-
-export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
 
 
 export const SortOrder = {

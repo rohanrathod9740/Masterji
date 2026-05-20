@@ -18,42 +18,32 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
- * Model Task
+ * Model User
  * 
  */
-export type Task = Prisma.TaskModel
-/**
- * Model Case
- * 
- */
-export type Case = Prisma.CaseModel
-/**
- * Model Commitment
- * 
- */
-export type Commitment = Prisma.CommitmentModel
-/**
- * Model Interaction
- * 
- */
-export type Interaction = Prisma.InteractionModel
-/**
- * Model PersonTag
- * 
- */
-export type PersonTag = Prisma.PersonTagModel
+export type User = Prisma.UserModel
 /**
  * Model Person
  * 
  */
 export type Person = Prisma.PersonModel
 /**
- * Model User
+ * Model Interaction
  * 
  */
-export type User = Prisma.UserModel
+export type Interaction = Prisma.InteractionModel
 /**
- * Model Tag
+ * Model Commitment
  * 
  */
-export type Tag = Prisma.TagModel
+export type Commitment = Prisma.CommitmentModel
+/**
+ * Model Case
+ * 
+ */
+export type Case = Prisma.CaseModel
+/**
+ * Model Task
+ * 
+ */
+export type Task = Prisma.TaskModel

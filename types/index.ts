@@ -149,3 +149,10 @@ export interface Tag {
   user?: User;
   persons?: PersonTag[];
 }
+
+export type PersonType =
+  | "client"
+  | "shishya"
+  | "patient"
+  | "friend"
+  | "other";

@@ -8,12 +8,10 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Task'
-export type * from './models/Case'
-export type * from './models/Commitment'
-export type * from './models/Interaction'
-export type * from './models/PersonTag'
-export type * from './models/Person'
 export type * from './models/User'
-export type * from './models/Tag'
+export type * from './models/Person'
+export type * from './models/Interaction'
+export type * from './models/Commitment'
+export type * from './models/Case'
+export type * from './models/Task'
 export type * from './commonInputTypes'
