@@ -14,13 +14,13 @@
   
     useEffect(() => {
       // If user is not authenticated and trying to access protected routes
-      if (!isAuthenticated && !pathname?.startsWith("/login") && !pathname?.startsWith("/        register")) {
+      if (!isAuthenticated && !pathname?.startsWith("/login") && !pathname?.startsWith("/register")) {
         router.push("/login");
         return;
       }
   
- 2    // If user is authenticated and trying to access login
-      if (isAuthenticated && pathname === "/login") {
+      // If user is authenticated and trying to access login or register
+      if (isAuthenticated && (pathname === "/login" || pathname === "/register")) {
         router.push("/");
       }
     }, [isAuthenticated, pathname, router]);

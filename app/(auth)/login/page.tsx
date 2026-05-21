@@ -8,8 +8,12 @@
    const router = useRouter();
    const [loading, setLoading] = useState(false);
    const [error, setError] = useState("");
-   const [phone, setPhone] = useState("");
+   const [userInput, setUserInput] = useState("");
    const [password, setPassword] = useState("");
+
+   const isEmail = (input: string) => {
+     return /^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$/.test(input);
+   };
 
    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
      e.preventDefault();
@@ -17,13 +21,20 @@
      setLoading(true);
 
      try {
+       const body: any = {
+         password: password,
+       };
+
+       if (isEmail(userInput)) {
+         body.userEmail = userInput;
+       } else {
+         body.userPhone = userInput;
+       }
+
        const response = await fetch("/api/auth/login", {
          method: "POST",
          headers: { "Content-Type": "application/json" },
-         body: JSON.stringify({
-           userPhone: phone,
-           password: password,
-         }),
+         body: JSON.stringify(body),
        });
 
        const data = await response.json();
@@ -64,10 +75,10 @@
           <input
             type="text"
             required
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
             placeholder="Enter phone number or email"
-            pattern="(^[0-9]{10}$)|(^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$)"
+            pattern="(^[0-9]{10}$)|(^[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$)"
             title="Enter a valid 10-digit phone number or email address"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none"
           />
