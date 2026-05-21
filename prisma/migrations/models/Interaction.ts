@@ -28,7 +28,7 @@ export type InteractionMinAggregateOutputType = {
   id: string | null
   userId: string | null
   personId: string | null
-  type: $Enums.InteractionType | null
+  interactionType: $Enums.InteractionType | null
   notes: string | null
   audioUrl: string | null
   transcript: string | null
@@ -40,7 +40,7 @@ export type InteractionMaxAggregateOutputType = {
   id: string | null
   userId: string | null
   personId: string | null
-  type: $Enums.InteractionType | null
+  interactionType: $Enums.InteractionType | null
   notes: string | null
   audioUrl: string | null
   transcript: string | null
@@ -52,7 +52,7 @@ export type InteractionCountAggregateOutputType = {
   id: number
   userId: number
   personId: number
-  type: number
+  interactionType: number
   notes: number
   audioUrl: number
   transcript: number
@@ -66,7 +66,7 @@ export type InteractionMinAggregateInputType = {
   id?: true
   userId?: true
   personId?: true
-  type?: true
+  interactionType?: true
   notes?: true
   audioUrl?: true
   transcript?: true
@@ -78,7 +78,7 @@ export type InteractionMaxAggregateInputType = {
   id?: true
   userId?: true
   personId?: true
-  type?: true
+  interactionType?: true
   notes?: true
   audioUrl?: true
   transcript?: true
@@ -90,7 +90,7 @@ export type InteractionCountAggregateInputType = {
   id?: true
   userId?: true
   personId?: true
-  type?: true
+  interactionType?: true
   notes?: true
   audioUrl?: true
   transcript?: true
@@ -175,7 +175,7 @@ export type InteractionGroupByOutputType = {
   id: string
   userId: string
   personId: string
-  type: $Enums.InteractionType | null
+  interactionType: $Enums.InteractionType | null
   notes: string | null
   audioUrl: string | null
   transcript: string | null
@@ -208,7 +208,7 @@ export type InteractionWhereInput = {
   id?: Prisma.StringFilter<"Interaction"> | string
   userId?: Prisma.StringFilter<"Interaction"> | string
   personId?: Prisma.StringFilter<"Interaction"> | string
-  type?: Prisma.EnumInteractionTypeNullableFilter<"Interaction"> | $Enums.InteractionType | null
+  interactionType?: Prisma.EnumInteractionTypeNullableFilter<"Interaction"> | $Enums.InteractionType | null
   notes?: Prisma.StringNullableFilter<"Interaction"> | string | null
   audioUrl?: Prisma.StringNullableFilter<"Interaction"> | string | null
   transcript?: Prisma.StringNullableFilter<"Interaction"> | string | null
@@ -223,7 +223,7 @@ export type InteractionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  type?: Prisma.SortOrderInput | Prisma.SortOrder
+  interactionType?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   audioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   transcript?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -241,7 +241,7 @@ export type InteractionWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.InteractionWhereInput | Prisma.InteractionWhereInput[]
   userId?: Prisma.StringFilter<"Interaction"> | string
   personId?: Prisma.StringFilter<"Interaction"> | string
-  type?: Prisma.EnumInteractionTypeNullableFilter<"Interaction"> | $Enums.InteractionType | null
+  interactionType?: Prisma.EnumInteractionTypeNullableFilter<"Interaction"> | $Enums.InteractionType | null
   notes?: Prisma.StringNullableFilter<"Interaction"> | string | null
   audioUrl?: Prisma.StringNullableFilter<"Interaction"> | string | null
   transcript?: Prisma.StringNullableFilter<"Interaction"> | string | null
@@ -256,7 +256,7 @@ export type InteractionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  type?: Prisma.SortOrderInput | Prisma.SortOrder
+  interactionType?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   audioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   transcript?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -274,7 +274,7 @@ export type InteractionScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Interaction"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Interaction"> | string
   personId?: Prisma.StringWithAggregatesFilter<"Interaction"> | string
-  type?: Prisma.EnumInteractionTypeNullableWithAggregatesFilter<"Interaction"> | $Enums.InteractionType | null
+  interactionType?: Prisma.EnumInteractionTypeNullableWithAggregatesFilter<"Interaction"> | $Enums.InteractionType | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Interaction"> | string | null
   audioUrl?: Prisma.StringNullableWithAggregatesFilter<"Interaction"> | string | null
   transcript?: Prisma.StringNullableWithAggregatesFilter<"Interaction"> | string | null
@@ -284,7 +284,7 @@ export type InteractionScalarWhereWithAggregatesInput = {
 
 export type InteractionCreateInput = {
   id?: string
-  type?: $Enums.InteractionType | null
+  interactionType?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
@@ -299,7 +299,7 @@ export type InteractionUncheckedCreateInput = {
   id?: string
   userId: string
   personId: string
-  type?: $Enums.InteractionType | null
+  interactionType?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
@@ -310,7 +310,7 @@ export type InteractionUncheckedCreateInput = {
 
 export type InteractionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -325,7 +325,7 @@ export type InteractionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -338,7 +338,7 @@ export type InteractionCreateManyInput = {
   id?: string
   userId: string
   personId: string
-  type?: $Enums.InteractionType | null
+  interactionType?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
@@ -348,7 +348,7 @@ export type InteractionCreateManyInput = {
 
 export type InteractionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -360,7 +360,7 @@ export type InteractionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -382,7 +382,7 @@ export type InteractionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  interactionType?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   audioUrl?: Prisma.SortOrder
   transcript?: Prisma.SortOrder
@@ -394,7 +394,7 @@ export type InteractionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  interactionType?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   audioUrl?: Prisma.SortOrder
   transcript?: Prisma.SortOrder
@@ -406,7 +406,7 @@ export type InteractionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   personId?: Prisma.SortOrder
-  type?: Prisma.SortOrder
+  interactionType?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   audioUrl?: Prisma.SortOrder
   transcript?: Prisma.SortOrder
@@ -525,7 +525,7 @@ export type InteractionUpdateOneWithoutCommitmentsNestedInput = {
 
 export type InteractionCreateWithoutUserInput = {
   id?: string
-  type?: $Enums.InteractionType | null
+  interactionType?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
@@ -538,7 +538,7 @@ export type InteractionCreateWithoutUserInput = {
 export type InteractionUncheckedCreateWithoutUserInput = {
   id?: string
   personId: string
-  type?: $Enums.InteractionType | null
+  interactionType?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
@@ -580,7 +580,7 @@ export type InteractionScalarWhereInput = {
   id?: Prisma.StringFilter<"Interaction"> | string
   userId?: Prisma.StringFilter<"Interaction"> | string
   personId?: Prisma.StringFilter<"Interaction"> | string
-  type?: Prisma.EnumInteractionTypeNullableFilter<"Interaction"> | $Enums.InteractionType | null
+  interactionType?: Prisma.EnumInteractionTypeNullableFilter<"Interaction"> | $Enums.InteractionType | null
   notes?: Prisma.StringNullableFilter<"Interaction"> | string | null
   audioUrl?: Prisma.StringNullableFilter<"Interaction"> | string | null
   transcript?: Prisma.StringNullableFilter<"Interaction"> | string | null
@@ -590,7 +590,7 @@ export type InteractionScalarWhereInput = {
 
 export type InteractionCreateWithoutPersonInput = {
   id?: string
-  type?: $Enums.InteractionType | null
+  interactionType?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
@@ -603,7 +603,7 @@ export type InteractionCreateWithoutPersonInput = {
 export type InteractionUncheckedCreateWithoutPersonInput = {
   id?: string
   userId: string
-  type?: $Enums.InteractionType | null
+  interactionType?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
@@ -640,7 +640,7 @@ export type InteractionUpdateManyWithWhereWithoutPersonInput = {
 
 export type InteractionCreateWithoutCommitmentsInput = {
   id?: string
-  type?: $Enums.InteractionType | null
+  interactionType?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
@@ -654,7 +654,7 @@ export type InteractionUncheckedCreateWithoutCommitmentsInput = {
   id?: string
   userId: string
   personId: string
-  type?: $Enums.InteractionType | null
+  interactionType?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
@@ -680,7 +680,7 @@ export type InteractionUpdateToOneWithWhereWithoutCommitmentsInput = {
 
 export type InteractionUpdateWithoutCommitmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -694,7 +694,7 @@ export type InteractionUncheckedUpdateWithoutCommitmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -705,7 +705,7 @@ export type InteractionUncheckedUpdateWithoutCommitmentsInput = {
 export type InteractionCreateManyUserInput = {
   id?: string
   personId: string
-  type?: $Enums.InteractionType | null
+  interactionType?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
@@ -715,7 +715,7 @@ export type InteractionCreateManyUserInput = {
 
 export type InteractionUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -728,7 +728,7 @@ export type InteractionUpdateWithoutUserInput = {
 export type InteractionUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -740,7 +740,7 @@ export type InteractionUncheckedUpdateWithoutUserInput = {
 export type InteractionUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   personId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -751,7 +751,7 @@ export type InteractionUncheckedUpdateManyWithoutUserInput = {
 export type InteractionCreateManyPersonInput = {
   id?: string
   userId: string
-  type?: $Enums.InteractionType | null
+  interactionType?: $Enums.InteractionType | null
   notes?: string | null
   audioUrl?: string | null
   transcript?: string | null
@@ -761,7 +761,7 @@ export type InteractionCreateManyPersonInput = {
 
 export type InteractionUpdateWithoutPersonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -774,7 +774,7 @@ export type InteractionUpdateWithoutPersonInput = {
 export type InteractionUncheckedUpdateWithoutPersonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -786,7 +786,7 @@ export type InteractionUncheckedUpdateWithoutPersonInput = {
 export type InteractionUncheckedUpdateManyWithoutPersonInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
+  interactionType?: Prisma.NullableEnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   audioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   transcript?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -829,7 +829,7 @@ export type InteractionSelect<ExtArgs extends runtime.Types.Extensions.InternalA
   id?: boolean
   userId?: boolean
   personId?: boolean
-  type?: boolean
+  interactionType?: boolean
   notes?: boolean
   audioUrl?: boolean
   transcript?: boolean
@@ -845,7 +845,7 @@ export type InteractionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   userId?: boolean
   personId?: boolean
-  type?: boolean
+  interactionType?: boolean
   notes?: boolean
   audioUrl?: boolean
   transcript?: boolean
@@ -859,7 +859,7 @@ export type InteractionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   id?: boolean
   userId?: boolean
   personId?: boolean
-  type?: boolean
+  interactionType?: boolean
   notes?: boolean
   audioUrl?: boolean
   transcript?: boolean
@@ -873,7 +873,7 @@ export type InteractionSelectScalar = {
   id?: boolean
   userId?: boolean
   personId?: boolean
-  type?: boolean
+  interactionType?: boolean
   notes?: boolean
   audioUrl?: boolean
   transcript?: boolean
@@ -881,7 +881,7 @@ export type InteractionSelectScalar = {
   createdAt?: boolean
 }
 
-export type InteractionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "personId" | "type" | "notes" | "audioUrl" | "transcript" | "interactionDate" | "createdAt", ExtArgs["result"]["interaction"]>
+export type InteractionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "personId" | "interactionType" | "notes" | "audioUrl" | "transcript" | "interactionDate" | "createdAt", ExtArgs["result"]["interaction"]>
 export type InteractionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
@@ -908,7 +908,7 @@ export type $InteractionPayload<ExtArgs extends runtime.Types.Extensions.Interna
     id: string
     userId: string
     personId: string
-    type: $Enums.InteractionType | null
+    interactionType: $Enums.InteractionType | null
     notes: string | null
     audioUrl: string | null
     transcript: string | null
@@ -1343,7 +1343,7 @@ export interface InteractionFieldRefs {
   readonly id: Prisma.FieldRef<"Interaction", 'String'>
   readonly userId: Prisma.FieldRef<"Interaction", 'String'>
   readonly personId: Prisma.FieldRef<"Interaction", 'String'>
-  readonly type: Prisma.FieldRef<"Interaction", 'InteractionType'>
+  readonly interactionType: Prisma.FieldRef<"Interaction", 'InteractionType'>
   readonly notes: Prisma.FieldRef<"Interaction", 'String'>
   readonly audioUrl: Prisma.FieldRef<"Interaction", 'String'>
   readonly transcript: Prisma.FieldRef<"Interaction", 'String'>

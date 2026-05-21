@@ -31,7 +31,6 @@ export type PersonMinAggregateOutputType = {
   type: $Enums.PersonType | null
   phone: string | null
   email: string | null
-  notes: string | null
   createdAt: Date | null
 }
 
@@ -42,7 +41,6 @@ export type PersonMaxAggregateOutputType = {
   type: $Enums.PersonType | null
   phone: string | null
   email: string | null
-  notes: string | null
   createdAt: Date | null
 }
 
@@ -53,7 +51,6 @@ export type PersonCountAggregateOutputType = {
   type: number
   phone: number
   email: number
-  notes: number
   tags: number
   createdAt: number
   _all: number
@@ -67,7 +64,6 @@ export type PersonMinAggregateInputType = {
   type?: true
   phone?: true
   email?: true
-  notes?: true
   createdAt?: true
 }
 
@@ -78,7 +74,6 @@ export type PersonMaxAggregateInputType = {
   type?: true
   phone?: true
   email?: true
-  notes?: true
   createdAt?: true
 }
 
@@ -89,7 +84,6 @@ export type PersonCountAggregateInputType = {
   type?: true
   phone?: true
   email?: true
-  notes?: true
   tags?: true
   createdAt?: true
   _all?: true
@@ -174,7 +168,6 @@ export type PersonGroupByOutputType = {
   type: $Enums.PersonType | null
   phone: string | null
   email: string | null
-  notes: string | null
   tags: string[]
   createdAt: Date
   _count: PersonCountAggregateOutputType | null
@@ -207,7 +200,6 @@ export type PersonWhereInput = {
   type?: Prisma.EnumPersonTypeNullableFilter<"Person"> | $Enums.PersonType | null
   phone?: Prisma.StringNullableFilter<"Person"> | string | null
   email?: Prisma.StringNullableFilter<"Person"> | string | null
-  notes?: Prisma.StringNullableFilter<"Person"> | string | null
   tags?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -224,7 +216,6 @@ export type PersonOrderByWithRelationInput = {
   type?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -244,7 +235,6 @@ export type PersonWhereUniqueInput = Prisma.AtLeast<{
   type?: Prisma.EnumPersonTypeNullableFilter<"Person"> | $Enums.PersonType | null
   phone?: Prisma.StringNullableFilter<"Person"> | string | null
   email?: Prisma.StringNullableFilter<"Person"> | string | null
-  notes?: Prisma.StringNullableFilter<"Person"> | string | null
   tags?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -261,7 +251,6 @@ export type PersonOrderByWithAggregationInput = {
   type?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
-  notes?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.PersonCountOrderByAggregateInput
@@ -279,7 +268,6 @@ export type PersonScalarWhereWithAggregatesInput = {
   type?: Prisma.EnumPersonTypeNullableWithAggregatesFilter<"Person"> | $Enums.PersonType | null
   phone?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
   email?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
-  notes?: Prisma.StringNullableWithAggregatesFilter<"Person"> | string | null
   tags?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Person"> | Date | string
 }
@@ -290,7 +278,6 @@ export type PersonCreateInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPersonsInput
@@ -307,7 +294,6 @@ export type PersonUncheckedCreateInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
@@ -322,7 +308,6 @@ export type PersonUpdateInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
@@ -339,7 +324,6 @@ export type PersonUncheckedUpdateInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
@@ -355,7 +339,6 @@ export type PersonCreateManyInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
 }
@@ -366,7 +349,6 @@ export type PersonUpdateManyMutationInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -378,7 +360,6 @@ export type PersonUncheckedUpdateManyInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -408,7 +389,6 @@ export type PersonCountOrderByAggregateInput = {
   type?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
   tags?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -420,7 +400,6 @@ export type PersonMaxOrderByAggregateInput = {
   type?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -431,7 +410,6 @@ export type PersonMinOrderByAggregateInput = {
   type?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -564,7 +542,6 @@ export type PersonCreateWithoutUserInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   interactions?: Prisma.InteractionCreateNestedManyWithoutPersonInput
@@ -579,7 +556,6 @@ export type PersonUncheckedCreateWithoutUserInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
@@ -624,7 +600,6 @@ export type PersonScalarWhereInput = {
   type?: Prisma.EnumPersonTypeNullableFilter<"Person"> | $Enums.PersonType | null
   phone?: Prisma.StringNullableFilter<"Person"> | string | null
   email?: Prisma.StringNullableFilter<"Person"> | string | null
-  notes?: Prisma.StringNullableFilter<"Person"> | string | null
   tags?: Prisma.StringNullableListFilter<"Person">
   createdAt?: Prisma.DateTimeFilter<"Person"> | Date | string
 }
@@ -635,7 +610,6 @@ export type PersonCreateWithoutInteractionsInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPersonsInput
@@ -651,7 +625,6 @@ export type PersonUncheckedCreateWithoutInteractionsInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutPersonInput
@@ -681,7 +654,6 @@ export type PersonUpdateWithoutInteractionsInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
@@ -697,7 +669,6 @@ export type PersonUncheckedUpdateWithoutInteractionsInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutPersonNestedInput
@@ -711,7 +682,6 @@ export type PersonCreateWithoutCommitmentsInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPersonsInput
@@ -727,7 +697,6 @@ export type PersonUncheckedCreateWithoutCommitmentsInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
@@ -757,7 +726,6 @@ export type PersonUpdateWithoutCommitmentsInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
@@ -773,7 +741,6 @@ export type PersonUncheckedUpdateWithoutCommitmentsInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
@@ -787,7 +754,6 @@ export type PersonCreateWithoutCasesInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPersonsInput
@@ -803,7 +769,6 @@ export type PersonUncheckedCreateWithoutCasesInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
@@ -833,7 +798,6 @@ export type PersonUpdateWithoutCasesInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
@@ -849,7 +813,6 @@ export type PersonUncheckedUpdateWithoutCasesInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
@@ -863,7 +826,6 @@ export type PersonCreateWithoutTasksInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutPersonsInput
@@ -879,7 +841,6 @@ export type PersonUncheckedCreateWithoutTasksInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutPersonInput
@@ -909,7 +870,6 @@ export type PersonUpdateWithoutTasksInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutPersonsNestedInput
@@ -925,7 +885,6 @@ export type PersonUncheckedUpdateWithoutTasksInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
@@ -939,7 +898,6 @@ export type PersonCreateManyUserInput = {
   type?: $Enums.PersonType | null
   phone?: string | null
   email?: string | null
-  notes?: string | null
   tags?: Prisma.PersonCreatetagsInput | string[]
   createdAt?: Date | string
 }
@@ -950,7 +908,6 @@ export type PersonUpdateWithoutUserInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   interactions?: Prisma.InteractionUpdateManyWithoutPersonNestedInput
@@ -965,7 +922,6 @@ export type PersonUncheckedUpdateWithoutUserInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutPersonNestedInput
@@ -980,7 +936,6 @@ export type PersonUncheckedUpdateManyWithoutUserInput = {
   type?: Prisma.NullableEnumPersonTypeFieldUpdateOperationsInput | $Enums.PersonType | null
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.PersonUpdatetagsInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1050,7 +1005,6 @@ export type PersonSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   type?: boolean
   phone?: boolean
   email?: boolean
-  notes?: boolean
   tags?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1068,7 +1022,6 @@ export type PersonSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   type?: boolean
   phone?: boolean
   email?: boolean
-  notes?: boolean
   tags?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1081,7 +1034,6 @@ export type PersonSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   type?: boolean
   phone?: boolean
   email?: boolean
-  notes?: boolean
   tags?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -1094,12 +1046,11 @@ export type PersonSelectScalar = {
   type?: boolean
   phone?: boolean
   email?: boolean
-  notes?: boolean
   tags?: boolean
   createdAt?: boolean
 }
 
-export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "type" | "phone" | "email" | "notes" | "tags" | "createdAt", ExtArgs["result"]["person"]>
+export type PersonOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "type" | "phone" | "email" | "tags" | "createdAt", ExtArgs["result"]["person"]>
 export type PersonInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   interactions?: boolean | Prisma.Person$interactionsArgs<ExtArgs>
@@ -1131,7 +1082,6 @@ export type $PersonPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     type: $Enums.PersonType | null
     phone: string | null
     email: string | null
-    notes: string | null
     tags: string[]
     createdAt: Date
   }, ExtArgs["result"]["person"]>
@@ -1568,7 +1518,6 @@ export interface PersonFieldRefs {
   readonly type: Prisma.FieldRef<"Person", 'PersonType'>
   readonly phone: Prisma.FieldRef<"Person", 'String'>
   readonly email: Prisma.FieldRef<"Person", 'String'>
-  readonly notes: Prisma.FieldRef<"Person", 'String'>
   readonly tags: Prisma.FieldRef<"Person", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Person", 'DateTime'>
 }

@@ -29,6 +29,12 @@ export const createPersonSchema = z.object({
     .max(2000, "Notes must be at most 2000 characters")
     .trim()
     .optional(),
+  audioUrl:z
+    .string()
+    .optional(),
+  interactionType:z
+    .enum(["conversation", "advice", "meeting", "treatment", "proposal", "session"])
+    .optional(),
 });
 
 export const listPersonSchema = z.object({

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 type PersonType = "client" | "shishya" | "patient" | "friend" | "other";
+type InteractionType = "conversation" | "advice" | "meeting" | "treatment" | "proposal" | "session";
 
 interface FormData {
   name: string;
@@ -15,6 +16,8 @@ interface FormData {
   phone: string;
   tags: string[];
   notes: string;
+  audioUrl: string;
+  interactionType: InteractionType | "";
 }
 
 export default function AddPersonPage() {
@@ -29,6 +32,8 @@ export default function AddPersonPage() {
     phone: "",
     tags: [],
     notes: "",
+    audioUrl: "",
+    interactionType: "",
   });
 
   const handleInputChange = (
@@ -104,6 +109,8 @@ export default function AddPersonPage() {
           phone: formData.phone || undefined,
           tags: formData.tags.length > 0 ? formData.tags : undefined,
           notes: formData.notes || undefined,
+          audioUrl: formData.audioUrl || undefined,
+          interactionType: formData.interactionType || undefined,
         }),
       });
 
@@ -113,7 +120,7 @@ export default function AddPersonPage() {
         throw new Error(data.message || "Failed to create person");
       }
 
-      router.push(`/people/${data.person.id}`);
+      router.push(`/people/${data.data.id}`);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to create person"
@@ -301,6 +308,54 @@ export default function AddPersonPage() {
           <p className="text-xs text-gray-500 mt-2">
             Maximum 2000 characters
           </p>
+        </div>
+
+        {/* Interaction Card */}
+        <div className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            Initial Interaction
+          </h2>
+
+          <div className="space-y-4">
+            {/* Interaction Type */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Interaction Type
+              </label>
+              <select
+                name="interactionType"
+                value={formData.interactionType}
+                onChange={handleInputChange}
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-sm bg-white"
+              >
+                <option value="">Select interaction type (optional)</option>
+                <option value="conversation">Conversation</option>
+                <option value="advice">Advice</option>
+                <option value="meeting">Meeting</option>
+                <option value="treatment">Treatment</option>
+                <option value="proposal">Proposal</option>
+                <option value="session">Session</option>
+              </select>
+            </div>
+
+            {/* Audio URL */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Audio URL
+              </label>
+              <input
+                type="url"
+                name="audioUrl"
+                value={formData.audioUrl}
+                onChange={handleInputChange}
+                placeholder="https://..."
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-sm"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                Optional - URL of audio recording from this interaction
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Action Buttons */}

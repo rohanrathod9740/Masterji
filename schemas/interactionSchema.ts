@@ -1,29 +1,78 @@
 import { z } from "zod";
+import { InteractionType } from "@/prisma/migrations/enums";
 
-export const createInteractionSchema = z.object({
-  userId: z
-    .string()
-    .trim(),
-  personId: z
-    .string()
-    .trim(),
-  type: z
-    .enum(["conversation", "advice", "meeting", "treatment", "proposal", "session"])
+export const interactionSchema = z.object({
+  interactionType: z
+    .enum([
+      "conversation",
+      "advice",
+      "meeting",
+      "treatment",
+      "proposal",
+      "session",
+    ])
     .optional(),
+
   notes: z
     .string()
     .max(2000, "Notes must be at most 2000 characters")
     .trim()
     .optional(),
+
   audioUrl: z
     .string()
     .url("Invalid URL")
     .optional(),
+
   transcript: z
     .string()
     .max(5000, "Transcript must be at most 5000 characters")
     .trim()
     .optional(),
+
+  interactionDate: z
+    .string()
+    .datetime()
+    .optional(),
+});
+
+export const createInteractionSchema = z.object({
+  userId: z
+    .string()
+    .trim(),
+
+  personId: z
+    .string()
+    .trim(),
+
+  interactionType: z
+    .enum([
+      "conversation",
+      "advice",
+      "meeting",
+      "treatment",
+      "proposal",
+      "session",
+    ])
+    .optional(),
+
+  notes: z
+    .string()
+    .max(2000, "Notes must be at most 2000 characters")
+    .trim()
+    .optional(),
+
+  audioUrl: z
+    .string()
+    .url("Invalid URL")
+    .optional(),
+
+  transcript: z
+    .string()
+    .max(5000, "Transcript must be at most 5000 characters")
+    .trim()
+    .optional(),
+
   interactionDate: z
     .string()
     .datetime()

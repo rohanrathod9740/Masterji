@@ -911,7 +911,6 @@ export const PersonScalarFieldEnum = {
   type: 'type',
   phone: 'phone',
   email: 'email',
-  notes: 'notes',
   tags: 'tags',
   createdAt: 'createdAt'
 } as const
@@ -923,7 +922,7 @@ export const InteractionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   personId: 'personId',
-  type: 'type',
+  interactionType: 'interactionType',
   notes: 'notes',
   audioUrl: 'audioUrl',
   transcript: 'transcript',

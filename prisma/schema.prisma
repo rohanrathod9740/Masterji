@@ -74,7 +74,6 @@ model Person {
   type  PersonType?
   phone String?
   email String?
-  notes String?
   tags  String[]
 
   createdAt DateTime @default(now())
@@ -96,7 +95,7 @@ model Interaction {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   person Person @relation(fields: [personId], references: [id], onDelete: Cascade)
 
-  type       InteractionType?
+  interactionType       InteractionType?
   notes      String?
   audioUrl   String?
   transcript String?

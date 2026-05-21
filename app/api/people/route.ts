@@ -31,6 +31,8 @@ export async function POST(req: NextRequest) {
       phone,
       tags,
       notes,
+      audioUrl,
+      interactionType
     } = result.data;
 
     // check if person already exists
@@ -54,24 +56,41 @@ export async function POST(req: NextRequest) {
     }
 
     // create person
-    const person = await prisma.person.create({
-      data: {
-        userId,
-        name,
-        type,
-        email,
-        phone,
-        tags,
-        notes,
-      },
+    const newPerson = await prisma.$transaction(async (tx) => {
+      const person = await tx.person.create({
+        data: {
+          userId,
+          name,
+          type,
+          email,
+          phone,
+          tags: tags || [],
+        },
+      });
+
+      if (notes || audioUrl || interactionType) {
+        await tx.interaction.create({
+          data: {
+            userId,
+            personId: person.id,
+            notes,
+            audioUrl,
+            interactionType,
+          },
+        });
+      }
+
+      return person;
     });
+
+
 
     // success response
     return NextResponse.json(
       {
         success: true,
         message: "Person created successfully",
-        person,
+        data:newPerson
       },
       { status: 201 }
     );
