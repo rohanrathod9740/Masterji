@@ -2,6 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { TrashIcon } from '@radix-ui/react-icons';
 
 export default function EditInteractionPage() {
   const params = useParams();
@@ -10,6 +11,7 @@ export default function EditInteractionPage() {
 
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
@@ -92,6 +94,31 @@ export default function EditInteractionPage() {
       setError(err instanceof Error ? err.message : 'Failed to update interaction');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm('Are you sure you want to delete this interaction?')) {
+      return;
+    }
+
+    setDeleting(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`/api/interactions/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || errorData.message || 'Failed to delete interaction');
+      }
+
+      router.push('/app/interactions');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to delete interaction');
+      setDeleting(false);
     }
   };
 
@@ -220,10 +247,19 @@ export default function EditInteractionPage() {
             <button
               type="button"
               onClick={() => router.back()}
-              disabled={submitting}
+              disabled={submitting || deleting}
               className="flex-1 px-6 py-2 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition"
             >
               Cancel
+            </button>
+            <button
+              type="button"
+              onClick={handleDelete}
+              disabled={submitting || deleting}
+              className="flex items-center justify-center gap-2 px-6 py-2 bg-red-100 text-red-700 font-medium rounded-lg hover:bg-red-200 disabled:bg-gray-200 disabled:text-gray-500 transition"
+            >
+              <TrashIcon className="w-4 h-4" />
+              {deleting ? 'Deleting...' : 'Delete'}
             </button>
           </div>
         </form>

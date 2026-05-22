@@ -2,7 +2,19 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Pencil1Icon, ArrowLeftIcon, TrashIcon, ExternalLinkIcon } from '@radix-ui/react-icons';
+import {
+  Pencil1Icon,
+  ArrowLeftIcon,
+  TrashIcon,
+  ExternalLinkIcon,
+  ChatBubbleIcon,
+  LightningBoltIcon,
+  CalendarIcon,
+  HeartIcon,
+  ClipboardIcon,
+  VideoIcon,
+  QuestionMarkCircledIcon,
+} from '@radix-ui/react-icons';
 
 interface Interaction {
   id: string;
@@ -94,24 +106,32 @@ export default function InteractionDetailPage() {
   };
 
   const getTypeColor = (type: string) => {
-    const colors: Record<string, { bg: string; text: string; icon: string }> = {
-      conversation: { bg: 'bg-blue-100', text: 'text-blue-700', icon: '💬' },
-      advice: { bg: 'bg-green-100', text: 'text-green-700', icon: '💡' },
-      meeting: { bg: 'bg-purple-100', text: 'text-purple-700', icon: '🤝' },
-      treatment: { bg: 'bg-red-100', text: 'text-red-700', icon: '⚕️' },
-      proposal: { bg: 'bg-amber-100', text: 'text-amber-700', icon: '📋' },
-      session: { bg: 'bg-indigo-100', text: 'text-indigo-700', icon: '📽️' },
+    const colors: Record<
+      string,
+      { bg: string; text: string; icon: React.ComponentType<{ className?: string }> }
+    > = {
+      conversation: { bg: 'bg-blue-100', text: 'text-blue-700', icon: ChatBubbleIcon },
+      advice: { bg: 'bg-green-100', text: 'text-green-700', icon: LightningBoltIcon },
+      meeting: { bg: 'bg-purple-100', text: 'text-purple-700', icon: CalendarIcon },
+      treatment: { bg: 'bg-red-100', text: 'text-red-700', icon: HeartIcon },
+      proposal: { bg: 'bg-amber-100', text: 'text-amber-700', icon: ClipboardIcon },
+      session: { bg: 'bg-indigo-100', text: 'text-indigo-700', icon: VideoIcon },
     };
-    return colors[type] || { bg: 'bg-gray-100', text: 'text-gray-700', icon: '📝' };
+    return (
+      colors[type] || {
+        bg: 'bg-gray-100',
+        text: 'text-gray-700',
+        icon: QuestionMarkCircledIcon,
+      }
+    );
   };
 
   if (loading) {
     return (
-          <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-50 p-4 sm:p-6">
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-xl shadow-sm p-8 text-center">
-            <div className="inline-block w-8 h-8 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
-            <p className="mt-4 text-gray-600">Loading interaction...</p>
+      <div className="w-full">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pb-20">
+          <div className="text-center py-12">
+            <p className="text-gray-600">Loading...</p>
           </div>
         </div>
       </div>
@@ -120,17 +140,17 @@ export default function InteractionDetailPage() {
 
   if (error || !interaction) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-50 p-4 sm:p-6">
-        <div className="max-w-2xl mx-auto">
+      <div className="w-full">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pb-20">
           <button
             onClick={() => router.back()}
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium mb-4 transition"
+            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium"
           >
-            <ArrowLeftIcon className="w-5 h-5" />
-            Go Back
+            <ArrowLeftIcon className="w-4 h-4" />
+            Back to interactions
           </button>
-          <div className="bg-white rounded-xl shadow-sm p-8 border-l-4 border-red-500">
-            <p className="text-red-700 font-medium">{error || 'Interaction not found'}</p>
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-sm text-red-600">{error || 'Interaction not found'}</p>
           </div>
         </div>
       </div>
@@ -140,163 +160,134 @@ export default function InteractionDetailPage() {
   const typeColor = getTypeColor(interaction.interactionType);
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-50 p-4 sm:p-6">
-      <div className="max-w-3xl mx-auto">
-        {/* Header Actions */}
-        <div className="flex items-center justify-between mb-6">
+    <div className="w-full">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pb-20">
+        {/* Header */}
+        <div className="mb-6 sm:mb-8">
           <button
             onClick={() => router.back()}
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition"
+            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium"
           >
-            <ArrowLeftIcon className="w-5 h-5" />
-            Back
+            <ArrowLeftIcon className="w-4 h-4" />
+            Back to interactions
           </button>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => router.push(`/app/interactions/${id}/edit`)}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition shadow-sm hover:shadow-md"
-            >
-              <Pencil1Icon className="w-4 h-4" />
-              <span className="hidden sm:inline">Edit</span>
-            </button>
-            <button
-              onClick={handleDelete}
-              disabled={deleting}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 text-red-700 font-medium rounded-lg hover:bg-red-200 disabled:bg-gray-200 disabled:text-gray-500 transition"
-            >
-              <TrashIcon className="w-4 h-4" />
-              <span className="hidden sm:inline">{deleting ? 'Deleting...' : 'Delete'}</span>
-            </button>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
+                {interaction.interactionType
+                  ? interaction.interactionType.charAt(0).toUpperCase() +
+                    interaction.interactionType.slice(1)
+                  : 'Interaction'}
+              </h1>
+              <p className="text-gray-600 mt-2">
+                {formatDate(interaction.interactionDate)}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={() => router.push(`/app/interactions/${id}/edit`)}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+              >
+                <Pencil1Icon className="w-4 h-4" />
+                Edit
+              </button>
+              <button
+                onClick={handleDelete}
+                disabled={deleting}
+                className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 text-red-700 font-medium rounded-lg hover:bg-red-200 disabled:bg-gray-200 disabled:text-gray-500 transition"
+              >
+                <TrashIcon className="w-4 h-4" />
+                {deleting ? 'Deleting...' : 'Delete'}
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Person Card */}
         {interaction.person && (
-          <div className="bg-white rounded-xl shadow-sm p-6 mb-6 border-l-4 border-indigo-500 hover:shadow-md transition">
+          <div className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6 mb-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Person</h2>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-linear-to-br from-indigo-400 to-blue-500 flex items-center justify-center text-white font-bold text-lg">
-                  {interaction.person.name.charAt(0).toUpperCase()}
-                </div>
-                <div>
-                  <h2 className="text-lg font-bold text-gray-900">
-                    {interaction.person.name}
-                  </h2>
-                  <div className="flex items-center gap-2 mt-1 text-sm text-gray-600">
-                    {interaction.person.email && <span>{interaction.person.email}</span>}
-                    {interaction.person.phone && (
-                      <>
-                        {interaction.person.email && <span>•</span>}
-                        <span>{interaction.person.phone}</span>
-                      </>
-                    )}
-                  </div>
+              <div>
+                <p className="text-gray-900 font-medium">{interaction.person.name}</p>
+                <div className="flex items-center gap-2 mt-1 text-sm text-gray-600">
+                  {interaction.person.email && <span>{interaction.person.email}</span>}
+                  {interaction.person.phone && (
+                    <>
+                      {interaction.person.email && <span>•</span>}
+                      <span>{interaction.person.phone}</span>
+                    </>
+                  )}
                 </div>
               </div>
               <button
                 onClick={() => router.push(`/app/people/${interaction.person?.id}`)}
-                className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
-                title="View person details"
+                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 text-sm font-medium"
               >
-                <ExternalLinkIcon className="w-5 h-5" />
+                View person
+                <ExternalLinkIcon className="w-4 h-4" />
               </button>
             </div>
           </div>
         )}
 
-        {/* Main Content Card */}
-        <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-          {/* Type and Date Header */}
-          <div className={`${typeColor.bg} p-6 border-b border-gray-100`}>
-            <div className="flex items-center gap-3 mb-2">
-              <span className="text-3xl">{typeColor.icon}</span>
-              <div>
-                <div className={`inline-block ${typeColor.bg} ${typeColor.text} px-3 py-1 rounded-full text-sm font-semibold`}>
-                  {interaction.interactionType.charAt(0).toUpperCase() +
-                    interaction.interactionType.slice(1)}
-                </div>
-              </div>
-            </div>
-            <p className="text-sm text-gray-600 mt-3">
-              <span className="font-medium text-gray-900">
-                {formatDate(interaction.interactionDate)}
+        {/* Interaction Details */}
+        <div className="space-y-4">
+          <div className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Details</h2>
+            <div className="flex items-center gap-3">
+              <typeColor.icon className="w-5 h-5 text-gray-700" />
+              <span className={`text-sm font-semibold ${typeColor.text} ${typeColor.bg} px-3 py-1 rounded-full`}>
+                {interaction.interactionType.charAt(0).toUpperCase() +
+                  interaction.interactionType.slice(1)}
               </span>
-            </p>
+            </div>
           </div>
 
-          {/* Content */}
-          <div className="p-6 space-y-6">
-            {/* Notes */}
-            {interaction.notes && (
-              <div>
-                <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-3">
-                  Notes
-                </h3>
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                  <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-                    {interaction.notes}
-                  </p>
-                </div>
-              </div>
-            )}
+          {/* Notes */}
+          {interaction.notes && (
+            <div className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Notes</h2>
+              <p className="text-sm text-gray-700 bg-gray-50 rounded p-3">
+                {interaction.notes}
+              </p>
+            </div>
+          )}
 
-            {/* Transcript */}
-            {interaction.transcript && (
-              <div>
-                <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-3">
-                  Transcript
-                </h3>
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 max-h-64 overflow-y-auto">
-                  <p className="text-gray-700 whitespace-pre-wrap leading-relaxed text-sm">
-                    {interaction.transcript}
-                  </p>
-                </div>
-              </div>
-            )}
+          {/* Transcript */}
+          {interaction.transcript && (
+            <div className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Transcript</h2>
+              <p className="text-sm text-gray-700 bg-gray-50 rounded p-3 whitespace-pre-wrap">
+                {interaction.transcript}
+              </p>
+            </div>
+          )}
 
-            {/* Audio */}
-            {interaction.audioUrl && (
-              <div>
-                <h3 className="text-sm font-semibold text-gray-600 uppercase tracking-wide mb-3">
-                  Audio Recording
-                </h3>
-                <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                  <audio
-                    controls
-                    className="w-full"
-                    src={interaction.audioUrl}
-                  >
-                    Your browser does not support the audio element.
-                  </audio>
-                  <a
-                    href={interaction.audioUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 text-sm mt-2 font-medium"
-                  >
-                    Open in new tab
-                    <ExternalLinkIcon className="w-3 h-3" />
-                  </a>
-                </div>
-              </div>
-            )}
+          {/* Audio */}
+          {interaction.audioUrl && (
+            <div className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Audio Recording</h2>
+              <audio controls className="w-full" src={interaction.audioUrl}>
+                Your browser does not support the audio element.
+              </audio>
+              <a
+                href={interaction.audioUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 text-sm mt-2 font-medium"
+              >
+                Open in new tab
+                <ExternalLinkIcon className="w-3 h-3" />
+              </a>
+            </div>
+          )}
 
-            {/* Empty State */}
-            {!interaction.notes &&
-              !interaction.transcript &&
-              !interaction.audioUrl && (
-                <div className="bg-gray-50 rounded-lg p-8 text-center border border-gray-200">
-                  <p className="text-gray-500">No additional details for this interaction</p>
-                </div>
-              )}
-          </div>
-        </div>
-
-        {/* Footer Info */}
-        <div className="mt-6 text-center">
-          <p className="text-xs text-gray-500">
-            Interaction ID: <span className="font-mono text-gray-400">{id}</span>
-          </p>
+          {!interaction.notes && !interaction.transcript && !interaction.audioUrl && (
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
+              <p className="text-gray-600">No additional details for this interaction</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

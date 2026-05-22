@@ -36,6 +36,7 @@ export default function PersonDetailPage() {
   const [person, setPerson] = useState<PersonWithInteractions | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deletingInteractionId, setDeletingInteractionId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPerson = async () => {
@@ -78,6 +79,47 @@ export default function PersonDetailPage() {
       router.push("/app/people");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete person");
+    }
+  };
+
+  const handleInteractionClick = (interactionId: string) => {
+    router.push(`/app/interactions/${interactionId}`);
+  };
+
+  const handleDeleteInteraction = async (interactionId: string) => {
+    if (!confirm("Delete this interaction?")) {
+      return;
+    }
+
+    setDeletingInteractionId(interactionId);
+    setError(null);
+
+    try {
+      const response = await fetch(`/api/interactions/${interactionId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.error || errorData.message || "Failed to delete interaction"
+        );
+      }
+
+      setPerson((prev) =>
+        prev
+          ? {
+              ...prev,
+              interactions: prev.interactions.filter(
+                (interaction) => interaction.id !== interactionId
+              ),
+            }
+          : prev
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete interaction");
+    } finally {
+      setDeletingInteractionId(null);
     }
   };
 
@@ -242,7 +284,16 @@ export default function PersonDetailPage() {
             {person.interactions.map((interaction) => (
               <div
                 key={interaction.id}
-                className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6"
+                className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6 cursor-pointer hover:bg-gray-50 transition"
+                onClick={() => handleInteractionClick(interaction.id)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    handleInteractionClick(interaction.id);
+                  }
+                }}
               >
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div>
@@ -256,11 +307,29 @@ export default function PersonDetailPage() {
                       {new Date(interaction.createdAt).toLocaleString()}
                     </p>
                   </div>
-                  <Link href={`/app/interactions/${interaction.id}/edit`}>
-                    <Button variant="outline" size="sm">
-                      <Pencil2Icon className="w-4 h-4" />
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/app/interactions/${interaction.id}/edit`}
+                      onClick={(event) => event.stopPropagation()}
+                    >
+                      <Button variant="outline" size="sm">
+                        <Pencil2Icon className="w-4 h-4" />
+                      </Button>
+                    </Link>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleDeleteInteraction(interaction.id);
+                      }}
+                      disabled={deletingInteractionId === interaction.id}
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                      aria-label="Delete interaction"
+                    >
+                      <TrashIcon className="w-4 h-4" />
                     </Button>
-                  </Link>
+                  </div>
                 </div>
 
                 {/* Notes */}
