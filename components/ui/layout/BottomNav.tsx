@@ -1,5 +1,4 @@
  "use client";
-
  import Link from "next/link";
  import { usePathname } from "next/navigation";
 
@@ -7,16 +6,16 @@
    const pathname = usePathname();
 
    const isActive = (route: string) => {
-     if (route === "/" && pathname === "/") return true;
-     if (route !== "/" && pathname?.startsWith(route)) return true;
+     if (route === "/app" && pathname === "/app") return true;
+     if (route !== "/app" && pathname?.startsWith(route)) return true;
      return false;
    };
 
    const navItems = [
-     { label: "Dashboard", route: "/", icon: "📊" },
-     { label: "People", route: "/people", icon: "👥" },
-     { label: "Cases", route: "/cases", icon: "📋" },
-     { label: "Commitments", route: "/commitments", icon: "✓" },
+     { label: "Dashboard", route: "/app", icon: "📊" },
+     { label: "People", route: "/app/people", icon: "👥" },
+     { label: "Cases", route: "/app/cases", icon: "📋" },
+     { label: "Commitments", route: "/app/commitments", icon: "✓" },
    ];
 
    return (

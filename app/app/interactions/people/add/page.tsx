@@ -120,7 +120,7 @@ export default function AddPersonPage() {
         throw new Error(data.message || "Failed to create person");
       }
 
-      router.push(`/people/${data.data.id}`);
+      router.push(`/app/people/${data.data.id}`);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to create person"
@@ -134,7 +134,7 @@ export default function AddPersonPage() {
     <div className="max-w-2xl mx-auto pb-20 px-4 sm:px-0">
       {/* Header */}
       <div className="mb-6 sm:mb-8">
-        <Link href="/people" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium">
+        <Link href="/app/people" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium">
           <ArrowLeftIcon className="w-4 h-4" />
           Back to people
         </Link>
@@ -360,7 +360,7 @@ export default function AddPersonPage() {
 
         {/* Action Buttons */}
         <div className="flex gap-3 pt-4">
-          <Link href="/people" className="flex-1">
+          <Link href="/app/people" className="flex-1">
             <Button
               type="button"
               variant="outline"

@@ -121,7 +121,7 @@ export default async function DashboardPage() {
               return (
                 <Link
                   key={commitment.id}
-                  href={`/people/${commitment.personId}`}
+                  href={`/app/people/${commitment.personId}`}
                   className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 hover:bg-gray-50 transition-colors"
                 >
                   <div className={`w-7 sm:w-8 h-7 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 text-10px sm:text-11px font-semibold ${getAvatarColor(idx)}`}>
@@ -152,7 +152,7 @@ export default async function DashboardPage() {
             {dueTodayCommitments.map((commitment, idx) => (
               <Link
                 key={commitment.id}
-                href={`/people/${commitment.personId}`}
+                href={`/app/people/${commitment.personId}`}
                 className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 hover:bg-gray-50 transition-colors"
               >
                 <div className={`w-7 sm:w-8 h-7 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 text-10px sm:text-11px font-semibold ${getAvatarColor(idx)}`}>
@@ -192,7 +192,7 @@ export default async function DashboardPage() {
               return (
                 <Link
                   key={caseItem.id}
-                  href={`/cases/${caseItem.id}`}
+                  href={`/app/cases/${caseItem.id}`}
                   className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 hover:bg-gray-50 transition-colors"
                 >
                   <div className="w-2 h-2 rounded-full flex-shrink-0 bg-teal-600"></div>
@@ -228,7 +228,7 @@ export default async function DashboardPage() {
             {recentInteractions.map((interaction, idx) => (
               <Link
                 key={interaction.id}
-                href={`/people/${interaction.personId}`}
+                href={`/app/people/${interaction.personId}`}
                 className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 hover:bg-gray-50 transition-colors"
               >
                 <div className={`w-7 sm:w-8 h-7 sm:h-8 rounded-full flex items-center justify-center flex-shrink-0 text-10px sm:text-11px font-semibold ${getAvatarColor(idx)}`}>

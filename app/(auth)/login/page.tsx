@@ -44,8 +44,8 @@
          return;
        }
 
-       // Success - redirect to dashboard
-       router.push("/");
+       // Success - refresh to re-validate auth state, then redirect
+       router.push("/app");
        router.refresh();
      } catch {
        setError("An error occurred. Please try again.");
@@ -57,7 +57,7 @@
    return (
      <div className="w-full max-w-md">
        <div className="text-center mb-8">
-         <h1 className="text-3xl font-bold mb-2">Ayushman!</h1>
+         <h1 className="text-3xl font-bold mb-2">Ayushman.</h1>
          <p className="text-gray-600">Sign in to your account</p>
        </div>
 

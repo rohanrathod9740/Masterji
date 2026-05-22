@@ -13,15 +13,25 @@
     const pathname = usePathname();
   
     useEffect(() => {
-      // If user is not authenticated and trying to access protected routes
-      if (!isAuthenticated && !pathname?.startsWith("/login") && !pathname?.startsWith("/register")) {
-        router.push("/login");
-        return;
+      // Unauthenticated user routing - can only access /, /login, /register
+      if (!isAuthenticated) {
+        const isPublicRoute =
+          pathname === "/" ||
+          pathname?.startsWith("/login") ||
+          pathname?.startsWith("/register");
+
+        if (!isPublicRoute) {
+          router.replace("/login");
+        }
       }
-  
-      // If user is authenticated and trying to access login or register
-      if (isAuthenticated && (pathname === "/login" || pathname === "/register")) {
-        router.push("/");
+
+      // Authenticated user routing - can only access /app and /app/* routes
+      if (isAuthenticated) {
+        const isProtectedRoute = pathname?.startsWith("/app");
+
+        if (!isProtectedRoute) {
+          router.replace("/app");
+        }
       }
     }, [isAuthenticated, pathname, router]);
   

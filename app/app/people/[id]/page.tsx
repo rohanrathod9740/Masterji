@@ -75,7 +75,7 @@ export default function PersonDetailPage() {
         throw new Error("Failed to delete person");
       }
 
-      router.push("/people");
+      router.push("/app/people");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete person");
     }
@@ -94,7 +94,7 @@ export default function PersonDetailPage() {
   if (error || !person) {
     return (
       <div className="max-w-4xl mx-auto pb-20 px-4 sm:px-0">
-        <Link href="/people" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium">
+        <Link href="/app/people" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium">
           <ArrowLeftIcon className="w-4 h-4" />
           Back to people
         </Link>
@@ -113,7 +113,7 @@ export default function PersonDetailPage() {
     <div className="max-w-4xl mx-auto pb-20 px-4 sm:px-0">
       {/* Header */}
       <div className="mb-6 sm:mb-8">
-        <Link href="/people" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium">
+        <Link href="/app/people" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium">
           <ArrowLeftIcon className="w-4 h-4" />
           Back to people
         </Link>
@@ -127,7 +127,7 @@ export default function PersonDetailPage() {
             </p>
           </div>
           <div className="flex gap-2">
-            <Link href={`/people/${person.id}/edit`}>
+            <Link href={`/app/people/${person.id}/edit`}>
               <Button variant="outline" size="sm">
                 <Pencil2Icon className="w-4 h-4 mr-2" />
                 Edit
@@ -224,7 +224,7 @@ export default function PersonDetailPage() {
           <h2 className="text-lg font-semibold text-gray-900">
             Interactions ({person.interactions.length})
           </h2>
-          <Link href={`/people/${person.id}/add-interaction`}>
+          <Link href={`/app/people/${person.id}/add-interaction`}>
             <Button size="sm">
               <PlusIcon className="w-4 h-4 mr-2" />
               Add Interaction
@@ -251,7 +251,7 @@ export default function PersonDetailPage() {
                       {new Date(interaction.createdAt).toLocaleString()}
                     </p>
                   </div>
-                  <Link href={`/interactions/${interaction.id}/edit`}>
+                  <Link href={`/app/interactions/${interaction.id}/edit`}>
                     <Button variant="outline" size="sm">
                       <Pencil2Icon className="w-4 h-4" />
                     </Button>
@@ -289,7 +289,7 @@ export default function PersonDetailPage() {
         ) : (
           <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
             <p className="text-gray-600 mb-4">No interactions yet</p>
-            <Link href={`/people/${person.id}/add-interaction`}>
+            <Link href={`/app/people/${person.id}/add-interaction`}>
               <Button>Add First Interaction</Button>
             </Link>
           </div>

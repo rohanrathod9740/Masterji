@@ -5,6 +5,15 @@ import { getCurrentUser } from "@/lib/auth";
 
 export async function POST(req: NextRequest) {
   try {
+    // Verify user is authenticated
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized" },
+        { status: 401 }
+      );
+    }
+
     // parse request body
     const body = await req.json();
 
@@ -34,6 +43,14 @@ export async function POST(req: NextRequest) {
       audioUrl,
       interactionType
     } = result.data;
+
+    // Verify the userId matches the authenticated user (prevent privilege escalation)
+    if (userId !== user.id) {
+      return NextResponse.json(
+        { success: false, error: "Cannot create person for another user" },
+        { status: 403 }
+      );
+    }
 
     // check if person already exists
     const existingPerson = await prisma.person.findFirst({

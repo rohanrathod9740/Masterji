@@ -18,37 +18,6 @@ type MenuItem = {
   onClick?: () => void;
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const HOLD_DURATION = 400; // ms
 
 const GlobalFloatingButton = () => {
@@ -72,14 +41,14 @@ const MENU_ITEMS: MenuItem[] = [
     label: "Interaction",
     color: "bg-emerald-500 hover:bg-emerald-400",
     trackColor: "#10b981",
-    onClick: () => console.log("Interaction"),
+    onClick: () => router.push("/app/interactions"),
   },
   {
     icon: <ChatBubbleIcon width={20} height={20} />,
     label: "Person",
     color: "bg-yellow-500 hover:bg-red-400",
     trackColor: "#103981",
-    onClick: () => router.push("/people"), 
+    onClick: () => router.push("/app/people"), 
   }
 ];
 
@@ -120,14 +89,9 @@ const MENU_ITEMS: MenuItem[] = [
     if (open) setOpen(false);
   }, [open]);
 
-  // SVG progress ring
   const RING_R = 28;
   const circumference = 2 * Math.PI * RING_R;
   const strokeDash = (progress / 100) * circumference;
-
-  // Distribute items evenly along the track, excluding the FAB position (bottom)
-  // Track runs full viewport height; FAB anchors at bottom-right.
-  // Items are placed from bottom upward, spaced equally.
   const ITEM_COUNT = MENU_ITEMS.length;
 
   return (

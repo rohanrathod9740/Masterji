@@ -73,7 +73,7 @@ export default function AddInteractionPage() {
         throw new Error(data.message || data.error || "Failed to create interaction");
       }
 
-      router.push(`/people/${personId}`);
+      router.push(`/app/people/${personId}`);
     } catch (err) {
       setError(
         err instanceof Error ? err.message : "Failed to create interaction"
@@ -88,7 +88,7 @@ export default function AddInteractionPage() {
       {/* Header */}
       <div className="mb-6 sm:mb-8">
         <Link
-          href={`/people/${personId}`}
+          href={`/app/people/${personId}`}
           className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium"
         >
           <ArrowLeftIcon className="w-4 h-4" />
@@ -222,7 +222,7 @@ export default function AddInteractionPage() {
 
         {/* Action Buttons */}
         <div className="flex gap-3 pt-4">
-          <Link href={`/people/${personId}`} className="flex-1">
+          <Link href={`/app/people/${personId}`} className="flex-1">
             <Button
               type="button"
               variant="outline"

@@ -104,7 +104,7 @@ export default function RegisterPage() {
 
       // Redirect to dashboard after 2 seconds
       setTimeout(() => {
-        router.push("/");
+        router.push("/app");
       }, 2000);
     } catch (error) {
       console.error("Registration error:", error);
@@ -116,155 +116,138 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">
-          Create Account
-        </h1>
-        <p className="text-center text-gray-600 mb-8">
-          Join us to get started
-        </p>
+    <div className="w-full max-w-md">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold mb-2">Ayushman.</h1>
+        <p className="text-gray-600">Create your account</p>
+      </div>
 
+      <form onSubmit={handleSubmit} className="space-y-4">
         {generalError && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded">
             {generalError}
           </div>
         )}
 
         {successMessage && (
-          <div className="mb-4 p-4 bg-green-50 border border-green-200 text-green-700 rounded-lg text-sm">
+          <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded">
             {successMessage}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Name Field */}
-          <div>
-            <label
-              htmlFor="userName"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="userName"
-              name="userName"
-              value={formData.userName}
-              onChange={handleChange}
-              placeholder="Enter your full name"
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
-                errors.userName ? "border-red-500" : "border-gray-300"
-              }`}
-              disabled={isLoading}
-            />
-            {errors.userName && (
-              <p className="mt-1 text-sm text-red-600">{errors.userName}</p>
-            )}
-          </div>
-
-          {/* Email Field */}
-          <div>
-            <label
-              htmlFor="userEmail"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Email Address
-            </label>
-            <input
-              type="email"
-              id="userEmail"
-              name="userEmail"
-              value={formData.userEmail}
-              onChange={handleChange}
-              placeholder="Enter your email"
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
-                errors.userEmail ? "border-red-500" : "border-gray-300"
-              }`}
-              disabled={isLoading}
-            />
-            {errors.userEmail && (
-              <p className="mt-1 text-sm text-red-600">{errors.userEmail}</p>
-            )}
-          </div>
-
-          {/* Phone Field */}
-          <div>
-            <label
-              htmlFor="userPhone"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              id="userPhone"
-              name="userPhone"
-              value={formData.userPhone}
-              onChange={handleChange}
-              placeholder="Enter your phone number"
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
-                errors.userPhone ? "border-red-500" : "border-gray-300"
-              }`}
-              disabled={isLoading}
-            />
-            {errors.userPhone && (
-              <p className="mt-1 text-sm text-red-600">{errors.userPhone}</p>
-            )}
-          </div>
-
-          {/* Password Field */}
-          <div>
-            <label
-              htmlFor="userPassword"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="userPassword"
-              name="userPassword"
-              value={formData.userPassword}
-              onChange={handleChange}
-              placeholder="Enter password"
-              className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 transition ${
-                errors.userPassword ? "border-red-500" : "border-gray-300"
-              }`}
-              disabled={isLoading}
-            />
-            {errors.userPassword && (
-              <p className="mt-1 text-sm text-red-600">{errors.userPassword}</p>
-            )}
-            <div className="mt-2 text-xs text-gray-600 space-y-1">
-              <p className="font-medium">Password must contain:</p>
-              <ul className="list-disc list-inside space-y-1 ml-2">
-                <li>At least 8 characters</li>
-                <li>One uppercase letter</li>
-                <li>One lowercase letter</li>
-                <li>One number</li>
-                <li>One special character (!@#$%^&*...)</li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
+        {/* Name Field */}
+        <div>
+          <label htmlFor="userName" className="block text-sm font-medium text-gray-700 mb-1">
+            Full Name
+          </label>
+          <input
+            type="text"
+            id="userName"
+            name="userName"
+            value={formData.userName}
+            onChange={handleChange}
+            placeholder="Enter your full name"
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none ${
+              errors.userName ? "border-red-500" : "border-gray-300"
+            }`}
             disabled={isLoading}
-            className="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? "Creating Account..." : "Sign Up"}
-          </button>
-        </form>
+          />
+          {errors.userName && (
+            <p className="mt-1 text-sm text-red-600">{errors.userName}</p>
+          )}
+        </div>
 
-        {/* Login Link */}
-        <p className="mt-8 text-center text-gray-600">
+        {/* Email Field */}
+        <div>
+          <label htmlFor="userEmail" className="block text-sm font-medium text-gray-700 mb-1">
+            Email Address
+          </label>
+          <input
+            type="email"
+            id="userEmail"
+            name="userEmail"
+            value={formData.userEmail}
+            onChange={handleChange}
+            placeholder="Enter your email"
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none ${
+              errors.userEmail ? "border-red-500" : "border-gray-300"
+            }`}
+            disabled={isLoading}
+          />
+          {errors.userEmail && (
+            <p className="mt-1 text-sm text-red-600">{errors.userEmail}</p>
+          )}
+        </div>
+
+        {/* Phone Field */}
+        <div>
+          <label htmlFor="userPhone" className="block text-sm font-medium text-gray-700 mb-1">
+            Phone Number
+          </label>
+          <input
+            type="tel"
+            id="userPhone"
+            name="userPhone"
+            value={formData.userPhone}
+            onChange={handleChange}
+            placeholder="Enter your phone number"
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none ${
+              errors.userPhone ? "border-red-500" : "border-gray-300"
+            }`}
+            disabled={isLoading}
+          />
+          {errors.userPhone && (
+            <p className="mt-1 text-sm text-red-600">{errors.userPhone}</p>
+          )}
+        </div>
+
+        {/* Password Field */}
+        <div>
+          <label htmlFor="userPassword" className="block text-sm font-medium text-gray-700 mb-1">
+            Password
+          </label>
+          <input
+            type="password"
+            id="userPassword"
+            name="userPassword"
+            value={formData.userPassword}
+            onChange={handleChange}
+            placeholder="Enter password"
+            className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-black focus:border-transparent outline-none ${
+              errors.userPassword ? "border-red-500" : "border-gray-300"
+            }`}
+            disabled={isLoading}
+          />
+          {errors.userPassword && (
+            <p className="mt-1 text-sm text-red-600">{errors.userPassword}</p>
+          )}
+          <div className="mt-2 text-xs text-gray-600 space-y-1">
+            <p className="font-medium">Password must contain:</p>
+            <ul className="list-disc list-inside space-y-1 ml-2">
+              <li>At least 8 characters</li>
+              <li>One uppercase letter</li>
+              <li>One lowercase letter</li>
+              <li>One number</li>
+              <li>One special character (!@#$%^&*...)</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="w-full bg-black text-white py-2 rounded-lg font-medium hover:bg-gray-800 disabled:bg-gray-400 transition-colors"
+        >
+          {isLoading ? "Creating Account..." : "Sign Up"}
+        </button>
+      </form>
+
+      {/* Login Link */}
+      <div className="mt-6 text-center text-sm">
+        <p className="text-gray-600">
           Already have an account?{" "}
-          <Link
-            href="/login"
-            className="text-indigo-600 font-semibold hover:text-indigo-700 transition"
-          >
+          <Link href="/login" className="text-black font-medium hover:underline">
             Sign In
           </Link>
         </p>

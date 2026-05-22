@@ -6,6 +6,15 @@ import { getCurrentUser } from "@/lib/auth";
 
 export async function GET(req: NextRequest) {
     try {
+        // Verify user is authenticated
+        const user = await getCurrentUser();
+        if (!user) {
+            return NextResponse.json(
+                { error: "Unauthorized" },
+                { status: 401 }
+            );
+        }
+
         const searchParams = req.nextUrl.searchParams;
         const query = {
             userId: searchParams.get("userId"),
@@ -27,6 +36,14 @@ export async function GET(req: NextRequest) {
         }
 
         const { userId, personId, type, skip, take } = result.data;
+
+        // Verify userId matches authenticated user (prevent privilege escalation)
+        if (userId !== user.id) {
+            return NextResponse.json(
+                { error: "Cannot access other user's interactions" },
+                { status: 403 }
+            );
+        }
 
         const where: Prisma.InteractionWhereInput = { userId };
         if (personId) where.personId = personId;

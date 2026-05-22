@@ -8,6 +8,7 @@ import {
   PlusCircledIcon,
 } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
 
 interface Person {
   id: string;
@@ -54,6 +55,8 @@ function getAvatarColor(index: number) {
 }
 
 export default function PeoplePage() {
+  const pathname = usePathname();
+
   const [people, setPeople] = useState<Person[]>([]);
   const [filteredPeople, setFilteredPeople] = useState<Person[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -134,7 +137,7 @@ export default function PeoplePage() {
             Manage and track your connections
           </p>
         </div>
-        <Link href="/people/add">
+        <Link href={`${pathname}/add`}>
           <Button className="gap-2">
             <PlusIcon className="w-4 h-4" />
             <span className="hidden sm:inline">Add Person</span>
@@ -229,7 +232,7 @@ export default function PeoplePage() {
               : "Start by adding your first person"}
           </p>
           {!searchQuery && filterType === "all" && (
-            <Link href="/people/add">
+            <Link href={`${pathname}/add`}>
               <Button className="gap-2 mt-2">
                 <PlusIcon className="w-4 h-4" />
                 Add your first person
@@ -245,7 +248,7 @@ export default function PeoplePage() {
           {filteredPeople.map((person, idx) => (
             <Link
               key={person.id}
-              href={`/people/${person.id}`}
+              href={`/app/people/${person.id}`}
               className="flex items-center gap-3 p-3 sm:p-4 hover:bg-gray-50 transition-colors"
             >
               {/* Avatar */}

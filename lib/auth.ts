@@ -45,19 +45,45 @@ export const getCurrentUser =  async ():Promise<User | null> => {
     try{
         const cookieStore = await cookies();
         const token = cookieStore.get("token")?.value;
+        
+        // Token not found - not authenticated
         if(!token){
             return null;
         }
-        const decoded =  verifyToken(token);
+
+        // Verify and decode the token
+        let decoded;
+        try {
+            decoded = verifyToken(token);
+        } catch (tokenError) {
+            // Token is invalid, expired, or tampered with
+            console.log("Token verification failed:", tokenError);
+            return null;
+        }
+
+        // Validate userId exists in token
+        if (!decoded.userId) {
+            console.log("No userId in token");
+            return null;
+        }
+
+        // Fetch user from database to ensure they still exist
         const userFromDb = await prisma.user.findUnique({
-            where:{id:decoded.userId},
-        })
-        if (!userFromDb) return null;
-        const {password,...user} = userFromDb;
+            where: { id: decoded.userId },
+        });
+
+        // User doesn't exist in database
+        if (!userFromDb) {
+            console.log("User not found in database");
+            return null;
+        }
+
+        // Return user without password
+        const { password, ...user } = userFromDb;
         return user as User;
     }
     catch(error){
-        console.log("error:",error);
+        console.error("getCurrentUser error:", error);
         return null;
     }
 }

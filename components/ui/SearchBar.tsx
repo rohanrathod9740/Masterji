@@ -61,7 +61,7 @@ export function SearchBar() {
     setQuery("");
     setIsOpen(false);
     setResults([]);
-    router.push(`/people/${personId}`);
+    router.push(`/app/people/${personId}`);
   };
 
   return (
