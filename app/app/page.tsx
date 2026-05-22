@@ -87,14 +87,9 @@ export default async function DashboardPage() {
 
   return (
     <div className="pb-32 px-4 sm:px-6 lg:px-0">
-      {/* Search Bar */}
-      <div className="mb-4 sm:mb-5">
-        <SearchBar />
-      </div>
-
       {/* Metrics Grid - Responsive: 2 cols on mobile, 3 on desktop */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-4 sm:mb-5">
-        <div className="bg-white rounded-lg p-2.5 sm:p-3 border border-gray-100">
+      <div className="w-full grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-4 sm:mb-5 relative">
+        <div className="w-full bg-white rounded-lg p-2.5 sm:p-3 border border-gray-100">
           <div className="text-xs font-medium text-gray-600 mb-1">Overdue</div>
           <div className="text-xl sm:text-2xl font-semibold text-red-600">{overdueCommitments.length}</div>
         </div>

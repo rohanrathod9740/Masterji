@@ -66,17 +66,7 @@ export function SearchBar() {
 
   return (
     <div ref={containerRef} className="relative w-full sm:min-w-screen">
-      <div className="bg-white rounded-lg border border-gray-100 flex items-center gap-2.5 px-3.5 py-2">
-        <MagnifyingGlassIcon className="w-4 h-4 text-gray-500 flex-shrink-0" />
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder="Search people…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => query.trim().length > 0 && setIsOpen(true)}
-          className="flex-1 text-sm bg-transparent border-none outline-none text-gray-900 placeholder-gray-500"
-        />
+      <div className="">
         {isLoading && (
           <div className="flex-shrink-0">
             <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-900 rounded-full animate-spin"></div>

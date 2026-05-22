@@ -1,7 +1,6 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { useRef } from "react"
 import { ChevronDownIcon, HeartIcon,  CheckCircledIcon, BarChartIcon, StarIcon, LockClosedIcon, PersonIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import { useRouter } from "next/navigation"
 
@@ -13,11 +12,11 @@ const LandingPage = () => {
   const router = useRouter();
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full max-w-screen overflow-hidden">
       {/* Sheet 1: Hero Section */}
       <section
         id="hero"
-        className="w-full h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 flex flex-col items-center justify-center text-white px-4"
+        className="w-full max-w-screen h-screen bg-linear-to-br from-blue-600 via-blue-500 to-cyan-400 flex flex-col items-center justify-center text-white px-4"
       >
         <div className="text-center space-y-6 max-w-2xl">
           <h1 className="text-6xl md:text-7xl font-bold">Ayushman.</h1>
@@ -57,9 +56,9 @@ const LandingPage = () => {
       {/* Sheet 2: Features Overview */}
       <section
         id="features"
-        className="w-full min-h-screen bg-white px-4 py-20 flex items-center"
+        className="w-full max-w-screen min-h-screen bg-white px-4 sm:px-6 lg:px-8 py-20 flex items-center"
       >
-        <div className="max-w-6xl mx-auto w-full">
+        <div className="mx-auto w-full">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-bold text-gray-900 mb-4">Core Features</h2>
             <p className="text-xl text-gray-600">Everything you need to manage your health</p>
@@ -67,7 +66,7 @@ const LandingPage = () => {
 
           <div className="grid md:grid-cols-2 gap-12">
             <div className="flex space-x-6">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <div className="flex items-center justify-center h-16 w-16 rounded-lg bg-blue-600">
                   <HeartIcon width={32} height={32} className="text-white" />
                 </div>
@@ -81,7 +80,7 @@ const LandingPage = () => {
             </div>
 
             <div className="flex space-x-6">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <div className="flex items-center justify-center h-16 w-16 rounded-lg bg-green-600">
                   <CheckCircledIcon width={32} height={32} className="text-white" />
                 </div>
@@ -95,7 +94,7 @@ const LandingPage = () => {
             </div>
 
             <div className="flex space-x-6">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <div className="flex items-center justify-center h-16 w-16 rounded-lg bg-purple-600">
                   <PersonIcon width={32} height={32} className="text-white" />
                 </div>
@@ -109,7 +108,7 @@ const LandingPage = () => {
             </div>
 
             <div className="flex space-x-6">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <div className="flex items-center justify-center h-16 w-16 rounded-lg bg-orange-600">
                   <BarChartIcon width={32} height={32} className="text-white" />
                 </div>
@@ -137,9 +136,9 @@ const LandingPage = () => {
       {/* Sheet 3: Benefits */}
       <section
         id="benefits"
-        className="w-full min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 px-4 py-20 flex items-center"
+        className="w-full max-w-screen min-h-screen bg-linear-to-b from-gray-50 to-gray-100 px-4 sm:px-6 lg:px-8 py-20 flex items-center"
       >
-        <div className="max-w-6xl mx-auto w-full">
+        <div className="mx-auto w-full">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-bold text-gray-900 mb-4">Why Choose Ayushman?</h2>
             <p className="text-xl text-gray-600">Trusted by thousands for their health journey</p>
@@ -206,9 +205,9 @@ const LandingPage = () => {
       {/* Sheet 4: Call to Action */}
       <section
         id="contact"
-        className="w-full min-h-screen bg-gradient-to-br from-blue-600 to-cyan-500 px-4 py-20 flex flex-col items-center justify-center text-white"
+        className="w-full max-w-screen min-h-screen bg-linear-to-br from-blue-600 to-cyan-500 px-4 sm:px-6 lg:px-8 py-20 flex flex-col items-center justify-center text-white"
       >
-        <div className="max-w-4xl mx-auto w-full text-center space-y-8">
+        <div className="mx-auto w-full text-center space-y-8">
           <div>
             <h2 className="text-5xl md:text-6xl font-bold mb-4">Ready to Transform Yourself?</h2>
           </div>

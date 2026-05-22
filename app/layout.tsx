@@ -29,7 +29,7 @@ export default async function RootLayout({
       lang="en"
       className={cn("h-full", "antialiased", googleSans, "font-sans", spaceGrotesk.variable)}
     >
-      <body className="min-h-full flex flex-col items-center justify-center">
+      <body className="min-h-screen w-full overflow-x-hidden flex flex-col">
         <AuthLayoutWrapper isAuthenticated={isAuthenticated}>
           {children}
         </AuthLayoutWrapper>

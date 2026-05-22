@@ -159,7 +159,8 @@ export default function PeoplePage() {
   ];
 
   return (
-    <div className="pb-32 px-4 sm:px-0">
+    <div className="w-full">
+      <div className="mx-auto max-w-full px-4 sm:px-6 lg:px-8 pb-32">
       {/* Header Section */}
       <div className="mb-5 sm:mb-6 flex items-center justify-between">
         <div>
@@ -344,7 +345,8 @@ export default function PeoplePage() {
             </div>
           ))}
            </div>      
-      )}            
-    </div>           
+      )}      
+      </div>
+    </div>
   );                
 }        

@@ -83,9 +83,11 @@ export default function PersonDetailPage() {
 
   if (isLoading) {
     return (
-      <div className="max-w-4xl mx-auto pb-20 px-4 sm:px-0">
+      <div className="w-full">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pb-20">
         <div className="text-center py-12">
           <p className="text-gray-600">Loading...</p>
+        </div>
         </div>
       </div>
     );
@@ -93,13 +95,15 @@ export default function PersonDetailPage() {
 
   if (error || !person) {
     return (
-      <div className="max-w-4xl mx-auto pb-20 px-4 sm:px-0">
+      <div className="w-full">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pb-20">
         <Link href="/app/people" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium">
           <ArrowLeftIcon className="w-4 h-4" />
           Back to people
         </Link>
         <div className="bg-red-50 border border-red-200 rounded-lg p-4">
           <p className="text-sm text-red-600">{error || "Person not found"}</p>
+        </div>
         </div>
       </div>
     );
@@ -110,7 +114,8 @@ export default function PersonDetailPage() {
     : "Not specified";
 
   return (
-    <div className="max-w-4xl mx-auto pb-20 px-4 sm:px-0">
+    <div className="w-full">
+      <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pb-20">
       {/* Header */}
       <div className="mb-6 sm:mb-8">
         <Link href="/app/people" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium">
@@ -294,6 +299,7 @@ export default function PersonDetailPage() {
             </Link>
           </div>
         )}
+      </div>
       </div>
     </div>
   );

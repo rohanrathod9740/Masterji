@@ -9,11 +9,13 @@ type Props = {
 
  export default function Layout({ children }: Props) {
    return (
-     <main className="min-h-screen text-black flex flex-col items-center justify-center">
+     <main className="min-h-screen w-full overflow-x-hidden flex flex-col justify-center">
        <Header />
        <div className="flex-1 flex flex-col">
-         <div className="flex-1 container py-10 items-center justify-center w-full max-w-5xl">
+        <div className="flex-1 w-full py-10">
+  <div className="w-full max-w-5xl mx-auto px-4 sm:px-6">
            {children}
+         </div>
          </div>
          {/* Add bottom padding on mobile to account for bottom nav */}
          <div className="h-20 sm:h-0" />

@@ -131,7 +131,8 @@ export default function AddPersonPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto pb-20 px-4 sm:px-0">
+    <div className="w-full">
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 pb-20">
       {/* Header */}
       <div className="mb-6 sm:mb-8">
         <Link href="/app/people" className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium">
@@ -379,6 +380,7 @@ export default function AddPersonPage() {
           </button>
         </div>
       </form>
+      </div>
     </div>
   );
 }

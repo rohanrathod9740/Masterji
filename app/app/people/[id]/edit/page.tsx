@@ -94,12 +94,18 @@ export default function EditPersonPage() {
   };
 
   if (loading) {
-    return <div className="p-6">Loading...</div>;
+    return (
+      <div className="w-full">
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-6">
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-white p-6">
-      <div className="max-w-2xl mx-auto">
+    <div className="w-full">
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-8 min-h-screen bg-white">
         <h1 className="text-3xl font-bold mb-6">Edit Person</h1>
 
         {error && (
@@ -211,6 +217,6 @@ export default function EditPersonPage() {
           </div>
         </form>
       </div>
-    </div>
+      </div>
   );
 }
