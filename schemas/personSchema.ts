@@ -37,6 +37,41 @@ export const createPersonSchema = z.object({
     .optional(),
 });
 
+export const editPersonSchema = z.object({
+  userId: z
+  .string()
+  .trim(),
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .max(255, "Name must be at most 255 characters")
+    .trim(),
+  type: z
+    .enum(["client", "shishya", "patient", "friend", "other"])
+    .optional(),
+  email: z
+    .string()
+    .email("Invalid email")
+    .optional(),
+  phone: z
+    .string()
+    .max(20, "Phone must be at most 20 characters")
+    .trim()
+    .optional(),
+  tags: z
+    .array(z.string())
+    .optional(),
+
+});
+
+
+
+
+
+
+
+
+
 export const listPersonSchema = z.object({
   search: z
     .string()

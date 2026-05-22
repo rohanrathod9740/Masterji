@@ -65,7 +65,7 @@ export function SearchBar() {
   };
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="relative w-full sm:min-w-screen">
       <div className="bg-white rounded-lg border border-gray-100 flex items-center gap-2.5 px-3.5 py-2">
         <MagnifyingGlassIcon className="w-4 h-4 text-gray-500 flex-shrink-0" />
         <input

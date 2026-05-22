@@ -1,6 +1,12 @@
  "use client";
  import Link from "next/link";
  import { usePathname } from "next/navigation";
+ import {
+   DashboardIcon,
+   PersonIcon,
+   FileTextIcon,
+   CheckCircledIcon,
+ } from "@radix-ui/react-icons";
 
  const BottomNav = () => {
    const pathname = usePathname();
@@ -12,10 +18,10 @@
    };
 
    const navItems = [
-     { label: "Dashboard", route: "/app", icon: "📊" },
-     { label: "People", route: "/app/people", icon: "👥" },
-     { label: "Cases", route: "/app/cases", icon: "📋" },
-     { label: "Commitments", route: "/app/commitments", icon: "✓" },
+     { label: "Dashboard", route: "/app", icon: DashboardIcon },
+     { label: "People", route: "/app/people", icon: PersonIcon },
+     { label: "Cases", route: "/app/cases", icon: FileTextIcon },
+     { label: "Commitments", route: "/app/commitments", icon: CheckCircledIcon },
    ];
 
    return (
@@ -31,7 +37,7 @@
                  : "text-gray-500 hover:text-gray-700"
              }`}
            >
-             <span className="text-xl">{item.icon}</span>
+             <item.icon width={24} height={24} />
              <span className="text-xs">{item.label}</span>
            </Link>
          ))}

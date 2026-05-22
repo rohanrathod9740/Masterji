@@ -6,6 +6,7 @@ import {
   PlusIcon,
   MagnifyingGlassIcon,
   PlusCircledIcon,
+  TrashIcon,
 } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
@@ -63,6 +64,7 @@ export default function PeoplePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterType, setFilterType] = useState<string>("all");
   const [error, setError] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const fetchPeople = useCallback(async () => {
     try {
@@ -78,6 +80,37 @@ export default function PeoplePage() {
       setIsLoading(false);
     }
   }, []);
+
+  const handleDeletePerson = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    personId: string
+  ) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!window.confirm("Are you sure you want to delete this person? This action cannot be undone.")) {
+      return;
+    }
+
+    setDeletingId(personId);
+    try {
+      const response = await fetch(`/api/people/${personId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete person");
+      }
+
+      setPeople((prevPeople) => prevPeople.filter((p) => p.id !== personId));
+      setError(null);
+    } catch (err) {
+      setError("Failed to delete person. Please try again.");
+      console.error(err);
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   useEffect(() => {
     // eslint-disable-next-line
@@ -246,58 +279,72 @@ export default function PeoplePage() {
       {!isLoading && filteredPeople.length > 0 && (
         <div className="bg-white rounded-lg border border-gray-100 divide-y divide-gray-100 overflow-hidden">
           {filteredPeople.map((person, idx) => (
-            <Link
+            <div
               key={person.id}
-              href={`/app/people/${person.id}`}
               className="flex items-center gap-3 p-3 sm:p-4 hover:bg-gray-50 transition-colors"
             >
-              {/* Avatar */}
-              <div
-                className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0 text-sm sm:text-base font-semibold ${getAvatarColor(idx)}`}
+              <Link
+                href={`/app/people/${person.id}`}
+                className="flex items-center gap-3 flex-1 min-w-0"
               >
-                {getInitials(person.name)}
-              </div>
+                {/* Avatar */}
+                <div
+                  className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shrink-0 text-sm sm:text-base font-semibold ${getAvatarColor(idx)}`}
+                >
+                  {getInitials(person.name)}
+                </div>
 
-              {/* Person Info */}
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="text-sm sm:text-base font-semibold text-gray-900 truncate">
-                    {person.name}
+                {/* Person Info */}
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="text-sm sm:text-base font-semibold text-gray-900 truncate">
+                      {person.name}
+                    </div>
+                    {person.type && (
+                      <span
+                        className={`text-xs font-medium px-2 py-0.5 rounded-full shrink-0 ${
+                          TYPE_COLORS[person.type]?.bg || "bg-gray-100"
+                        } ${TYPE_COLORS[person.type]?.text || "text-gray-700"}`}
+                      >
+                        {person.type}
+                      </span>
+                    )}
                   </div>
-                  {person.type && (
-                    <span
-                      className={`text-xs font-medium px-2 py-0.5 rounded-full shrink-0 ${
-                        TYPE_COLORS[person.type]?.bg || "bg-gray-100"
-                      } ${TYPE_COLORS[person.type]?.text || "text-gray-700"}`}
-                    >
-                      {person.type}
-                    </span>
-                  )}
+                  <div className="flex flex-col sm:flex-row sm:gap-3 gap-1">
+                    {person.email && (
+                      <p className="text-xs text-gray-600 truncate">
+                        {person.email}
+                      </p>
+                    )}
+                    {person.phone && (
+                      <p className="text-xs text-gray-600 truncate">
+                        {person.phone}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <div className="flex flex-col sm:flex-row sm:gap-3 gap-1">
-                  {person.email && (
-                    <p className="text-xs text-gray-600 truncate">
-                      {person.email}
-                    </p>
-                  )}
-                  {person.phone && (
-                    <p className="text-xs text-gray-600 truncate">
-                      {person.phone}
-                    </p>
-                  )}
-                </div>
-              </div>
 
-              {/* Recent Interactions */}
-              {person.interactions && person.interactions.length > 0 && (
-                <div className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded shrink-0 whitespace-nowrap">
-                  {person.interactions.length} interaction{person.interactions.length !== 1 ? "s" : ""}
-                </div>
-              )}
-            </Link>
+                {/* Recent Interactions */}
+                {person.interactions && person.interactions.length > 0 && (
+                  <div className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded shrink-0 whitespace-nowrap">
+                    {person.interactions.length} interaction{person.interactions.length !== 1 ? "s" : ""}
+                  </div>
+                )}
+              </Link>
+
+              {/* Delete Button */}
+              <button
+                onClick={(e) => handleDeletePerson(e, person.id)}
+                disabled={deletingId === person.id}
+                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50 shrink-0"
+                title="Delete person"
+              >
+                <TrashIcon className="w-4 h-4" />
+              </button>
+            </div>
           ))}
-        </div>
-      )}
-    </div>
-  );
-}
+           </div>      
+      )}            
+    </div>           
+  );                
+}        
