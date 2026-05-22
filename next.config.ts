@@ -5,9 +5,8 @@ const nextConfig: NextConfig = {
     allowedDevOrigins: [
     "http://localhost:3000",
     "http://192.168.1.6:3000",
-    "https://advik-masterji-vercel-qmmp129er-ybladviks-projects.vercel.app"
+    "https://advik-masterji-vercel.vercel.app"
     ]
-
 };
 
 export default nextConfig;
