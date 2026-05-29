@@ -1,0 +1,180 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .dash { padding: 1.25rem 0; }
+  .search-bar { display: flex; align-items: center; gap: 10px; background: var(--color-background-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-lg); padding: 10px 14px; margin-bottom: 1.25rem; }
+  .search-bar input { border: none; background: transparent; font-size: 14px; color: var(--color-text-primary); flex: 1; outline: none; }
+  .search-bar input::placeholder { color: var(--color-text-tertiary); }
+  .metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.25rem; }
+  .metric { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px 14px; }
+  .metric .label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+  .metric .value { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+  .metric.danger .value { color: var(--color-text-danger); }
+  .section { margin-bottom: 1.25rem; }
+  .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .section-title { font-size: 13px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.04em; }
+  .see-all { font-size: 12px; color: var(--color-text-info); cursor: pointer; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); }
+  .item { display: flex; align-items: flex-start; gap: 12px; padding: 11px 14px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .item:last-child { border-bottom: none; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 500; flex-shrink: 0; }
+  .av-blue { background: #E6F1FB; color: #0C447C; }
+  .av-teal { background: #E1F5EE; color: #085041; }
+  .av-amber { background: #FAEEDA; color: #633806; }
+  .av-purple { background: #EEEDFE; color: #3C3489; }
+  .av-coral { background: #FAECE7; color: #712B13; }
+  .item-body { flex: 1; min-width: 0; }
+  .item-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .item-sub { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .badge { font-size: 11px; padding: 3px 8px; border-radius: 20px; font-weight: 500; flex-shrink: 0; align-self: center; }
+  .badge-danger { background: var(--color-background-danger); color: var(--color-text-danger); }
+  .badge-warn { background: var(--color-background-warning); color: var(--color-text-warning); }
+  .badge-info { background: var(--color-background-info); color: var(--color-text-info); }
+  .badge-success { background: var(--color-background-success); color: var(--color-text-success); }
+  .fab { position: fixed; bottom: 1.5rem; right: 1.5rem; width: 48px; height: 48px; border-radius: 50%; background: #534AB7; color: #fff; border: none; font-size: 22px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: none; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; align-self: center; }
+  .dot-danger { background: var(--color-text-danger); }
+  .dot-warn { background: var(--color-text-warning); }
+  .dot-teal { background: #1D9E75; }
+</style>
+<div class="dash">
+  <h2 class="sr-only">Masterji dashboard — daily overview of commitments, follow-ups, and recent interactions</h2>
+
+  <div class="search-bar">
+    <i class="ti ti-search" style="font-size:16px; color:var(--color-text-tertiary);" aria-hidden="true"></i>
+    <input type="text" placeholder="Search people…" />
+  </div>
+
+  <div class="metrics">
+    <div class="metric danger">
+      <div class="label">Overdue</div>
+      <div class="value">3</div>
+    </div>
+    <div class="metric">
+      <div class="label">Due today</div>
+      <div class="value">5</div>
+    </div>
+    <div class="metric">
+      <div class="label">Follow-ups (7d)</div>
+      <div class="value">4</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title"><i class="ti ti-alert-circle" aria-hidden="true" style="font-size:13px; vertical-align:-1px; margin-right:4px;"></i>Overdue</span>
+    </div>
+    <div class="card">
+      <div class="item">
+        <div class="avatar av-coral">RV</div>
+        <div class="item-body">
+          <div class="item-name">Ravi Sharma</div>
+          <div class="item-sub">Send homeopathy prescription</div>
+        </div>
+        <span class="badge badge-danger">3d ago</span>
+      </div>
+      <div class="item">
+        <div class="avatar av-blue">PM</div>
+        <div class="item-body">
+          <div class="item-name">Priya Mehta</div>
+          <div class="item-sub">Follow up on kundali reading</div>
+        </div>
+        <span class="badge badge-danger">1d ago</span>
+      </div>
+      <div class="item">
+        <div class="avatar av-amber">SK</div>
+        <div class="item-body">
+          <div class="item-name">Suresh Kumar</div>
+          <div class="item-sub">Send proposal draft</div>
+        </div>
+        <span class="badge badge-danger">5d ago</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title"><i class="ti ti-clock" aria-hidden="true" style="font-size:13px; vertical-align:-1px; margin-right:4px;"></i>Due today</span>
+    </div>
+    <div class="card">
+      <div class="item">
+        <div class="avatar av-teal">AN</div>
+        <div class="item-body">
+          <div class="item-name">Anita Nair</div>
+          <div class="item-sub">Check on meditation progress</div>
+        </div>
+        <span class="badge badge-warn">Today</span>
+      </div>
+      <div class="item">
+        <div class="avatar av-purple">DJ</div>
+        <div class="item-body">
+          <div class="item-name">Dev Joshi</div>
+          <div class="item-sub">Call to discuss business case</div>
+        </div>
+        <span class="badge badge-warn">Today</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title"><i class="ti ti-calendar" aria-hidden="true" style="font-size:13px; vertical-align:-1px; margin-right:4px;"></i>Upcoming case follow-ups</span>
+    </div>
+    <div class="card">
+      <div class="item">
+        <div class="dot dot-teal"></div>
+        <div class="item-body">
+          <div class="item-name">Ravi Sharma <span style="font-weight:400; color:var(--color-text-secondary);">· health</span></div>
+          <div class="item-sub">Review remedy response</div>
+        </div>
+        <span class="badge badge-info">In 2d</span>
+      </div>
+      <div class="item">
+        <div class="dot dot-teal"></div>
+        <div class="item-body">
+          <div class="item-name">Priya Mehta <span style="font-weight:400; color:var(--color-text-secondary);">· astrology</span></div>
+          <div class="item-sub">Saturn transit check-in</div>
+        </div>
+        <span class="badge badge-info">In 5d</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span class="section-title"><i class="ti ti-history" aria-hidden="true" style="font-size:13px; vertical-align:-1px; margin-right:4px;"></i>Recent interactions</span>
+      <span class="see-all">See all</span>
+    </div>
+    <div class="card">
+      <div class="item">
+        <div class="avatar av-blue">PM</div>
+        <div class="item-body">
+          <div class="item-name">Priya Mehta</div>
+          <div class="item-sub">Voice note — discussed marriage timing, 3 min</div>
+        </div>
+        <span style="font-size:11px; color:var(--color-text-tertiary); flex-shrink:0; align-self:center;">2h ago</span>
+      </div>
+      <div class="item">
+        <div class="avatar av-teal">AN</div>
+        <div class="item-body">
+          <div class="item-name">Anita Nair</div>
+          <div class="item-sub">Session — breathwork and anxiety</div>
+        </div>
+        <span style="font-size:11px; color:var(--color-text-tertiary); flex-shrink:0; align-self:center;">Yesterday</span>
+      </div>
+      <div class="item">
+        <div class="avatar av-coral">RV</div>
+        <div class="item-body">
+          <div class="item-name">Ravi Sharma</div>
+          <div class="item-sub">Treatment update — sulphur 30C given</div>
+        </div>
+        <span style="font-size:11px; color:var(--color-text-tertiary); flex-shrink:0; align-self:center;">Yesterday</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="fab" aria-label="Quick add">
+    <i class="ti ti-plus" aria-hidden="true"></i>
+  </button>
+</div>
