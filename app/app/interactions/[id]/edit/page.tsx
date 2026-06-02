@@ -2,7 +2,9 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { TrashIcon } from '@radix-ui/react-icons';
+import { ArrowLeftIcon, TrashIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { useTranscriber } from '@/hooks/useTranscriber';
 import AudioManager from '@/components/ui/audio/audioManager';
 
@@ -40,7 +42,7 @@ export default function EditInteractionPage() {
           audioUrl: data.audioUrl || '',
           transcript: data.transcript || '',
           interactionDate: data.interactionDate
-            ? new Date(data.interactionDate).toISOString().split('T')[0]
+            ? new Date(data.interactionDate).toISOString().slice(0, 16)
             : '',
         });
       } catch (err) {
@@ -71,7 +73,6 @@ export default function EditInteractionPage() {
     setError(null);
 
     try {
-      // Format the data for submission
       const submitData = {
         ...formData,
         interactionDate: formData.interactionDate
@@ -138,8 +139,8 @@ export default function EditInteractionPage() {
   if (loading) {
     return (
       <div className="w-full">
-        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-6">
-          <p>Loading...</p>
+        <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 pb-20">
+          <p className="text-gray-500 text-sm mt-8">Loading...</p>
         </div>
       </div>
     );
@@ -147,149 +148,176 @@ export default function EditInteractionPage() {
 
   return (
     <div className="w-full">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 py-8 min-h-screen bg-white">
-        <div className='flex items-center justify-between text-sm font-medium mb-4'>
-          <span>
-            {transcriber.modelLoadingProgress === 0 && `Model not loaded`}
-            {transcriber.isModeLoading && `Loading model`}
-            {transcriber.modelLoadingProgress === 100 && `Model ready`}
-          </span>
-          <span>{transcriber.modelLoadingProgress.toFixed()}%</span>
-        </div>
-        <h1 className="text-3xl font-bold mb-6">Edit Interaction</h1>
-
-        {error && (
-          <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-            {error}
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 pb-20">
+        <div className="flex-1">
+          <div className="flex items-center justify-between text-sm font-medium">
+            <span>
+              {transcriber.modelLoadingProgress === 0 && `Model not loaded`}
+              {transcriber.isModeLoading && `Loading model`}
+              {transcriber.modelLoadingProgress === 100 && `Model ready`}
+            </span>
+            <span>{transcriber.modelLoadingProgress.toFixed()}%</span>
           </div>
-        )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Interaction Type */}
-          <div>
-            <label htmlFor="interactionType" className="block text-sm font-medium text-gray-700 mb-1">
-              Interaction Type *
-            </label>
-            <select
-              id="interactionType"
-              name="interactionType"
-              value={formData.interactionType}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          {/* Header */}
+          <div className="mb-6 sm:mb-8">
+            <Link
+              href={`/app/interactions/${id}`}
+              className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-4 font-medium"
             >
-              <option value="">Select interaction type</option>
-              <option value="conversation">Conversation</option>
-              <option value="advice">Advice</option>
-              <option value="meeting">Meeting</option>
-              <option value="treatment">Treatment</option>
-              <option value="proposal">Proposal</option>
-              <option value="session">Session</option>
-            </select>
+              <ArrowLeftIcon className="w-4 h-4" />
+              Back to interaction
+            </Link>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900">
+              Edit Interaction
+            </h1>
+            <p className="text-gray-600 mt-2">
+              Update the details of this interaction
+            </p>
           </div>
 
-          {/* Interaction Date */}
-          <div>
-            <label htmlFor="interactionDate" className="block text-sm font-medium text-gray-700 mb-1">
-              Date *
-            </label>
-            <input
-              type="date"
-              id="interactionDate"
-              name="interactionDate"
-              value={formData.interactionDate}
-              onChange={handleChange}
-              required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+              <p className="text-sm text-red-600">{error}</p>
+            </div>
+          )}
 
-          {/* Notes */}
-          <div>
-            <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-1">
-              Notes
-            </label>
-            <textarea
-              id="notes"
-              name="notes"
-              value={formData.notes}
-              onChange={handleChange}
-              maxLength={2000}
-              rows={4}
-              placeholder="Add notes about this interaction..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            <p className="mt-1 text-xs text-gray-500">{formData.notes.length}/2000 characters</p>
-          </div>
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Interaction Details Card */}
+            <div className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Interaction Details
+              </h2>
 
-          {/* Transcript */}
-          <div>
-            <label htmlFor="transcript" className="block text-sm font-medium text-gray-700 mb-1">
-              Transcript
-            </label>
-            <textarea
-              id="transcript"
-              name="transcript"
-              value={formData.transcript}
-              onChange={handleChange}
-              maxLength={5000}
-              rows={6}
-              placeholder="Add transcript of the interaction..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            <p className="mt-1 text-xs text-gray-500">{formData.transcript.length}/5000 characters</p>
-          </div>
+              <div className="space-y-4">
+                {/* Interaction Type */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Interaction Type *
+                  </label>
+                  <select
+                    id="interactionType"
+                    name="interactionType"
+                    value={formData.interactionType}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-sm bg-white"
+                  >
+                    <option value="">Select interaction type</option>
+                    <option value="conversation">Conversation</option>
+                    <option value="advice">Advice</option>
+                    <option value="meeting">Meeting</option>
+                    <option value="treatment">Treatment</option>
+                    <option value="proposal">Proposal</option>
+                    <option value="session">Session</option>
+                  </select>
+                </div>
 
-          {/* Audio URL */}
-          <div>
-            <label htmlFor="audioUrl" className="block text-sm font-medium text-gray-700 mb-1">
-              Audio URL
-            </label>
-            <input
-              type="url"
-              id="audioUrl"
-              name="audioUrl"
-              value={formData.audioUrl}
-              onChange={handleChange}
-              placeholder="https://example.com/audio.mp3"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-          </div>
+                {/* Interaction Date */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Date &amp; Time *
+                  </label>
+                  <input
+                    type="datetime-local"
+                    id="interactionDate"
+                    name="interactionDate"
+                    value={formData.interactionDate}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-sm"
+                  />
+                </div>
+              </div>
+            </div>
 
-          {/* Buttons */}
-          <div className="flex gap-4">
-            <button
-              type="submit"
-              disabled={submitting}
-              className="flex-1 px-6 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 disabled:bg-gray-400 transition"
-            >
-              {submitting ? 'Saving...' : 'Save Changes'}
-            </button>
-            <button
-              type="button"
-              onClick={() => router.back()}
-              disabled={submitting || deleting}
-              className="flex-1 px-6 py-2 bg-gray-200 text-gray-800 font-medium rounded-lg hover:bg-gray-300 transition"
-            >
-              Cancel
-            </button>
+            {/* Notes Card */}
+            <div className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Notes
+              </h2>
+
+              <textarea
+                id="notes"
+                name="notes"
+                value={formData.notes}
+                onChange={handleChange}
+                maxLength={2000}
+                rows={4}
+                placeholder="Add notes about this interaction..."
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-sm resize-none"
+              />
+              <p className="text-xs text-gray-500 mt-2">
+                {formData.notes.length}/2000 characters
+              </p>
+            </div>
+
+            {/* Audio Card */}
+            <div className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Audio Recording
+              </h2>
+              <AudioManager transcriber={transcriber} />
+            </div>
+
+            {/* Transcript Card */}
+            <div className="bg-white rounded-lg border border-gray-100 p-5 sm:p-6">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Transcript
+              </h2>
+
+              <textarea
+                id="transcript"
+                name="transcript"
+                value={formData.transcript}
+                onChange={handleChange}
+                maxLength={5000}
+                rows={4}
+                placeholder="Add transcript or summary of the interaction..."
+                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 text-sm resize-none"
+              />
+              <p className="text-xs text-gray-500 mt-2">
+                {formData.transcript.length}/5000 characters
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-4">
+              <Link href={`/app/interactions/${id}`} className="flex-1">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  disabled={submitting || deleting}
+                >
+                  Cancel
+                </Button>
+              </Link>
+              <button
+                type="submit"
+                disabled={submitting || deleting}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
+              >
+                {submitting ? 'Saving...' : 'Save Changes'}
+              </button>
+            </div>
+          </form>
+
+          {/* Delete Section */}
+          <div className="mt-6 bg-white rounded-lg border border-red-100 p-5 sm:p-6">
+            <h2 className="text-lg font-semibold text-gray-900 mb-1">Danger Zone</h2>
+            <p className="text-sm text-gray-500 mb-4">This action cannot be undone.</p>
             <button
               type="button"
               onClick={handleDelete}
               disabled={submitting || deleting}
-              className="flex items-center justify-center gap-2 px-6 py-2 bg-red-100 text-red-700 font-medium rounded-lg hover:bg-red-200 disabled:bg-gray-200 disabled:text-gray-500 transition"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-red-50 text-red-700 font-medium rounded-lg hover:bg-red-100 disabled:opacity-50 transition-colors text-sm"
             >
               <TrashIcon className="w-4 h-4" />
-              {deleting ? 'Deleting...' : 'Delete'}
+              {deleting ? 'Deleting...' : 'Delete Interaction'}
             </button>
-          </div>
-        </form>
-
-        {/* Audio Recording Card (outside form to avoid submit conflicts) */}
-        <div className="mt-6 space-y-6">
-          <div className="bg-white rounded-lg border border-gray-200 p-5">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Audio Recording</h2>
-            <AudioManager transcriber={transcriber} />
           </div>
         </div>
       </div>

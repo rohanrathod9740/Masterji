@@ -74,6 +74,7 @@ model Person {
   type  PersonType?
   phone String?
   email String?
+  summary String?
   tags  String[]
 
   createdAt DateTime @default(now())
@@ -99,12 +100,9 @@ model Interaction {
   notes      String?
   audioUrl   String?
   transcript String?
-
   interactionDate DateTime  @default(now())
   createdAt       DateTime  @default(now())
-
   commitments Commitment[]
-
   @@index([personId, interactionDate(sort: Desc)])
   @@index([userId])
 }
