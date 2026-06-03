@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
@@ -111,6 +112,16 @@ export default function PeoplePage() {
       setDeletingId(null);
     }
   };
+
+  const router = useRouter();
+
+
+  const handleAddCommitment = (e: React.MouseEvent<HTMLButtonElement>, personId: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    router.push(`${pathname}/add?personId=${personId}`);
+  };
+
 
   useEffect(() => {
     // eslint-disable-next-line
@@ -333,6 +344,16 @@ export default function PeoplePage() {
                 )}
               </Link>
 
+              {/* Add Commitment Button */}
+              <button
+                onClick={(e) => handleAddCommitment(e, person.id)}
+                title="Add commitment"
+                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-colors shrink-0 whitespace-nowrap"
+              >
+                <PlusIcon className="w-3.5 h-3.5" />
+                Add commitment
+              </button>
+
               {/* Delete Button */}
               <button
                 onClick={(e) => handleDeletePerson(e, person.id)}
@@ -340,7 +361,7 @@ export default function PeoplePage() {
                 className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50 shrink-0"
                 title="Delete person"
               >
-                <TrashIcon className="w-4 h-4" />
+                <TrashIcon className="w-8 h-8" />
               </button>
             </div>
           ))}

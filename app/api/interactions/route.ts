@@ -23,6 +23,7 @@ export async function GET(req: NextRequest) {
             skip: searchParams.get("skip") ? parseInt(searchParams.get("skip")!) : undefined,
             take: searchParams.get("take") ? parseInt(searchParams.get("take")!) : undefined,
         };
+        console.log("userId",searchParams.get("userId"));
 
         const result = listInteractionSchema.safeParse(query);
         if (!result.success) {
@@ -40,7 +41,7 @@ export async function GET(req: NextRequest) {
         // Verify userId matches authenticated user (prevent privilege escalation)
         if (userId !== user.id) {
             return NextResponse.json(
-                { error: "Cannot access other user's interactions" },
+                { error: "Unauthorized access" },
                 { status: 403 }
             );
         }
