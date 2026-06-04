@@ -1,5 +1,5 @@
 "use client";
-
+import { Suspense } from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeftIcon, MagnifyingGlassIcon } from "@radix-ui/react-icons";
@@ -47,7 +47,8 @@ function getAvatarColor(index: number) {
   return AVATAR_COLORS[index % AVATAR_COLORS.length];
 }
 
-export default function AddCommitmentPage() {
+ function AddCommitmentPage() {
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -450,4 +451,14 @@ export default function AddCommitmentPage() {
       </div>
     </div>
   );
+}
+
+
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading....</div>}>
+      <AddCommitmentPage />
+    </Suspense>
+  )
 }
