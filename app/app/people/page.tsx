@@ -119,7 +119,7 @@ export default function PeoplePage() {
   const handleAddCommitment = (e: React.MouseEvent<HTMLButtonElement>, personId: string) => {
     e.preventDefault();
     e.stopPropagation();
-    router.push(`${pathname}/add?personId=${personId}`);
+    router.push(`/app/commitments/add?personId=${personId}`);
   };
 
 

@@ -34,7 +34,7 @@ const MENU_ITEMS: MenuItem[] = [
     label: "Commitment",
     color: "bg-violet-500 hover:bg-violet-400",
     trackColor: "#8b5cf6",
-    onClick: () => console.log("Commitment"),
+    onClick: () => router.push("/app/commitments"),
   },
   {
     icon: <ChatBubbleIcon width={20} height={20} />,
