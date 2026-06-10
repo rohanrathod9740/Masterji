@@ -52,11 +52,14 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
-  Person: 'Person',
+  Client: 'Client',
+  Appointment: 'Appointment',
+  Attachment: 'Attachment',
   Interaction: 'Interaction',
   Commitment: 'Commitment',
   Case: 'Case',
-  Task: 'Task'
+  Task: 'Task',
+  AuditLog: 'AuditLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -87,30 +90,69 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const PersonScalarFieldEnum = {
+export const ClientScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   name: 'name',
-  type: 'type',
-  phone: 'phone',
   email: 'email',
+  phone: 'phone',
+  companyName: 'companyName',
+  type: 'type',
+  status: 'status',
   tags: 'tags',
+  address: 'address',
+  dob: 'dob',
+  internalNotes: 'internalNotes',
+  passwordHash: 'passwordHash',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
+
+
+export const AppointmentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  clientId: 'clientId',
+  appointmentType: 'appointmentType',
+  appointmentDate: 'appointmentDate',
+  duration: 'duration',
+  meetingMode: 'meetingMode',
+  appointmentStatus: 'appointmentStatus',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
+
+
+export const AttachmentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  clientId: 'clientId',
+  interactionId: 'interactionId',
+  taskId: 'taskId',
+  fileName: 'fileName',
+  fileType: 'fileType',
+  fileUrl: 'fileUrl',
+  fileSize: 'fileSize',
   createdAt: 'createdAt'
 } as const
 
-export type PersonScalarFieldEnum = (typeof PersonScalarFieldEnum)[keyof typeof PersonScalarFieldEnum]
+export type AttachmentScalarFieldEnum = (typeof AttachmentScalarFieldEnum)[keyof typeof AttachmentScalarFieldEnum]
 
 
 export const InteractionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  personId: 'personId',
+  clientId: 'clientId',
   interactionType: 'interactionType',
   notes: 'notes',
   audioUrl: 'audioUrl',
   transcript: 'transcript',
-  interactionDate: 'interactionDate',
-  createdAt: 'createdAt'
+  interactionDate: 'interactionDate'
 } as const
 
 export type InteractionScalarFieldEnum = (typeof InteractionScalarFieldEnum)[keyof typeof InteractionScalarFieldEnum]
@@ -119,7 +161,7 @@ export type InteractionScalarFieldEnum = (typeof InteractionScalarFieldEnum)[key
 export const CommitmentScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  personId: 'personId',
+  clientId: 'clientId',
   interactionId: 'interactionId',
   title: 'title',
   dueDate: 'dueDate',
@@ -133,8 +175,7 @@ export type CommitmentScalarFieldEnum = (typeof CommitmentScalarFieldEnum)[keyof
 export const CaseScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  personId: 'personId',
-  category: 'category',
+  clientId: 'clientId',
   problem: 'problem',
   diagnosis: 'diagnosis',
   suggestedActions: 'suggestedActions',
@@ -149,7 +190,7 @@ export type CaseScalarFieldEnum = (typeof CaseScalarFieldEnum)[keyof typeof Case
 export const TaskScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  personId: 'personId',
+  clientId: 'clientId',
   caseId: 'caseId',
   title: 'title',
   remindAt: 'remindAt',
@@ -160,12 +201,34 @@ export const TaskScalarFieldEnum = {
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
 
 
+export const AuditLogScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  recordType: 'recordType',
+  recordId: 'recordId',
+  action: 'action',
+  before: 'before',
+  after: 'after',
+  timestamp: 'timestamp'
+} as const
+
+export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -182,4 +245,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

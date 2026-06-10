@@ -7,29 +7,81 @@ datasource db {
   provider = "postgresql"
 }
 
-
-enum PersonType {
-  client
-  shishya
-  patient
-  friend
+enum ClientType {
+  consulting_client
+  retained_client
+  one_time_client
+  lead
   other
 }
 
-enum InteractionType {
-  conversation
-  advice
-  meeting
-  treatment
-  proposal
-  session
+enum UserType{
+  it
+  healthcare
+  realestate
+  legal
+  other
 }
 
-enum CaseCategory {
-  health
-  astrology
-  business
-  spiritual
+enum ClientStatus {
+  active
+  inactive
+  archived
+}
+
+enum InteractionType {
+  consulation
+  meeting
+  call
+  treatment_session
+  review_meeting
+  project_discussion 
+  support_call
+}
+
+enum TaskPriority {
+  low
+  medium
+  high
+  critical
+}
+enum TaskStatus {
+  pending
+  in_progress
+  done
+  overdue
+}
+enum AppointmentType {
+  consultation
+  follow_up
+  review
+  onboarding
+  other
+}
+enum MeetingMode {
+  in_person
+  phone
+  video
+  other
+}
+enum AppointmentStatus {
+  scheduled
+  completed
+  rescheduled
+  cancelled
+  missed
+}
+enum AuditAction {
+  created
+  updated
+  deleted
+}
+
+enum AuditRecordType {
+  client
+  interaction
+  task
+  appointment
 }
 
 enum CaseStatus {
@@ -44,77 +96,135 @@ enum CommitmentStatus {
   missed
 }
 
-enum TaskStatus {
-  pending
-  done
-  snoozed
-}
-
 
 model User {
   id        String   @id @default(uuid())
-  name      String?
+  name      String?  
   email     String   @unique
+  type      UserType @default(it)
   phone     String?  @unique
-  password  String
+  password String
   createdAt DateTime @default(now())
 
-  persons      Person[]
+  clients Client[]
   interactions Interaction[]
   commitments  Commitment[]
-  cases        Case[]
-  tasks        Task[]
+  appointments Appointment[]
+  auditLogs AuditLog[]
+  cases Case[]
+  tasks Task[]
 }
 
-model Person {
+
+model Client{
   id     String     @id @default(uuid())
   userId String
   user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   name  String
-  type  PersonType?
-  phone String?
-  email String?
-  summary String?
-  tags  String[]
+  email String
+  phone String
+  companyName String?
+  type  ClientType?
+  status ClientStatus? @default(active)
+  tags  String[] @default([])
+  address String
+  dob DateTime
+  internalNotes String[] @default([])
+  passwordHash String
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   interactions Interaction[]
+  tasks        Task[]
+  appointments Appointment[]
+  attachments Attachment[]
   commitments  Commitment[]
   cases        Case[]
-  tasks        Task[]
 
-  @@index([userId])
   @@index([userId, name])
+  @@index([userId, email])
+  @@index([userId, status])
+  @@index([id, status])
+}
+
+
+model Appointment{
+  id String @id @default (uuid())
+  userId String
+  clientId String
+
+  user User @relation(fields: [userId],references:[id], onDelete:Cascade)
+  client Client @relation(fields: [clientId],references:[id], onDelete:Cascade)
+
+  appointmentType AppointmentType
+  appointmentDate DateTime
+  duration Int
+  meetingMode MeetingMode
+  appointmentStatus AppointmentStatus @default(scheduled)
+  notes  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId,appointmentDate])
+  @@index([clientId, appointmentDate])
+  @@index([userId,appointmentStatus])
+}
+
+
+model Attachment{
+  id String @id @default(uuid())
+  userId        String?  // Uploader (internal)
+
+  clientId      String?  // Client owner
+  interactionId String?  // Related interaction
+  taskId String?
+
+  client        Client?      @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  interaction   Interaction? @relation(fields: [interactionId], references: [id], onDelete: Cascade)
+  task          Task?        @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  fileName      String
+  fileType      String   // pdf | png | jpg | jpeg | docx
+  fileUrl       String
+  fileSize      Int?     // bytes
+
+  createdAt     DateTime @default(now())
+
+  @@index([clientId])
+  @@index([interactionId])
+  @@index([taskId])
 }
 
 model Interaction {
   id       String @id @default(uuid())
   userId   String
-  personId String
+  clientId String
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  person Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
   interactionType       InteractionType?
   notes      String?
   audioUrl   String?
   transcript String?
   interactionDate DateTime  @default(now())
-  createdAt       DateTime  @default(now())
   commitments Commitment[]
-  @@index([personId, interactionDate(sort: Desc)])
+  attachments Attachment[]
+  @@index([clientId, interactionDate(sort: Desc)])
   @@index([userId])
 }
 
 model Commitment {
   id            String  @id @default(uuid())
   userId        String
-  personId      String
+  clientId      String
   interactionId String?
 
   user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  person      Person       @relation(fields: [personId], references: [id], onDelete: Cascade)
+  client      Client       @relation(fields: [clientId], references: [id], onDelete: Cascade)
   interaction Interaction? @relation(fields: [interactionId], references: [id], onDelete: SetNull)
 
   title   String
@@ -130,12 +240,11 @@ model Commitment {
 model Case {
   id       String @id @default(uuid())
   userId   String
-  personId String
+  clientId String
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  person Person @relation(fields: [personId], references: [id], onDelete: Cascade)
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
-  category         CaseCategory?
   problem          String?
   diagnosis        String?
   suggestedActions String?
@@ -154,11 +263,11 @@ model Case {
 model Task {
   id       String  @id @default(uuid())
   userId   String
-  personId String?
+  clientId String?
   caseId   String?
-
+  
   user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  person Person? @relation(fields: [personId], references: [id], onDelete: SetNull)
+  client Client? @relation(fields: [clientId], references: [id], onDelete: SetNull)
   case   Case?   @relation(fields: [caseId], references: [id], onDelete: SetNull)
 
   title      String
@@ -167,6 +276,25 @@ model Task {
 
   createdAt DateTime @default(now())
 
+  attachments Attachment[]
+
   @@index([userId, remindAt])
   @@index([userId, status])
+}
+
+model AuditLog {
+  id         String          @id @default(uuid())
+  userId     String?         // Null if system-triggered (e.g. overdue automation)
+  user       User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  recordType AuditRecordType
+  recordId   String
+  action     AuditAction
+  before     Json?           // State snapshot before change
+  after      Json?           // State snapshot after change
+
+  timestamp  DateTime        @default(now())
+
+  @@index([recordType, recordId])
+  @@index([userId, timestamp])
 }

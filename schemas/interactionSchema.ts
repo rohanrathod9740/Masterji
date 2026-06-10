@@ -1,17 +1,17 @@
 import { z } from "zod";
-import { InteractionType } from "@/prisma/migrations/enums";
+
+const interactionTypes = [
+  "consulation",
+  "meeting",
+  "call",
+  "treatment_session",
+  "review_meeting",
+  "project_discussion",
+  "support_call",
+] as const;
 
 export const interactionSchema = z.object({
-  interactionType: z
-    .enum([
-      "conversation",
-      "advice",
-      "meeting",
-      "treatment",
-      "proposal",
-      "session",
-    ])
-    .optional(),
+  interactionType: z.enum(interactionTypes).optional(),
 
   notes: z
     .string()
@@ -41,20 +41,11 @@ export const createInteractionSchema = z.object({
     .string()
     .trim(),
 
-  personId: z
+  clientId: z
     .string()
     .trim(),
 
-  interactionType: z
-    .enum([
-      "conversation",
-      "advice",
-      "meeting",
-      "treatment",
-      "proposal",
-      "session",
-    ])
-    .optional(),
+  interactionType: z.enum(interactionTypes).optional(),
 
   notes: z
     .string()
@@ -83,13 +74,11 @@ export const listInteractionSchema = z.object({
   userId: z
     .string()
     .trim(),
-  personId: z
+  clientId: z
     .string()
     .trim()
     .optional(),
-  type: z
-    .enum(["conversation", "advice", "meeting", "treatment", "proposal", "session"])
-    .optional(),
+  type: z.enum(interactionTypes).optional(),
   skip: z
     .number()
     .int()

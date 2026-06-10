@@ -9,37 +9,108 @@
 * 🟢 You can import this file directly.
 */
 
-export const PersonType = {
-  client: 'client',
-  shishya: 'shishya',
-  patient: 'patient',
-  friend: 'friend',
+export const ClientType = {
+  consulting_client: 'consulting_client',
+  retained_client: 'retained_client',
+  one_time_client: 'one_time_client',
+  lead: 'lead',
   other: 'other'
 } as const
 
-export type PersonType = (typeof PersonType)[keyof typeof PersonType]
+export type ClientType = (typeof ClientType)[keyof typeof ClientType]
+
+
+export const ClientStatus = {
+  active: 'active',
+  inactive: 'inactive',
+  archived: 'archived'
+} as const
+
+export type ClientStatus = (typeof ClientStatus)[keyof typeof ClientStatus]
 
 
 export const InteractionType = {
-  conversation: 'conversation',
-  advice: 'advice',
+  consulation: 'consulation',
   meeting: 'meeting',
-  treatment: 'treatment',
-  proposal: 'proposal',
-  session: 'session'
+  call: 'call',
+  treatment_session: 'treatment_session',
+  review_meeting: 'review_meeting',
+  project_discussion: 'project_discussion',
+  support_call: 'support_call'
 } as const
 
 export type InteractionType = (typeof InteractionType)[keyof typeof InteractionType]
 
 
-export const CaseCategory = {
-  health: 'health',
-  astrology: 'astrology',
-  business: 'business',
-  spiritual: 'spiritual'
+export const TaskPriority = {
+  low: 'low',
+  medium: 'medium',
+  high: 'high',
+  critical: 'critical'
 } as const
 
-export type CaseCategory = (typeof CaseCategory)[keyof typeof CaseCategory]
+export type TaskPriority = (typeof TaskPriority)[keyof typeof TaskPriority]
+
+
+export const TaskStatus = {
+  pending: 'pending',
+  in_progress: 'in_progress',
+  done: 'done',
+  overdue: 'overdue'
+} as const
+
+export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]
+
+
+export const AppointmentType = {
+  consultation: 'consultation',
+  follow_up: 'follow_up',
+  review: 'review',
+  onboarding: 'onboarding',
+  other: 'other'
+} as const
+
+export type AppointmentType = (typeof AppointmentType)[keyof typeof AppointmentType]
+
+
+export const MeetingMode = {
+  in_person: 'in_person',
+  phone: 'phone',
+  video: 'video',
+  other: 'other'
+} as const
+
+export type MeetingMode = (typeof MeetingMode)[keyof typeof MeetingMode]
+
+
+export const AppointmentStatus = {
+  scheduled: 'scheduled',
+  completed: 'completed',
+  rescheduled: 'rescheduled',
+  cancelled: 'cancelled',
+  missed: 'missed'
+} as const
+
+export type AppointmentStatus = (typeof AppointmentStatus)[keyof typeof AppointmentStatus]
+
+
+export const AuditAction = {
+  created: 'created',
+  updated: 'updated',
+  deleted: 'deleted'
+} as const
+
+export type AuditAction = (typeof AuditAction)[keyof typeof AuditAction]
+
+
+export const AuditRecordType = {
+  client: 'client',
+  interaction: 'interaction',
+  task: 'task',
+  appointment: 'appointment'
+} as const
+
+export type AuditRecordType = (typeof AuditRecordType)[keyof typeof AuditRecordType]
 
 
 export const CaseStatus = {
@@ -58,12 +129,3 @@ export const CommitmentStatus = {
 } as const
 
 export type CommitmentStatus = (typeof CommitmentStatus)[keyof typeof CommitmentStatus]
-
-
-export const TaskStatus = {
-  pending: 'pending',
-  done: 'done',
-  snoozed: 'snoozed'
-} as const
-
-export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]

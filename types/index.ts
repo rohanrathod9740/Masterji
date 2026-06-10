@@ -4,6 +4,8 @@
 
 export type TaskStatus = "pending" | "completed" | "cancelled";
 
+export type UserType = "healthcare" | "it" | "legal" | "realestate" | "other";
+
 export interface Task {
   id: string;
   userId: string;

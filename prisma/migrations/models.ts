@@ -9,9 +9,12 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/User'
-export type * from './models/Person'
+export type * from './models/Client'
+export type * from './models/Appointment'
+export type * from './models/Attachment'
 export type * from './models/Interaction'
 export type * from './models/Commitment'
 export type * from './models/Case'
 export type * from './models/Task'
+export type * from './models/AuditLog'
 export type * from './commonInputTypes'

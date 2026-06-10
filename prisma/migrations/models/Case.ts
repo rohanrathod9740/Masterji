@@ -27,8 +27,7 @@ export type AggregateCase = {
 export type CaseMinAggregateOutputType = {
   id: string | null
   userId: string | null
-  personId: string | null
-  category: $Enums.CaseCategory | null
+  clientId: string | null
   problem: string | null
   diagnosis: string | null
   suggestedActions: string | null
@@ -40,8 +39,7 @@ export type CaseMinAggregateOutputType = {
 export type CaseMaxAggregateOutputType = {
   id: string | null
   userId: string | null
-  personId: string | null
-  category: $Enums.CaseCategory | null
+  clientId: string | null
   problem: string | null
   diagnosis: string | null
   suggestedActions: string | null
@@ -53,8 +51,7 @@ export type CaseMaxAggregateOutputType = {
 export type CaseCountAggregateOutputType = {
   id: number
   userId: number
-  personId: number
-  category: number
+  clientId: number
   problem: number
   diagnosis: number
   suggestedActions: number
@@ -68,8 +65,7 @@ export type CaseCountAggregateOutputType = {
 export type CaseMinAggregateInputType = {
   id?: true
   userId?: true
-  personId?: true
-  category?: true
+  clientId?: true
   problem?: true
   diagnosis?: true
   suggestedActions?: true
@@ -81,8 +77,7 @@ export type CaseMinAggregateInputType = {
 export type CaseMaxAggregateInputType = {
   id?: true
   userId?: true
-  personId?: true
-  category?: true
+  clientId?: true
   problem?: true
   diagnosis?: true
   suggestedActions?: true
@@ -94,8 +89,7 @@ export type CaseMaxAggregateInputType = {
 export type CaseCountAggregateInputType = {
   id?: true
   userId?: true
-  personId?: true
-  category?: true
+  clientId?: true
   problem?: true
   diagnosis?: true
   suggestedActions?: true
@@ -180,8 +174,7 @@ export type CaseGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type CaseGroupByOutputType = {
   id: string
   userId: string
-  personId: string
-  category: $Enums.CaseCategory | null
+  clientId: string
   problem: string | null
   diagnosis: string | null
   suggestedActions: string | null
@@ -214,8 +207,7 @@ export type CaseWhereInput = {
   NOT?: Prisma.CaseWhereInput | Prisma.CaseWhereInput[]
   id?: Prisma.StringFilter<"Case"> | string
   userId?: Prisma.StringFilter<"Case"> | string
-  personId?: Prisma.StringFilter<"Case"> | string
-  category?: Prisma.EnumCaseCategoryNullableFilter<"Case"> | $Enums.CaseCategory | null
+  clientId?: Prisma.StringFilter<"Case"> | string
   problem?: Prisma.StringNullableFilter<"Case"> | string | null
   diagnosis?: Prisma.StringNullableFilter<"Case"> | string | null
   suggestedActions?: Prisma.StringNullableFilter<"Case"> | string | null
@@ -223,15 +215,14 @@ export type CaseWhereInput = {
   status?: Prisma.EnumCaseStatusFilter<"Case"> | $Enums.CaseStatus
   createdAt?: Prisma.DateTimeFilter<"Case"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
+  client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   tasks?: Prisma.TaskListRelationFilter
 }
 
 export type CaseOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
-  category?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   problem?: Prisma.SortOrderInput | Prisma.SortOrder
   diagnosis?: Prisma.SortOrderInput | Prisma.SortOrder
   suggestedActions?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -239,7 +230,7 @@ export type CaseOrderByWithRelationInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  person?: Prisma.PersonOrderByWithRelationInput
+  client?: Prisma.ClientOrderByWithRelationInput
   tasks?: Prisma.TaskOrderByRelationAggregateInput
 }
 
@@ -249,8 +240,7 @@ export type CaseWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CaseWhereInput[]
   NOT?: Prisma.CaseWhereInput | Prisma.CaseWhereInput[]
   userId?: Prisma.StringFilter<"Case"> | string
-  personId?: Prisma.StringFilter<"Case"> | string
-  category?: Prisma.EnumCaseCategoryNullableFilter<"Case"> | $Enums.CaseCategory | null
+  clientId?: Prisma.StringFilter<"Case"> | string
   problem?: Prisma.StringNullableFilter<"Case"> | string | null
   diagnosis?: Prisma.StringNullableFilter<"Case"> | string | null
   suggestedActions?: Prisma.StringNullableFilter<"Case"> | string | null
@@ -258,15 +248,14 @@ export type CaseWhereUniqueInput = Prisma.AtLeast<{
   status?: Prisma.EnumCaseStatusFilter<"Case"> | $Enums.CaseStatus
   createdAt?: Prisma.DateTimeFilter<"Case"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
+  client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   tasks?: Prisma.TaskListRelationFilter
 }, "id">
 
 export type CaseOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
-  category?: Prisma.SortOrderInput | Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   problem?: Prisma.SortOrderInput | Prisma.SortOrder
   diagnosis?: Prisma.SortOrderInput | Prisma.SortOrder
   suggestedActions?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -284,8 +273,7 @@ export type CaseScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CaseScalarWhereWithAggregatesInput | Prisma.CaseScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Case"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Case"> | string
-  personId?: Prisma.StringWithAggregatesFilter<"Case"> | string
-  category?: Prisma.EnumCaseCategoryNullableWithAggregatesFilter<"Case"> | $Enums.CaseCategory | null
+  clientId?: Prisma.StringWithAggregatesFilter<"Case"> | string
   problem?: Prisma.StringNullableWithAggregatesFilter<"Case"> | string | null
   diagnosis?: Prisma.StringNullableWithAggregatesFilter<"Case"> | string | null
   suggestedActions?: Prisma.StringNullableWithAggregatesFilter<"Case"> | string | null
@@ -296,7 +284,6 @@ export type CaseScalarWhereWithAggregatesInput = {
 
 export type CaseCreateInput = {
   id?: string
-  category?: $Enums.CaseCategory | null
   problem?: string | null
   diagnosis?: string | null
   suggestedActions?: string | null
@@ -304,15 +291,14 @@ export type CaseCreateInput = {
   status?: $Enums.CaseStatus
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCasesInput
-  person: Prisma.PersonCreateNestedOneWithoutCasesInput
+  client: Prisma.ClientCreateNestedOneWithoutCasesInput
   tasks?: Prisma.TaskCreateNestedManyWithoutCaseInput
 }
 
 export type CaseUncheckedCreateInput = {
   id?: string
   userId: string
-  personId: string
-  category?: $Enums.CaseCategory | null
+  clientId: string
   problem?: string | null
   diagnosis?: string | null
   suggestedActions?: string | null
@@ -324,7 +310,6 @@ export type CaseUncheckedCreateInput = {
 
 export type CaseUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -332,15 +317,14 @@ export type CaseUpdateInput = {
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCasesNestedInput
-  person?: Prisma.PersonUpdateOneRequiredWithoutCasesNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutCasesNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutCaseNestedInput
 }
 
 export type CaseUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -353,8 +337,7 @@ export type CaseUncheckedUpdateInput = {
 export type CaseCreateManyInput = {
   id?: string
   userId: string
-  personId: string
-  category?: $Enums.CaseCategory | null
+  clientId: string
   problem?: string | null
   diagnosis?: string | null
   suggestedActions?: string | null
@@ -365,7 +348,6 @@ export type CaseCreateManyInput = {
 
 export type CaseUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -377,8 +359,7 @@ export type CaseUpdateManyMutationInput = {
 export type CaseUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -400,8 +381,7 @@ export type CaseOrderByRelationAggregateInput = {
 export type CaseCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
-  category?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   problem?: Prisma.SortOrder
   diagnosis?: Prisma.SortOrder
   suggestedActions?: Prisma.SortOrder
@@ -413,8 +393,7 @@ export type CaseCountOrderByAggregateInput = {
 export type CaseMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
-  category?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   problem?: Prisma.SortOrder
   diagnosis?: Prisma.SortOrder
   suggestedActions?: Prisma.SortOrder
@@ -426,8 +405,7 @@ export type CaseMaxOrderByAggregateInput = {
 export type CaseMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
-  category?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   problem?: Prisma.SortOrder
   diagnosis?: Prisma.SortOrder
   suggestedActions?: Prisma.SortOrder
@@ -483,50 +461,46 @@ export type CaseUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.CaseScalarWhereInput | Prisma.CaseScalarWhereInput[]
 }
 
-export type CaseCreateNestedManyWithoutPersonInput = {
-  create?: Prisma.XOR<Prisma.CaseCreateWithoutPersonInput, Prisma.CaseUncheckedCreateWithoutPersonInput> | Prisma.CaseCreateWithoutPersonInput[] | Prisma.CaseUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutPersonInput | Prisma.CaseCreateOrConnectWithoutPersonInput[]
-  createMany?: Prisma.CaseCreateManyPersonInputEnvelope
+export type CaseCreateNestedManyWithoutClientInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutClientInput, Prisma.CaseUncheckedCreateWithoutClientInput> | Prisma.CaseCreateWithoutClientInput[] | Prisma.CaseUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutClientInput | Prisma.CaseCreateOrConnectWithoutClientInput[]
+  createMany?: Prisma.CaseCreateManyClientInputEnvelope
   connect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
 }
 
-export type CaseUncheckedCreateNestedManyWithoutPersonInput = {
-  create?: Prisma.XOR<Prisma.CaseCreateWithoutPersonInput, Prisma.CaseUncheckedCreateWithoutPersonInput> | Prisma.CaseCreateWithoutPersonInput[] | Prisma.CaseUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutPersonInput | Prisma.CaseCreateOrConnectWithoutPersonInput[]
-  createMany?: Prisma.CaseCreateManyPersonInputEnvelope
+export type CaseUncheckedCreateNestedManyWithoutClientInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutClientInput, Prisma.CaseUncheckedCreateWithoutClientInput> | Prisma.CaseCreateWithoutClientInput[] | Prisma.CaseUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutClientInput | Prisma.CaseCreateOrConnectWithoutClientInput[]
+  createMany?: Prisma.CaseCreateManyClientInputEnvelope
   connect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
 }
 
-export type CaseUpdateManyWithoutPersonNestedInput = {
-  create?: Prisma.XOR<Prisma.CaseCreateWithoutPersonInput, Prisma.CaseUncheckedCreateWithoutPersonInput> | Prisma.CaseCreateWithoutPersonInput[] | Prisma.CaseUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutPersonInput | Prisma.CaseCreateOrConnectWithoutPersonInput[]
-  upsert?: Prisma.CaseUpsertWithWhereUniqueWithoutPersonInput | Prisma.CaseUpsertWithWhereUniqueWithoutPersonInput[]
-  createMany?: Prisma.CaseCreateManyPersonInputEnvelope
+export type CaseUpdateManyWithoutClientNestedInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutClientInput, Prisma.CaseUncheckedCreateWithoutClientInput> | Prisma.CaseCreateWithoutClientInput[] | Prisma.CaseUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutClientInput | Prisma.CaseCreateOrConnectWithoutClientInput[]
+  upsert?: Prisma.CaseUpsertWithWhereUniqueWithoutClientInput | Prisma.CaseUpsertWithWhereUniqueWithoutClientInput[]
+  createMany?: Prisma.CaseCreateManyClientInputEnvelope
   set?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
   disconnect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
   delete?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
   connect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
-  update?: Prisma.CaseUpdateWithWhereUniqueWithoutPersonInput | Prisma.CaseUpdateWithWhereUniqueWithoutPersonInput[]
-  updateMany?: Prisma.CaseUpdateManyWithWhereWithoutPersonInput | Prisma.CaseUpdateManyWithWhereWithoutPersonInput[]
+  update?: Prisma.CaseUpdateWithWhereUniqueWithoutClientInput | Prisma.CaseUpdateWithWhereUniqueWithoutClientInput[]
+  updateMany?: Prisma.CaseUpdateManyWithWhereWithoutClientInput | Prisma.CaseUpdateManyWithWhereWithoutClientInput[]
   deleteMany?: Prisma.CaseScalarWhereInput | Prisma.CaseScalarWhereInput[]
 }
 
-export type CaseUncheckedUpdateManyWithoutPersonNestedInput = {
-  create?: Prisma.XOR<Prisma.CaseCreateWithoutPersonInput, Prisma.CaseUncheckedCreateWithoutPersonInput> | Prisma.CaseCreateWithoutPersonInput[] | Prisma.CaseUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutPersonInput | Prisma.CaseCreateOrConnectWithoutPersonInput[]
-  upsert?: Prisma.CaseUpsertWithWhereUniqueWithoutPersonInput | Prisma.CaseUpsertWithWhereUniqueWithoutPersonInput[]
-  createMany?: Prisma.CaseCreateManyPersonInputEnvelope
+export type CaseUncheckedUpdateManyWithoutClientNestedInput = {
+  create?: Prisma.XOR<Prisma.CaseCreateWithoutClientInput, Prisma.CaseUncheckedCreateWithoutClientInput> | Prisma.CaseCreateWithoutClientInput[] | Prisma.CaseUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.CaseCreateOrConnectWithoutClientInput | Prisma.CaseCreateOrConnectWithoutClientInput[]
+  upsert?: Prisma.CaseUpsertWithWhereUniqueWithoutClientInput | Prisma.CaseUpsertWithWhereUniqueWithoutClientInput[]
+  createMany?: Prisma.CaseCreateManyClientInputEnvelope
   set?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
   disconnect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
   delete?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
   connect?: Prisma.CaseWhereUniqueInput | Prisma.CaseWhereUniqueInput[]
-  update?: Prisma.CaseUpdateWithWhereUniqueWithoutPersonInput | Prisma.CaseUpdateWithWhereUniqueWithoutPersonInput[]
-  updateMany?: Prisma.CaseUpdateManyWithWhereWithoutPersonInput | Prisma.CaseUpdateManyWithWhereWithoutPersonInput[]
+  update?: Prisma.CaseUpdateWithWhereUniqueWithoutClientInput | Prisma.CaseUpdateWithWhereUniqueWithoutClientInput[]
+  updateMany?: Prisma.CaseUpdateManyWithWhereWithoutClientInput | Prisma.CaseUpdateManyWithWhereWithoutClientInput[]
   deleteMany?: Prisma.CaseScalarWhereInput | Prisma.CaseScalarWhereInput[]
-}
-
-export type NullableEnumCaseCategoryFieldUpdateOperationsInput = {
-  set?: $Enums.CaseCategory | null
 }
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -555,21 +529,19 @@ export type CaseUpdateOneWithoutTasksNestedInput = {
 
 export type CaseCreateWithoutUserInput = {
   id?: string
-  category?: $Enums.CaseCategory | null
   problem?: string | null
   diagnosis?: string | null
   suggestedActions?: string | null
   followUpDate?: Date | string | null
   status?: $Enums.CaseStatus
   createdAt?: Date | string
-  person: Prisma.PersonCreateNestedOneWithoutCasesInput
+  client: Prisma.ClientCreateNestedOneWithoutCasesInput
   tasks?: Prisma.TaskCreateNestedManyWithoutCaseInput
 }
 
 export type CaseUncheckedCreateWithoutUserInput = {
   id?: string
-  personId: string
-  category?: $Enums.CaseCategory | null
+  clientId: string
   problem?: string | null
   diagnosis?: string | null
   suggestedActions?: string | null
@@ -611,8 +583,7 @@ export type CaseScalarWhereInput = {
   NOT?: Prisma.CaseScalarWhereInput | Prisma.CaseScalarWhereInput[]
   id?: Prisma.StringFilter<"Case"> | string
   userId?: Prisma.StringFilter<"Case"> | string
-  personId?: Prisma.StringFilter<"Case"> | string
-  category?: Prisma.EnumCaseCategoryNullableFilter<"Case"> | $Enums.CaseCategory | null
+  clientId?: Prisma.StringFilter<"Case"> | string
   problem?: Prisma.StringNullableFilter<"Case"> | string | null
   diagnosis?: Prisma.StringNullableFilter<"Case"> | string | null
   suggestedActions?: Prisma.StringNullableFilter<"Case"> | string | null
@@ -621,9 +592,8 @@ export type CaseScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Case"> | Date | string
 }
 
-export type CaseCreateWithoutPersonInput = {
+export type CaseCreateWithoutClientInput = {
   id?: string
-  category?: $Enums.CaseCategory | null
   problem?: string | null
   diagnosis?: string | null
   suggestedActions?: string | null
@@ -634,10 +604,9 @@ export type CaseCreateWithoutPersonInput = {
   tasks?: Prisma.TaskCreateNestedManyWithoutCaseInput
 }
 
-export type CaseUncheckedCreateWithoutPersonInput = {
+export type CaseUncheckedCreateWithoutClientInput = {
   id?: string
   userId: string
-  category?: $Enums.CaseCategory | null
   problem?: string | null
   diagnosis?: string | null
   suggestedActions?: string | null
@@ -647,35 +616,34 @@ export type CaseUncheckedCreateWithoutPersonInput = {
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCaseInput
 }
 
-export type CaseCreateOrConnectWithoutPersonInput = {
+export type CaseCreateOrConnectWithoutClientInput = {
   where: Prisma.CaseWhereUniqueInput
-  create: Prisma.XOR<Prisma.CaseCreateWithoutPersonInput, Prisma.CaseUncheckedCreateWithoutPersonInput>
+  create: Prisma.XOR<Prisma.CaseCreateWithoutClientInput, Prisma.CaseUncheckedCreateWithoutClientInput>
 }
 
-export type CaseCreateManyPersonInputEnvelope = {
-  data: Prisma.CaseCreateManyPersonInput | Prisma.CaseCreateManyPersonInput[]
+export type CaseCreateManyClientInputEnvelope = {
+  data: Prisma.CaseCreateManyClientInput | Prisma.CaseCreateManyClientInput[]
   skipDuplicates?: boolean
 }
 
-export type CaseUpsertWithWhereUniqueWithoutPersonInput = {
+export type CaseUpsertWithWhereUniqueWithoutClientInput = {
   where: Prisma.CaseWhereUniqueInput
-  update: Prisma.XOR<Prisma.CaseUpdateWithoutPersonInput, Prisma.CaseUncheckedUpdateWithoutPersonInput>
-  create: Prisma.XOR<Prisma.CaseCreateWithoutPersonInput, Prisma.CaseUncheckedCreateWithoutPersonInput>
+  update: Prisma.XOR<Prisma.CaseUpdateWithoutClientInput, Prisma.CaseUncheckedUpdateWithoutClientInput>
+  create: Prisma.XOR<Prisma.CaseCreateWithoutClientInput, Prisma.CaseUncheckedCreateWithoutClientInput>
 }
 
-export type CaseUpdateWithWhereUniqueWithoutPersonInput = {
+export type CaseUpdateWithWhereUniqueWithoutClientInput = {
   where: Prisma.CaseWhereUniqueInput
-  data: Prisma.XOR<Prisma.CaseUpdateWithoutPersonInput, Prisma.CaseUncheckedUpdateWithoutPersonInput>
+  data: Prisma.XOR<Prisma.CaseUpdateWithoutClientInput, Prisma.CaseUncheckedUpdateWithoutClientInput>
 }
 
-export type CaseUpdateManyWithWhereWithoutPersonInput = {
+export type CaseUpdateManyWithWhereWithoutClientInput = {
   where: Prisma.CaseScalarWhereInput
-  data: Prisma.XOR<Prisma.CaseUpdateManyMutationInput, Prisma.CaseUncheckedUpdateManyWithoutPersonInput>
+  data: Prisma.XOR<Prisma.CaseUpdateManyMutationInput, Prisma.CaseUncheckedUpdateManyWithoutClientInput>
 }
 
 export type CaseCreateWithoutTasksInput = {
   id?: string
-  category?: $Enums.CaseCategory | null
   problem?: string | null
   diagnosis?: string | null
   suggestedActions?: string | null
@@ -683,14 +651,13 @@ export type CaseCreateWithoutTasksInput = {
   status?: $Enums.CaseStatus
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCasesInput
-  person: Prisma.PersonCreateNestedOneWithoutCasesInput
+  client: Prisma.ClientCreateNestedOneWithoutCasesInput
 }
 
 export type CaseUncheckedCreateWithoutTasksInput = {
   id?: string
   userId: string
-  personId: string
-  category?: $Enums.CaseCategory | null
+  clientId: string
   problem?: string | null
   diagnosis?: string | null
   suggestedActions?: string | null
@@ -717,7 +684,6 @@ export type CaseUpdateToOneWithWhereWithoutTasksInput = {
 
 export type CaseUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -725,14 +691,13 @@ export type CaseUpdateWithoutTasksInput = {
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCasesNestedInput
-  person?: Prisma.PersonUpdateOneRequiredWithoutCasesNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutCasesNestedInput
 }
 
 export type CaseUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -743,8 +708,7 @@ export type CaseUncheckedUpdateWithoutTasksInput = {
 
 export type CaseCreateManyUserInput = {
   id?: string
-  personId: string
-  category?: $Enums.CaseCategory | null
+  clientId: string
   problem?: string | null
   diagnosis?: string | null
   suggestedActions?: string | null
@@ -755,21 +719,19 @@ export type CaseCreateManyUserInput = {
 
 export type CaseUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   followUpDate?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   status?: Prisma.EnumCaseStatusFieldUpdateOperationsInput | $Enums.CaseStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  person?: Prisma.PersonUpdateOneRequiredWithoutCasesNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutCasesNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutCaseNestedInput
 }
 
 export type CaseUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -781,8 +743,7 @@ export type CaseUncheckedUpdateWithoutUserInput = {
 
 export type CaseUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -791,10 +752,9 @@ export type CaseUncheckedUpdateManyWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type CaseCreateManyPersonInput = {
+export type CaseCreateManyClientInput = {
   id?: string
   userId: string
-  category?: $Enums.CaseCategory | null
   problem?: string | null
   diagnosis?: string | null
   suggestedActions?: string | null
@@ -803,9 +763,8 @@ export type CaseCreateManyPersonInput = {
   createdAt?: Date | string
 }
 
-export type CaseUpdateWithoutPersonInput = {
+export type CaseUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -816,10 +775,9 @@ export type CaseUpdateWithoutPersonInput = {
   tasks?: Prisma.TaskUpdateManyWithoutCaseNestedInput
 }
 
-export type CaseUncheckedUpdateWithoutPersonInput = {
+export type CaseUncheckedUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -829,10 +787,9 @@ export type CaseUncheckedUpdateWithoutPersonInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCaseNestedInput
 }
 
-export type CaseUncheckedUpdateManyWithoutPersonInput = {
+export type CaseUncheckedUpdateManyWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  category?: Prisma.NullableEnumCaseCategoryFieldUpdateOperationsInput | $Enums.CaseCategory | null
   problem?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   diagnosis?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   suggestedActions?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -875,8 +832,7 @@ export type CaseCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Exte
 export type CaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  personId?: boolean
-  category?: boolean
+  clientId?: boolean
   problem?: boolean
   diagnosis?: boolean
   suggestedActions?: boolean
@@ -884,7 +840,7 @@ export type CaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   status?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   tasks?: boolean | Prisma.Case$tasksArgs<ExtArgs>
   _count?: boolean | Prisma.CaseCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case"]>
@@ -892,8 +848,7 @@ export type CaseSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type CaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  personId?: boolean
-  category?: boolean
+  clientId?: boolean
   problem?: boolean
   diagnosis?: boolean
   suggestedActions?: boolean
@@ -901,14 +856,13 @@ export type CaseSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case"]>
 
 export type CaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  personId?: boolean
-  category?: boolean
+  clientId?: boolean
   problem?: boolean
   diagnosis?: boolean
   suggestedActions?: boolean
@@ -916,14 +870,13 @@ export type CaseSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   status?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["case"]>
 
 export type CaseSelectScalar = {
   id?: boolean
   userId?: boolean
-  personId?: boolean
-  category?: boolean
+  clientId?: boolean
   problem?: boolean
   diagnosis?: boolean
   suggestedActions?: boolean
@@ -932,34 +885,33 @@ export type CaseSelectScalar = {
   createdAt?: boolean
 }
 
-export type CaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "personId" | "category" | "problem" | "diagnosis" | "suggestedActions" | "followUpDate" | "status" | "createdAt", ExtArgs["result"]["case"]>
+export type CaseOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "clientId" | "problem" | "diagnosis" | "suggestedActions" | "followUpDate" | "status" | "createdAt", ExtArgs["result"]["case"]>
 export type CaseInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   tasks?: boolean | Prisma.Case$tasksArgs<ExtArgs>
   _count?: boolean | Prisma.CaseCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CaseIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
 }
 export type CaseIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
 }
 
 export type $CasePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Case"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    person: Prisma.$PersonPayload<ExtArgs>
+    client: Prisma.$ClientPayload<ExtArgs>
     tasks: Prisma.$TaskPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
-    personId: string
-    category: $Enums.CaseCategory | null
+    clientId: string
     problem: string | null
     diagnosis: string | null
     suggestedActions: string | null
@@ -1361,7 +1313,7 @@ readonly fields: CaseFieldRefs;
 export interface Prisma__CaseClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  person<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tasks<T extends Prisma.Case$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Case$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1394,8 +1346,7 @@ export interface Prisma__CaseClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface CaseFieldRefs {
   readonly id: Prisma.FieldRef<"Case", 'String'>
   readonly userId: Prisma.FieldRef<"Case", 'String'>
-  readonly personId: Prisma.FieldRef<"Case", 'String'>
-  readonly category: Prisma.FieldRef<"Case", 'CaseCategory'>
+  readonly clientId: Prisma.FieldRef<"Case", 'String'>
   readonly problem: Prisma.FieldRef<"Case", 'String'>
   readonly diagnosis: Prisma.FieldRef<"Case", 'String'>
   readonly suggestedActions: Prisma.FieldRef<"Case", 'String'>

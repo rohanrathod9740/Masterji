@@ -27,7 +27,7 @@ export type AggregateCommitment = {
 export type CommitmentMinAggregateOutputType = {
   id: string | null
   userId: string | null
-  personId: string | null
+  clientId: string | null
   interactionId: string | null
   title: string | null
   dueDate: Date | null
@@ -38,7 +38,7 @@ export type CommitmentMinAggregateOutputType = {
 export type CommitmentMaxAggregateOutputType = {
   id: string | null
   userId: string | null
-  personId: string | null
+  clientId: string | null
   interactionId: string | null
   title: string | null
   dueDate: Date | null
@@ -49,7 +49,7 @@ export type CommitmentMaxAggregateOutputType = {
 export type CommitmentCountAggregateOutputType = {
   id: number
   userId: number
-  personId: number
+  clientId: number
   interactionId: number
   title: number
   dueDate: number
@@ -62,7 +62,7 @@ export type CommitmentCountAggregateOutputType = {
 export type CommitmentMinAggregateInputType = {
   id?: true
   userId?: true
-  personId?: true
+  clientId?: true
   interactionId?: true
   title?: true
   dueDate?: true
@@ -73,7 +73,7 @@ export type CommitmentMinAggregateInputType = {
 export type CommitmentMaxAggregateInputType = {
   id?: true
   userId?: true
-  personId?: true
+  clientId?: true
   interactionId?: true
   title?: true
   dueDate?: true
@@ -84,7 +84,7 @@ export type CommitmentMaxAggregateInputType = {
 export type CommitmentCountAggregateInputType = {
   id?: true
   userId?: true
-  personId?: true
+  clientId?: true
   interactionId?: true
   title?: true
   dueDate?: true
@@ -168,7 +168,7 @@ export type CommitmentGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
 export type CommitmentGroupByOutputType = {
   id: string
   userId: string
-  personId: string
+  clientId: string
   interactionId: string | null
   title: string
   dueDate: Date
@@ -200,28 +200,28 @@ export type CommitmentWhereInput = {
   NOT?: Prisma.CommitmentWhereInput | Prisma.CommitmentWhereInput[]
   id?: Prisma.StringFilter<"Commitment"> | string
   userId?: Prisma.StringFilter<"Commitment"> | string
-  personId?: Prisma.StringFilter<"Commitment"> | string
+  clientId?: Prisma.StringFilter<"Commitment"> | string
   interactionId?: Prisma.StringNullableFilter<"Commitment"> | string | null
   title?: Prisma.StringFilter<"Commitment"> | string
   dueDate?: Prisma.DateTimeFilter<"Commitment"> | Date | string
   status?: Prisma.EnumCommitmentStatusFilter<"Commitment"> | $Enums.CommitmentStatus
   createdAt?: Prisma.DateTimeFilter<"Commitment"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
+  client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   interaction?: Prisma.XOR<Prisma.InteractionNullableScalarRelationFilter, Prisma.InteractionWhereInput> | null
 }
 
 export type CommitmentOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   interactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  person?: Prisma.PersonOrderByWithRelationInput
+  client?: Prisma.ClientOrderByWithRelationInput
   interaction?: Prisma.InteractionOrderByWithRelationInput
 }
 
@@ -231,21 +231,21 @@ export type CommitmentWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.CommitmentWhereInput[]
   NOT?: Prisma.CommitmentWhereInput | Prisma.CommitmentWhereInput[]
   userId?: Prisma.StringFilter<"Commitment"> | string
-  personId?: Prisma.StringFilter<"Commitment"> | string
+  clientId?: Prisma.StringFilter<"Commitment"> | string
   interactionId?: Prisma.StringNullableFilter<"Commitment"> | string | null
   title?: Prisma.StringFilter<"Commitment"> | string
   dueDate?: Prisma.DateTimeFilter<"Commitment"> | Date | string
   status?: Prisma.EnumCommitmentStatusFilter<"Commitment"> | $Enums.CommitmentStatus
   createdAt?: Prisma.DateTimeFilter<"Commitment"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  person?: Prisma.XOR<Prisma.PersonScalarRelationFilter, Prisma.PersonWhereInput>
+  client?: Prisma.XOR<Prisma.ClientScalarRelationFilter, Prisma.ClientWhereInput>
   interaction?: Prisma.XOR<Prisma.InteractionNullableScalarRelationFilter, Prisma.InteractionWhereInput> | null
 }, "id">
 
 export type CommitmentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   interactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -262,7 +262,7 @@ export type CommitmentScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CommitmentScalarWhereWithAggregatesInput | Prisma.CommitmentScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Commitment"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Commitment"> | string
-  personId?: Prisma.StringWithAggregatesFilter<"Commitment"> | string
+  clientId?: Prisma.StringWithAggregatesFilter<"Commitment"> | string
   interactionId?: Prisma.StringNullableWithAggregatesFilter<"Commitment"> | string | null
   title?: Prisma.StringWithAggregatesFilter<"Commitment"> | string
   dueDate?: Prisma.DateTimeWithAggregatesFilter<"Commitment"> | Date | string
@@ -277,14 +277,14 @@ export type CommitmentCreateInput = {
   status?: $Enums.CommitmentStatus
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCommitmentsInput
-  person: Prisma.PersonCreateNestedOneWithoutCommitmentsInput
+  client: Prisma.ClientCreateNestedOneWithoutCommitmentsInput
   interaction?: Prisma.InteractionCreateNestedOneWithoutCommitmentsInput
 }
 
 export type CommitmentUncheckedCreateInput = {
   id?: string
   userId: string
-  personId: string
+  clientId: string
   interactionId?: string | null
   title: string
   dueDate: Date | string
@@ -299,14 +299,14 @@ export type CommitmentUpdateInput = {
   status?: Prisma.EnumCommitmentStatusFieldUpdateOperationsInput | $Enums.CommitmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCommitmentsNestedInput
-  person?: Prisma.PersonUpdateOneRequiredWithoutCommitmentsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutCommitmentsNestedInput
   interaction?: Prisma.InteractionUpdateOneWithoutCommitmentsNestedInput
 }
 
 export type CommitmentUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -317,7 +317,7 @@ export type CommitmentUncheckedUpdateInput = {
 export type CommitmentCreateManyInput = {
   id?: string
   userId: string
-  personId: string
+  clientId: string
   interactionId?: string | null
   title: string
   dueDate: Date | string
@@ -336,7 +336,7 @@ export type CommitmentUpdateManyMutationInput = {
 export type CommitmentUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -357,7 +357,7 @@ export type CommitmentOrderByRelationAggregateInput = {
 export type CommitmentCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   interactionId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -368,7 +368,7 @@ export type CommitmentCountOrderByAggregateInput = {
 export type CommitmentMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   interactionId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -379,7 +379,7 @@ export type CommitmentMaxOrderByAggregateInput = {
 export type CommitmentMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  personId?: Prisma.SortOrder
+  clientId?: Prisma.SortOrder
   interactionId?: Prisma.SortOrder
   title?: Prisma.SortOrder
   dueDate?: Prisma.SortOrder
@@ -429,45 +429,45 @@ export type CommitmentUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.CommitmentScalarWhereInput | Prisma.CommitmentScalarWhereInput[]
 }
 
-export type CommitmentCreateNestedManyWithoutPersonInput = {
-  create?: Prisma.XOR<Prisma.CommitmentCreateWithoutPersonInput, Prisma.CommitmentUncheckedCreateWithoutPersonInput> | Prisma.CommitmentCreateWithoutPersonInput[] | Prisma.CommitmentUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.CommitmentCreateOrConnectWithoutPersonInput | Prisma.CommitmentCreateOrConnectWithoutPersonInput[]
-  createMany?: Prisma.CommitmentCreateManyPersonInputEnvelope
+export type CommitmentCreateNestedManyWithoutClientInput = {
+  create?: Prisma.XOR<Prisma.CommitmentCreateWithoutClientInput, Prisma.CommitmentUncheckedCreateWithoutClientInput> | Prisma.CommitmentCreateWithoutClientInput[] | Prisma.CommitmentUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.CommitmentCreateOrConnectWithoutClientInput | Prisma.CommitmentCreateOrConnectWithoutClientInput[]
+  createMany?: Prisma.CommitmentCreateManyClientInputEnvelope
   connect?: Prisma.CommitmentWhereUniqueInput | Prisma.CommitmentWhereUniqueInput[]
 }
 
-export type CommitmentUncheckedCreateNestedManyWithoutPersonInput = {
-  create?: Prisma.XOR<Prisma.CommitmentCreateWithoutPersonInput, Prisma.CommitmentUncheckedCreateWithoutPersonInput> | Prisma.CommitmentCreateWithoutPersonInput[] | Prisma.CommitmentUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.CommitmentCreateOrConnectWithoutPersonInput | Prisma.CommitmentCreateOrConnectWithoutPersonInput[]
-  createMany?: Prisma.CommitmentCreateManyPersonInputEnvelope
+export type CommitmentUncheckedCreateNestedManyWithoutClientInput = {
+  create?: Prisma.XOR<Prisma.CommitmentCreateWithoutClientInput, Prisma.CommitmentUncheckedCreateWithoutClientInput> | Prisma.CommitmentCreateWithoutClientInput[] | Prisma.CommitmentUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.CommitmentCreateOrConnectWithoutClientInput | Prisma.CommitmentCreateOrConnectWithoutClientInput[]
+  createMany?: Prisma.CommitmentCreateManyClientInputEnvelope
   connect?: Prisma.CommitmentWhereUniqueInput | Prisma.CommitmentWhereUniqueInput[]
 }
 
-export type CommitmentUpdateManyWithoutPersonNestedInput = {
-  create?: Prisma.XOR<Prisma.CommitmentCreateWithoutPersonInput, Prisma.CommitmentUncheckedCreateWithoutPersonInput> | Prisma.CommitmentCreateWithoutPersonInput[] | Prisma.CommitmentUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.CommitmentCreateOrConnectWithoutPersonInput | Prisma.CommitmentCreateOrConnectWithoutPersonInput[]
-  upsert?: Prisma.CommitmentUpsertWithWhereUniqueWithoutPersonInput | Prisma.CommitmentUpsertWithWhereUniqueWithoutPersonInput[]
-  createMany?: Prisma.CommitmentCreateManyPersonInputEnvelope
+export type CommitmentUpdateManyWithoutClientNestedInput = {
+  create?: Prisma.XOR<Prisma.CommitmentCreateWithoutClientInput, Prisma.CommitmentUncheckedCreateWithoutClientInput> | Prisma.CommitmentCreateWithoutClientInput[] | Prisma.CommitmentUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.CommitmentCreateOrConnectWithoutClientInput | Prisma.CommitmentCreateOrConnectWithoutClientInput[]
+  upsert?: Prisma.CommitmentUpsertWithWhereUniqueWithoutClientInput | Prisma.CommitmentUpsertWithWhereUniqueWithoutClientInput[]
+  createMany?: Prisma.CommitmentCreateManyClientInputEnvelope
   set?: Prisma.CommitmentWhereUniqueInput | Prisma.CommitmentWhereUniqueInput[]
   disconnect?: Prisma.CommitmentWhereUniqueInput | Prisma.CommitmentWhereUniqueInput[]
   delete?: Prisma.CommitmentWhereUniqueInput | Prisma.CommitmentWhereUniqueInput[]
   connect?: Prisma.CommitmentWhereUniqueInput | Prisma.CommitmentWhereUniqueInput[]
-  update?: Prisma.CommitmentUpdateWithWhereUniqueWithoutPersonInput | Prisma.CommitmentUpdateWithWhereUniqueWithoutPersonInput[]
-  updateMany?: Prisma.CommitmentUpdateManyWithWhereWithoutPersonInput | Prisma.CommitmentUpdateManyWithWhereWithoutPersonInput[]
+  update?: Prisma.CommitmentUpdateWithWhereUniqueWithoutClientInput | Prisma.CommitmentUpdateWithWhereUniqueWithoutClientInput[]
+  updateMany?: Prisma.CommitmentUpdateManyWithWhereWithoutClientInput | Prisma.CommitmentUpdateManyWithWhereWithoutClientInput[]
   deleteMany?: Prisma.CommitmentScalarWhereInput | Prisma.CommitmentScalarWhereInput[]
 }
 
-export type CommitmentUncheckedUpdateManyWithoutPersonNestedInput = {
-  create?: Prisma.XOR<Prisma.CommitmentCreateWithoutPersonInput, Prisma.CommitmentUncheckedCreateWithoutPersonInput> | Prisma.CommitmentCreateWithoutPersonInput[] | Prisma.CommitmentUncheckedCreateWithoutPersonInput[]
-  connectOrCreate?: Prisma.CommitmentCreateOrConnectWithoutPersonInput | Prisma.CommitmentCreateOrConnectWithoutPersonInput[]
-  upsert?: Prisma.CommitmentUpsertWithWhereUniqueWithoutPersonInput | Prisma.CommitmentUpsertWithWhereUniqueWithoutPersonInput[]
-  createMany?: Prisma.CommitmentCreateManyPersonInputEnvelope
+export type CommitmentUncheckedUpdateManyWithoutClientNestedInput = {
+  create?: Prisma.XOR<Prisma.CommitmentCreateWithoutClientInput, Prisma.CommitmentUncheckedCreateWithoutClientInput> | Prisma.CommitmentCreateWithoutClientInput[] | Prisma.CommitmentUncheckedCreateWithoutClientInput[]
+  connectOrCreate?: Prisma.CommitmentCreateOrConnectWithoutClientInput | Prisma.CommitmentCreateOrConnectWithoutClientInput[]
+  upsert?: Prisma.CommitmentUpsertWithWhereUniqueWithoutClientInput | Prisma.CommitmentUpsertWithWhereUniqueWithoutClientInput[]
+  createMany?: Prisma.CommitmentCreateManyClientInputEnvelope
   set?: Prisma.CommitmentWhereUniqueInput | Prisma.CommitmentWhereUniqueInput[]
   disconnect?: Prisma.CommitmentWhereUniqueInput | Prisma.CommitmentWhereUniqueInput[]
   delete?: Prisma.CommitmentWhereUniqueInput | Prisma.CommitmentWhereUniqueInput[]
   connect?: Prisma.CommitmentWhereUniqueInput | Prisma.CommitmentWhereUniqueInput[]
-  update?: Prisma.CommitmentUpdateWithWhereUniqueWithoutPersonInput | Prisma.CommitmentUpdateWithWhereUniqueWithoutPersonInput[]
-  updateMany?: Prisma.CommitmentUpdateManyWithWhereWithoutPersonInput | Prisma.CommitmentUpdateManyWithWhereWithoutPersonInput[]
+  update?: Prisma.CommitmentUpdateWithWhereUniqueWithoutClientInput | Prisma.CommitmentUpdateWithWhereUniqueWithoutClientInput[]
+  updateMany?: Prisma.CommitmentUpdateManyWithWhereWithoutClientInput | Prisma.CommitmentUpdateManyWithWhereWithoutClientInput[]
   deleteMany?: Prisma.CommitmentScalarWhereInput | Prisma.CommitmentScalarWhereInput[]
 }
 
@@ -523,13 +523,13 @@ export type CommitmentCreateWithoutUserInput = {
   dueDate: Date | string
   status?: $Enums.CommitmentStatus
   createdAt?: Date | string
-  person: Prisma.PersonCreateNestedOneWithoutCommitmentsInput
+  client: Prisma.ClientCreateNestedOneWithoutCommitmentsInput
   interaction?: Prisma.InteractionCreateNestedOneWithoutCommitmentsInput
 }
 
 export type CommitmentUncheckedCreateWithoutUserInput = {
   id?: string
-  personId: string
+  clientId: string
   interactionId?: string | null
   title: string
   dueDate: Date | string
@@ -569,7 +569,7 @@ export type CommitmentScalarWhereInput = {
   NOT?: Prisma.CommitmentScalarWhereInput | Prisma.CommitmentScalarWhereInput[]
   id?: Prisma.StringFilter<"Commitment"> | string
   userId?: Prisma.StringFilter<"Commitment"> | string
-  personId?: Prisma.StringFilter<"Commitment"> | string
+  clientId?: Prisma.StringFilter<"Commitment"> | string
   interactionId?: Prisma.StringNullableFilter<"Commitment"> | string | null
   title?: Prisma.StringFilter<"Commitment"> | string
   dueDate?: Prisma.DateTimeFilter<"Commitment"> | Date | string
@@ -577,7 +577,7 @@ export type CommitmentScalarWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Commitment"> | Date | string
 }
 
-export type CommitmentCreateWithoutPersonInput = {
+export type CommitmentCreateWithoutClientInput = {
   id?: string
   title: string
   dueDate: Date | string
@@ -587,7 +587,7 @@ export type CommitmentCreateWithoutPersonInput = {
   interaction?: Prisma.InteractionCreateNestedOneWithoutCommitmentsInput
 }
 
-export type CommitmentUncheckedCreateWithoutPersonInput = {
+export type CommitmentUncheckedCreateWithoutClientInput = {
   id?: string
   userId: string
   interactionId?: string | null
@@ -597,30 +597,30 @@ export type CommitmentUncheckedCreateWithoutPersonInput = {
   createdAt?: Date | string
 }
 
-export type CommitmentCreateOrConnectWithoutPersonInput = {
+export type CommitmentCreateOrConnectWithoutClientInput = {
   where: Prisma.CommitmentWhereUniqueInput
-  create: Prisma.XOR<Prisma.CommitmentCreateWithoutPersonInput, Prisma.CommitmentUncheckedCreateWithoutPersonInput>
+  create: Prisma.XOR<Prisma.CommitmentCreateWithoutClientInput, Prisma.CommitmentUncheckedCreateWithoutClientInput>
 }
 
-export type CommitmentCreateManyPersonInputEnvelope = {
-  data: Prisma.CommitmentCreateManyPersonInput | Prisma.CommitmentCreateManyPersonInput[]
+export type CommitmentCreateManyClientInputEnvelope = {
+  data: Prisma.CommitmentCreateManyClientInput | Prisma.CommitmentCreateManyClientInput[]
   skipDuplicates?: boolean
 }
 
-export type CommitmentUpsertWithWhereUniqueWithoutPersonInput = {
+export type CommitmentUpsertWithWhereUniqueWithoutClientInput = {
   where: Prisma.CommitmentWhereUniqueInput
-  update: Prisma.XOR<Prisma.CommitmentUpdateWithoutPersonInput, Prisma.CommitmentUncheckedUpdateWithoutPersonInput>
-  create: Prisma.XOR<Prisma.CommitmentCreateWithoutPersonInput, Prisma.CommitmentUncheckedCreateWithoutPersonInput>
+  update: Prisma.XOR<Prisma.CommitmentUpdateWithoutClientInput, Prisma.CommitmentUncheckedUpdateWithoutClientInput>
+  create: Prisma.XOR<Prisma.CommitmentCreateWithoutClientInput, Prisma.CommitmentUncheckedCreateWithoutClientInput>
 }
 
-export type CommitmentUpdateWithWhereUniqueWithoutPersonInput = {
+export type CommitmentUpdateWithWhereUniqueWithoutClientInput = {
   where: Prisma.CommitmentWhereUniqueInput
-  data: Prisma.XOR<Prisma.CommitmentUpdateWithoutPersonInput, Prisma.CommitmentUncheckedUpdateWithoutPersonInput>
+  data: Prisma.XOR<Prisma.CommitmentUpdateWithoutClientInput, Prisma.CommitmentUncheckedUpdateWithoutClientInput>
 }
 
-export type CommitmentUpdateManyWithWhereWithoutPersonInput = {
+export type CommitmentUpdateManyWithWhereWithoutClientInput = {
   where: Prisma.CommitmentScalarWhereInput
-  data: Prisma.XOR<Prisma.CommitmentUpdateManyMutationInput, Prisma.CommitmentUncheckedUpdateManyWithoutPersonInput>
+  data: Prisma.XOR<Prisma.CommitmentUpdateManyMutationInput, Prisma.CommitmentUncheckedUpdateManyWithoutClientInput>
 }
 
 export type CommitmentCreateWithoutInteractionInput = {
@@ -630,13 +630,13 @@ export type CommitmentCreateWithoutInteractionInput = {
   status?: $Enums.CommitmentStatus
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutCommitmentsInput
-  person: Prisma.PersonCreateNestedOneWithoutCommitmentsInput
+  client: Prisma.ClientCreateNestedOneWithoutCommitmentsInput
 }
 
 export type CommitmentUncheckedCreateWithoutInteractionInput = {
   id?: string
   userId: string
-  personId: string
+  clientId: string
   title: string
   dueDate: Date | string
   status?: $Enums.CommitmentStatus
@@ -671,7 +671,7 @@ export type CommitmentUpdateManyWithWhereWithoutInteractionInput = {
 
 export type CommitmentCreateManyUserInput = {
   id?: string
-  personId: string
+  clientId: string
   interactionId?: string | null
   title: string
   dueDate: Date | string
@@ -685,13 +685,13 @@ export type CommitmentUpdateWithoutUserInput = {
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCommitmentStatusFieldUpdateOperationsInput | $Enums.CommitmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  person?: Prisma.PersonUpdateOneRequiredWithoutCommitmentsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutCommitmentsNestedInput
   interaction?: Prisma.InteractionUpdateOneWithoutCommitmentsNestedInput
 }
 
 export type CommitmentUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -701,7 +701,7 @@ export type CommitmentUncheckedUpdateWithoutUserInput = {
 
 export type CommitmentUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -709,7 +709,7 @@ export type CommitmentUncheckedUpdateManyWithoutUserInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type CommitmentCreateManyPersonInput = {
+export type CommitmentCreateManyClientInput = {
   id?: string
   userId: string
   interactionId?: string | null
@@ -719,7 +719,7 @@ export type CommitmentCreateManyPersonInput = {
   createdAt?: Date | string
 }
 
-export type CommitmentUpdateWithoutPersonInput = {
+export type CommitmentUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -729,7 +729,7 @@ export type CommitmentUpdateWithoutPersonInput = {
   interaction?: Prisma.InteractionUpdateOneWithoutCommitmentsNestedInput
 }
 
-export type CommitmentUncheckedUpdateWithoutPersonInput = {
+export type CommitmentUncheckedUpdateWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -739,7 +739,7 @@ export type CommitmentUncheckedUpdateWithoutPersonInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type CommitmentUncheckedUpdateManyWithoutPersonInput = {
+export type CommitmentUncheckedUpdateManyWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -752,7 +752,7 @@ export type CommitmentUncheckedUpdateManyWithoutPersonInput = {
 export type CommitmentCreateManyInteractionInput = {
   id?: string
   userId: string
-  personId: string
+  clientId: string
   title: string
   dueDate: Date | string
   status?: $Enums.CommitmentStatus
@@ -766,13 +766,13 @@ export type CommitmentUpdateWithoutInteractionInput = {
   status?: Prisma.EnumCommitmentStatusFieldUpdateOperationsInput | $Enums.CommitmentStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutCommitmentsNestedInput
-  person?: Prisma.PersonUpdateOneRequiredWithoutCommitmentsNestedInput
+  client?: Prisma.ClientUpdateOneRequiredWithoutCommitmentsNestedInput
 }
 
 export type CommitmentUncheckedUpdateWithoutInteractionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCommitmentStatusFieldUpdateOperationsInput | $Enums.CommitmentStatus
@@ -782,7 +782,7 @@ export type CommitmentUncheckedUpdateWithoutInteractionInput = {
 export type CommitmentUncheckedUpdateManyWithoutInteractionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  personId?: Prisma.StringFieldUpdateOperationsInput | string
+  clientId?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   status?: Prisma.EnumCommitmentStatusFieldUpdateOperationsInput | $Enums.CommitmentStatus
@@ -794,49 +794,49 @@ export type CommitmentUncheckedUpdateManyWithoutInteractionInput = {
 export type CommitmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  personId?: boolean
+  clientId?: boolean
   interactionId?: boolean
   title?: boolean
   dueDate?: boolean
   status?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   interaction?: boolean | Prisma.Commitment$interactionArgs<ExtArgs>
 }, ExtArgs["result"]["commitment"]>
 
 export type CommitmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  personId?: boolean
+  clientId?: boolean
   interactionId?: boolean
   title?: boolean
   dueDate?: boolean
   status?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   interaction?: boolean | Prisma.Commitment$interactionArgs<ExtArgs>
 }, ExtArgs["result"]["commitment"]>
 
 export type CommitmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  personId?: boolean
+  clientId?: boolean
   interactionId?: boolean
   title?: boolean
   dueDate?: boolean
   status?: boolean
   createdAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   interaction?: boolean | Prisma.Commitment$interactionArgs<ExtArgs>
 }, ExtArgs["result"]["commitment"]>
 
 export type CommitmentSelectScalar = {
   id?: boolean
   userId?: boolean
-  personId?: boolean
+  clientId?: boolean
   interactionId?: boolean
   title?: boolean
   dueDate?: boolean
@@ -844,20 +844,20 @@ export type CommitmentSelectScalar = {
   createdAt?: boolean
 }
 
-export type CommitmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "personId" | "interactionId" | "title" | "dueDate" | "status" | "createdAt", ExtArgs["result"]["commitment"]>
+export type CommitmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "clientId" | "interactionId" | "title" | "dueDate" | "status" | "createdAt", ExtArgs["result"]["commitment"]>
 export type CommitmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   interaction?: boolean | Prisma.Commitment$interactionArgs<ExtArgs>
 }
 export type CommitmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   interaction?: boolean | Prisma.Commitment$interactionArgs<ExtArgs>
 }
 export type CommitmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  person?: boolean | Prisma.PersonDefaultArgs<ExtArgs>
+  client?: boolean | Prisma.ClientDefaultArgs<ExtArgs>
   interaction?: boolean | Prisma.Commitment$interactionArgs<ExtArgs>
 }
 
@@ -865,13 +865,13 @@ export type $CommitmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "Commitment"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    person: Prisma.$PersonPayload<ExtArgs>
+    client: Prisma.$ClientPayload<ExtArgs>
     interaction: Prisma.$InteractionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
-    personId: string
+    clientId: string
     interactionId: string | null
     title: string
     dueDate: Date
@@ -1272,7 +1272,7 @@ readonly fields: CommitmentFieldRefs;
 export interface Prisma__CommitmentClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  person<T extends Prisma.PersonDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PersonDefaultArgs<ExtArgs>>): Prisma.Prisma__PersonClient<runtime.Types.Result.GetResult<Prisma.$PersonPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  client<T extends Prisma.ClientDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClientDefaultArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   interaction<T extends Prisma.Commitment$interactionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Commitment$interactionArgs<ExtArgs>>): Prisma.Prisma__InteractionClient<runtime.Types.Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1305,7 +1305,7 @@ export interface Prisma__CommitmentClient<T, Null = never, ExtArgs extends runti
 export interface CommitmentFieldRefs {
   readonly id: Prisma.FieldRef<"Commitment", 'String'>
   readonly userId: Prisma.FieldRef<"Commitment", 'String'>
-  readonly personId: Prisma.FieldRef<"Commitment", 'String'>
+  readonly clientId: Prisma.FieldRef<"Commitment", 'String'>
   readonly interactionId: Prisma.FieldRef<"Commitment", 'String'>
   readonly title: Prisma.FieldRef<"Commitment", 'String'>
   readonly dueDate: Prisma.FieldRef<"Commitment", 'DateTime'>
