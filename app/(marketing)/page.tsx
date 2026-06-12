@@ -1,11 +1,11 @@
 import React from 'react'
-import { HeroHeader } from '@/components/landing-page/header'
-import HeroSection from '@/components/landing-page/hero-section-one'
-import HowItWorks from '@/components/landing-page/how-it-works'
-import FeaturesSection from '@/components/landing-page/features-three'
-import FAQs from '@/components/landing-page/faqs-section-one'
-import FooterSection from '@/components/landing-page/footer-one'
-import LenisProvider from '@/components/landing-page/lenis-provider'
+import { HeroHeader } from '@/components/marketing/header'
+import HeroSection from '@/components/marketing/hero-section-one'
+import HowItWorks from '@/components/marketing/how-it-works'
+import FeaturesSection from '@/components/marketing/features-three'
+import FAQs from '@/components/marketing/faqs-section-one'
+import FooterSection from '@/components/marketing/footer-one'
+import LenisProvider from '@/components/marketing/lenis-provider'
 
 export const metadata = {
     title: 'Masterji — B2B Client Management Platform',

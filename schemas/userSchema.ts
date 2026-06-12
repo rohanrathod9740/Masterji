@@ -1,21 +1,40 @@
 import { z } from "zod";
 
 export const createUserSchema = z.object({
-  userName: z
+  name: z
     .string()
     .min(2, "Name must be at least 2 characters")
     .max(100, "Name must be at most 100 characters")
     .trim(),
-  userEmail: z
+  email: z
     .string()
     .email("Invalid email address")
     .toLowerCase()
     .trim(),
-  userPhone: z
+  phone: z
     .string()
     .regex(/^[\d\s\-\+\(\)]{10,}$/, "Invalid phone number format")
     .trim(),
-  userPassword: z
+  dob: z
+    .string()
+    .refine(
+      (date) => !isNaN(Date.parse(date)),
+      "Date of birth must be a valid date"
+    ),
+  type: z
+    .enum(["it", "healthcare", "realestate", "legal", "other"])
+    .default("it"),
+  nameOfConsultancy: z
+    .string()
+    .min(2, "Consultancy name must be at least 2 characters")
+    .max(200, "Consultancy name must be at most 200 characters")
+    .trim(),
+  address: z
+    .string()
+    .min(5, "Address must be at least 5 characters")
+    .max(500, "Address must be at most 500 characters")
+    .trim(),
+  password: z
     .string()
     .min(8, "Password must be at least 8 characters")
     .max(128, "Password must be at most 128 characters")
@@ -30,14 +49,14 @@ export const createUserSchema = z.object({
 
 export const loginSchema = z
   .object({
-    userEmail: z
+    email: z
       .string()
       .email("Invalid email address")
       .toLowerCase()
       .trim()
       .optional(),
 
-    userPhone: z
+    phone: z
       .string()
       .regex(
         /^[\d\s\-\+\(\)]{10,}$/,
@@ -51,21 +70,21 @@ export const loginSchema = z
       .min(1, "Password is required"),
   })
   .refine(
-    (data) => data.userEmail || data.userPhone,
+    (data) => data.email || data.phone,
     {
       message: "Email or phone is required",
-      path: ["userEmail"],
+      path: ["email"],
     }
   );
 
 export const updateUserSchema = z.object({
-  userName: z
+  name: z
     .string()
     .min(2, "Name must be at least 2 characters")
     .max(100, "Name must be at most 100 characters")
     .trim()
     .optional(),
-  userPhone: z
+  phone: z
     .string()
     .regex(/^[\d\s\-\+\(\)]{10,}$/, "Invalid phone number format")
     .trim()

@@ -27,8 +27,12 @@ export type AggregateUser = {
 export type UserMinAggregateOutputType = {
   id: string | null
   name: string | null
+  dob: Date | null
+  type: $Enums.UserType | null
   email: string | null
   phone: string | null
+  nameOfConsultancy: string | null
+  address: string | null
   password: string | null
   createdAt: Date | null
 }
@@ -36,8 +40,12 @@ export type UserMinAggregateOutputType = {
 export type UserMaxAggregateOutputType = {
   id: string | null
   name: string | null
+  dob: Date | null
+  type: $Enums.UserType | null
   email: string | null
   phone: string | null
+  nameOfConsultancy: string | null
+  address: string | null
   password: string | null
   createdAt: Date | null
 }
@@ -45,8 +53,12 @@ export type UserMaxAggregateOutputType = {
 export type UserCountAggregateOutputType = {
   id: number
   name: number
+  dob: number
+  type: number
   email: number
   phone: number
+  nameOfConsultancy: number
+  address: number
   password: number
   createdAt: number
   _all: number
@@ -56,8 +68,12 @@ export type UserCountAggregateOutputType = {
 export type UserMinAggregateInputType = {
   id?: true
   name?: true
+  dob?: true
+  type?: true
   email?: true
   phone?: true
+  nameOfConsultancy?: true
+  address?: true
   password?: true
   createdAt?: true
 }
@@ -65,8 +81,12 @@ export type UserMinAggregateInputType = {
 export type UserMaxAggregateInputType = {
   id?: true
   name?: true
+  dob?: true
+  type?: true
   email?: true
   phone?: true
+  nameOfConsultancy?: true
+  address?: true
   password?: true
   createdAt?: true
 }
@@ -74,8 +94,12 @@ export type UserMaxAggregateInputType = {
 export type UserCountAggregateInputType = {
   id?: true
   name?: true
+  dob?: true
+  type?: true
   email?: true
   phone?: true
+  nameOfConsultancy?: true
+  address?: true
   password?: true
   createdAt?: true
   _all?: true
@@ -156,8 +180,12 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type UserGroupByOutputType = {
   id: string
   name: string | null
+  dob: Date
+  type: $Enums.UserType
   email: string
-  phone: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt: Date
   _count: UserCountAggregateOutputType | null
@@ -186,8 +214,12 @@ export type UserWhereInput = {
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
   name?: Prisma.StringNullableFilter<"User"> | string | null
+  dob?: Prisma.DateTimeFilter<"User"> | Date | string
+  type?: Prisma.EnumUserTypeFilter<"User"> | $Enums.UserType
   email?: Prisma.StringFilter<"User"> | string
-  phone?: Prisma.StringNullableFilter<"User"> | string | null
+  phone?: Prisma.StringFilter<"User"> | string
+  nameOfConsultancy?: Prisma.StringFilter<"User"> | string
+  address?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   clients?: Prisma.ClientListRelationFilter
@@ -202,8 +234,12 @@ export type UserWhereInput = {
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  nameOfConsultancy?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   password?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   clients?: Prisma.ClientOrderByRelationAggregateInput
@@ -223,6 +259,10 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringNullableFilter<"User"> | string | null
+  dob?: Prisma.DateTimeFilter<"User"> | Date | string
+  type?: Prisma.EnumUserTypeFilter<"User"> | $Enums.UserType
+  nameOfConsultancy?: Prisma.StringFilter<"User"> | string
+  address?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   clients?: Prisma.ClientListRelationFilter
@@ -237,8 +277,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   email?: Prisma.SortOrder
-  phone?: Prisma.SortOrderInput | Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  nameOfConsultancy?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   password?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -252,8 +296,12 @@ export type UserScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
   name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  dob?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  type?: Prisma.EnumUserTypeWithAggregatesFilter<"User"> | $Enums.UserType
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  phone?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  phone?: Prisma.StringWithAggregatesFilter<"User"> | string
+  nameOfConsultancy?: Prisma.StringWithAggregatesFilter<"User"> | string
+  address?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -261,8 +309,12 @@ export type UserScalarWhereWithAggregatesInput = {
 export type UserCreateInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientCreateNestedManyWithoutUserInput
@@ -277,8 +329,12 @@ export type UserCreateInput = {
 export type UserUncheckedCreateInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutUserInput
@@ -293,8 +349,12 @@ export type UserUncheckedCreateInput = {
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUpdateManyWithoutUserNestedInput
@@ -309,8 +369,12 @@ export type UserUpdateInput = {
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUncheckedUpdateManyWithoutUserNestedInput
@@ -325,8 +389,12 @@ export type UserUncheckedUpdateInput = {
 export type UserCreateManyInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
 }
@@ -334,8 +402,12 @@ export type UserCreateManyInput = {
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -343,8 +415,12 @@ export type UserUpdateManyMutationInput = {
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -352,8 +428,12 @@ export type UserUncheckedUpdateManyInput = {
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  nameOfConsultancy?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   password?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -361,8 +441,12 @@ export type UserCountOrderByAggregateInput = {
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  nameOfConsultancy?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   password?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -370,8 +454,12 @@ export type UserMaxOrderByAggregateInput = {
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  type?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
+  nameOfConsultancy?: Prisma.SortOrder
+  address?: Prisma.SortOrder
   password?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
@@ -396,6 +484,10 @@ export type NullableStringFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type EnumUserTypeFieldUpdateOperationsInput = {
+  set?: $Enums.UserType
 }
 
 export type UserCreateNestedOneWithoutClientsInput = {
@@ -501,8 +593,12 @@ export type UserUpdateOneWithoutAuditLogsNestedInput = {
 export type UserCreateWithoutClientsInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
@@ -516,8 +612,12 @@ export type UserCreateWithoutClientsInput = {
 export type UserUncheckedCreateWithoutClientsInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
@@ -547,8 +647,12 @@ export type UserUpdateToOneWithWhereWithoutClientsInput = {
 export type UserUpdateWithoutClientsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
@@ -562,8 +666,12 @@ export type UserUpdateWithoutClientsInput = {
 export type UserUncheckedUpdateWithoutClientsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
@@ -577,8 +685,12 @@ export type UserUncheckedUpdateWithoutClientsInput = {
 export type UserCreateWithoutAppointmentsInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientCreateNestedManyWithoutUserInput
@@ -592,8 +704,12 @@ export type UserCreateWithoutAppointmentsInput = {
 export type UserUncheckedCreateWithoutAppointmentsInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutUserInput
@@ -623,8 +739,12 @@ export type UserUpdateToOneWithWhereWithoutAppointmentsInput = {
 export type UserUpdateWithoutAppointmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUpdateManyWithoutUserNestedInput
@@ -638,8 +758,12 @@ export type UserUpdateWithoutAppointmentsInput = {
 export type UserUncheckedUpdateWithoutAppointmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUncheckedUpdateManyWithoutUserNestedInput
@@ -653,8 +777,12 @@ export type UserUncheckedUpdateWithoutAppointmentsInput = {
 export type UserCreateWithoutInteractionsInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientCreateNestedManyWithoutUserInput
@@ -668,8 +796,12 @@ export type UserCreateWithoutInteractionsInput = {
 export type UserUncheckedCreateWithoutInteractionsInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutUserInput
@@ -699,8 +831,12 @@ export type UserUpdateToOneWithWhereWithoutInteractionsInput = {
 export type UserUpdateWithoutInteractionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUpdateManyWithoutUserNestedInput
@@ -714,8 +850,12 @@ export type UserUpdateWithoutInteractionsInput = {
 export type UserUncheckedUpdateWithoutInteractionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUncheckedUpdateManyWithoutUserNestedInput
@@ -729,8 +869,12 @@ export type UserUncheckedUpdateWithoutInteractionsInput = {
 export type UserCreateWithoutCommitmentsInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientCreateNestedManyWithoutUserInput
@@ -744,8 +888,12 @@ export type UserCreateWithoutCommitmentsInput = {
 export type UserUncheckedCreateWithoutCommitmentsInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutUserInput
@@ -775,8 +923,12 @@ export type UserUpdateToOneWithWhereWithoutCommitmentsInput = {
 export type UserUpdateWithoutCommitmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUpdateManyWithoutUserNestedInput
@@ -790,8 +942,12 @@ export type UserUpdateWithoutCommitmentsInput = {
 export type UserUncheckedUpdateWithoutCommitmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUncheckedUpdateManyWithoutUserNestedInput
@@ -805,8 +961,12 @@ export type UserUncheckedUpdateWithoutCommitmentsInput = {
 export type UserCreateWithoutCasesInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientCreateNestedManyWithoutUserInput
@@ -820,8 +980,12 @@ export type UserCreateWithoutCasesInput = {
 export type UserUncheckedCreateWithoutCasesInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutUserInput
@@ -851,8 +1015,12 @@ export type UserUpdateToOneWithWhereWithoutCasesInput = {
 export type UserUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUpdateManyWithoutUserNestedInput
@@ -866,8 +1034,12 @@ export type UserUpdateWithoutCasesInput = {
 export type UserUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUncheckedUpdateManyWithoutUserNestedInput
@@ -881,8 +1053,12 @@ export type UserUncheckedUpdateWithoutCasesInput = {
 export type UserCreateWithoutTasksInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientCreateNestedManyWithoutUserInput
@@ -896,8 +1072,12 @@ export type UserCreateWithoutTasksInput = {
 export type UserUncheckedCreateWithoutTasksInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutUserInput
@@ -927,8 +1107,12 @@ export type UserUpdateToOneWithWhereWithoutTasksInput = {
 export type UserUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUpdateManyWithoutUserNestedInput
@@ -942,8 +1126,12 @@ export type UserUpdateWithoutTasksInput = {
 export type UserUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUncheckedUpdateManyWithoutUserNestedInput
@@ -957,8 +1145,12 @@ export type UserUncheckedUpdateWithoutTasksInput = {
 export type UserCreateWithoutAuditLogsInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientCreateNestedManyWithoutUserInput
@@ -972,8 +1164,12 @@ export type UserCreateWithoutAuditLogsInput = {
 export type UserUncheckedCreateWithoutAuditLogsInput = {
   id?: string
   name?: string | null
+  dob: Date | string
+  type?: $Enums.UserType
   email: string
-  phone?: string | null
+  phone: string
+  nameOfConsultancy: string
+  address: string
   password: string
   createdAt?: Date | string
   clients?: Prisma.ClientUncheckedCreateNestedManyWithoutUserInput
@@ -1003,8 +1199,12 @@ export type UserUpdateToOneWithWhereWithoutAuditLogsInput = {
 export type UserUpdateWithoutAuditLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUpdateManyWithoutUserNestedInput
@@ -1018,8 +1218,12 @@ export type UserUpdateWithoutAuditLogsInput = {
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
   email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clients?: Prisma.ClientUncheckedUpdateManyWithoutUserNestedInput
@@ -1118,8 +1322,12 @@ export type UserCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Exte
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  dob?: boolean
+  type?: boolean
   email?: boolean
   phone?: boolean
+  nameOfConsultancy?: boolean
+  address?: boolean
   password?: boolean
   createdAt?: boolean
   clients?: boolean | Prisma.User$clientsArgs<ExtArgs>
@@ -1135,8 +1343,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  dob?: boolean
+  type?: boolean
   email?: boolean
   phone?: boolean
+  nameOfConsultancy?: boolean
+  address?: boolean
   password?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1144,8 +1356,12 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
+  dob?: boolean
+  type?: boolean
   email?: boolean
   phone?: boolean
+  nameOfConsultancy?: boolean
+  address?: boolean
   password?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
@@ -1153,13 +1369,17 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type UserSelectScalar = {
   id?: boolean
   name?: boolean
+  dob?: boolean
+  type?: boolean
   email?: boolean
   phone?: boolean
+  nameOfConsultancy?: boolean
+  address?: boolean
   password?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "phone" | "password" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "dob" | "type" | "email" | "phone" | "nameOfConsultancy" | "address" | "password" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   clients?: boolean | Prisma.User$clientsArgs<ExtArgs>
   interactions?: boolean | Prisma.User$interactionsArgs<ExtArgs>
@@ -1187,8 +1407,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string | null
+    dob: Date
+    type: $Enums.UserType
     email: string
-    phone: string | null
+    phone: string
+    nameOfConsultancy: string
+    address: string
     password: string
     createdAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1623,8 +1847,12 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
   readonly name: Prisma.FieldRef<"User", 'String'>
+  readonly dob: Prisma.FieldRef<"User", 'DateTime'>
+  readonly type: Prisma.FieldRef<"User", 'UserType'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
+  readonly nameOfConsultancy: Prisma.FieldRef<"User", 'String'>
+  readonly address: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }

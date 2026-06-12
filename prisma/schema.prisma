@@ -100,11 +100,15 @@ enum CommitmentStatus {
 model User {
   id        String   @id @default(uuid())
   name      String?  
-  email     String   @unique
+  dob       DateTime
   type      UserType @default(it)
-  phone     String?  @unique
+  email     String   @unique
+  phone     String  @unique
+  nameOfConsultancy String
+  address   String
   password String
   createdAt DateTime @default(now())
+  
 
   clients Client[]
   interactions Interaction[]

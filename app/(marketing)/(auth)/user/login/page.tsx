@@ -2,6 +2,7 @@
 
  import { useState, FormEvent } from "react";
  import { useRouter } from "next/navigation";
+ import { loginClientSchema } from "@/schemas/clientSchema";
  import Link from "next/link";
 
  export default function LoginPage() {
@@ -27,12 +28,12 @@
        };
 
        if (isEmail(userInput)) {
-         body.userEmail = userInput;
+         body.email = userInput;
        } else {
-         body.userPhone = userInput;
+         body.phone = userInput;
        }
 
-       const response = await fetch("/api/auth/login", {
+       const response = await fetch("/api/user/auth/login", {
          method: "POST",
          headers: { "Content-Type": "application/json" },
          body: JSON.stringify(body),
@@ -46,7 +47,7 @@
        }
 
        // Success - refresh to re-validate auth state, then redirect
-       router.push("/app");
+       router.push("/client");
        router.refresh();
      } catch {
        setError("An error occurred. Please try again.");
@@ -56,15 +57,15 @@
    };
 
    return (
-     <div className="w-full min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center px-4 py-8">
+     <div className="w-full min-h-screen  flex items-center justify-center px-4 py-8">
        <div className="w-full max-w-md">
        <div className="text-center mb-8">
-        
- <span className="bg-linear-to-r select-none font-bold text-4xl from-blue-600 to-purple-600 bg-clip-text text-transparent">
+         <span className="bg-linear-to-r select-none font-bold text-4xl from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Ayushman.
-              </span>        
-        
-         <p className="text-gray-600">Sign in to your account</p>
+         </span>
+         <h2 className="mb-4 text-xl font-bold ">
+            Consultant Signin 
+          </h2>
        </div>
 
        <form onSubmit={handleSubmit} className="space-y-4">
@@ -107,7 +108,7 @@
          <button
            type="submit"
            disabled={loading}
-           className="w-full bg-black text-white py-2 rounded-lg font-medium hover:bg-gray-800 disabled:bg-gray-400 transition-colors"
+           className="w-full font-medium py-2 px-4 rounded-md transition btn-primary"
          >
            {loading ? "Signing in..." : "Sign In"}
          </button>
@@ -119,6 +120,10 @@
            <Link href="/user/register" className="text-black font-medium hover:underline">
              Sign up
            </Link>
+           <br/>
+            <a href="/user/login" className="font-bold hover:underline">
+              Forgot Password?
+              </a>
          </p>
        </div>
      </div>

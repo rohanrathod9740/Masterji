@@ -22,20 +22,20 @@ export async function POST(request: NextRequest) {
 
     // validated data
     const {
-      userEmail,
-      userPhone,
+      email,
+      phone,
       password,
     } = result.data;
 
     // find user
     const orConditions = [];
 
-    if (userEmail) {
-      orConditions.push({ email: userEmail });
+    if (email) {
+      orConditions.push({ email: email });
     }
 
-    if (userPhone) {
-      orConditions.push({ phone: userPhone });
+    if (phone) {
+      orConditions.push({ phone: phone });
     }
 
     const user = await prisma.user.findFirst({

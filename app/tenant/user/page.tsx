@@ -61,6 +61,7 @@ function SectionHeader({
 
 export default async function DashboardPage() {
   const user = await getCurrentUser();
+
   if (!user) redirect("/user/login");
 
   const today = new Date();

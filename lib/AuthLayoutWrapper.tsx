@@ -17,21 +17,17 @@
       if (!isAuthenticated) {
         const isPublicRoute =
           pathname === "/" ||
-          pathname?.startsWith("/login") ||
-          pathname?.startsWith("/register");
+          pathname?.startsWith("/user/login") ||
+          pathname?.startsWith("/user/register");
 
         if (!isPublicRoute) {
-          router.replace("/login");
+          router.replace("/user/login");
         }
       }
 
       // Authenticated user routing - can only access /app and /app/* routes
-      if (isAuthenticated) {
-        const isProtectedRoute = pathname?.startsWith("/app");
-
-        if (!isProtectedRoute) {
-          router.replace("/app");
-        }
+       if (isAuthenticated) {
+          router.replace("/tenant/user");
       }
     }, [isAuthenticated, pathname, router]);
   

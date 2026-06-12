@@ -48,7 +48,7 @@
 }
 
 :root {
-    --background: oklch(1 0 0);
+    --background: white; 
     --foreground: oklch(0.148 0.004 228.8);
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.148 0.004 228.8);
@@ -257,3 +257,4 @@
   50%     { opacity: 1;   transform: scale(1.05); }
 }
 .pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
+

@@ -20,6 +20,17 @@ export const ClientType = {
 export type ClientType = (typeof ClientType)[keyof typeof ClientType]
 
 
+export const UserType = {
+  it: 'it',
+  healthcare: 'healthcare',
+  realestate: 'realestate',
+  legal: 'legal',
+  other: 'other'
+} as const
+
+export type UserType = (typeof UserType)[keyof typeof UserType]
+
+
 export const ClientStatus = {
   active: 'active',
   inactive: 'inactive',

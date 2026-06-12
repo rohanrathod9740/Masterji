@@ -26,7 +26,7 @@ export const HeroHeader = () => {
         <header>
             <nav
                 data-state={menuState && 'active'}
-                className={cn('fixed z-20 w-full transition-all duration-300', isScrolled && 'bg-background/75 border-b border-black/5 backdrop-blur-lg')}>
+                className={cn('fixed z-20 w-full transition-all duration-300', isScrolled && 'bg-background/75 border-b  border-black/5 backdrop-blur-lg')}>
                 <div className="w-full px-6 md:px-10 lg:px-16">
                     <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0">
                         <div className="flex w-full justify-between gap-6 lg:w-auto">
@@ -34,9 +34,9 @@ export const HeroHeader = () => {
                                 href="/"
                                 aria-label="home"
                                 className="flex items-center space-x-2">
-                        <span className="bg-linear-to-r font-bold text-3xl tracking-tight from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                        Ayushman.
-                        </span>
+                                    <span className="select-none bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-bold text-3xl tracking-tight inline-block transition-transform duration-300 ">
+                                        Ayushman.
+                                    </span>
                             </Link>
 
                             <button
@@ -47,10 +47,10 @@ export const HeroHeader = () => {
                                 <X className="in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 absolute inset-0 m-auto size-6 -rotate-180 scale-0 opacity-0 duration-200" />
                             </button>
 
-                            <div className="m-auto hidden size-fit lg:block">
-                                <ul className="flex gap-1">
+                            <div className="m-auto hidden size-fit lg:block ">
+                                <ul className="flex w-full">
                                     {menuItems.map((item, index) => (
-                                        <li key={index}>
+                                        <li key={index} className="flex-1">
                                             <Button
                                                 asChild
                                                 variant="ghost"
@@ -74,7 +74,7 @@ export const HeroHeader = () => {
                                         <li key={index}>
                                             <Link
                                                 href={item.href}
-                                                className="text-muted-foreground hover:text-accent-foreground block duration-150">
+                                                className="hover:text-accent-foreground block duration-150 text-base">
                                                 <span>{item.name}</span>
                                             </Link>
                                         </li>
@@ -82,6 +82,15 @@ export const HeroHeader = () => {
                                 </ul>
                             </div>
                             <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+                                <Button
+                                    asChild
+                                    size="sm"
+                                    className={cn(isScrolled && 'lg:hidden')}>
+                                    <Link href="/user/register">
+                                        <span>Sign Up</span>
+                                    </Link>
+                                </Button>
+
                                 <Button
                                     asChild
                                     size="sm"

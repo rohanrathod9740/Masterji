@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import LandingBackground from '@/components/svgs/landing_background.jpg'
 import { ChevronRight, ArrowRight, MousePointer2, Sparkles } from 'lucide-react'
+import LogoCloud from "@/components/marketing/logo-cloud-two";
 
 
 export default function HeroSection() {
@@ -28,10 +29,10 @@ export default function HeroSection() {
                         {/* Left: Copy */}
                         <div className="flex-1 max-w-2xl fade-up">
                                 <h1 className="text-balance text-4xl font-black md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
-                                    AI Assistance for every consultant.{' '}
-                                    <span className="grad-text">Client's stuff</span>{' '}
+                                    AI Assistance that {' '}
+                                    <span className="grad-text">Consultants</span>{' '}
                                     <br/>
-                                    At one single place.
+                                    Need.
                                 </h1>
 
                                 <p className="text-muted-foreground my-8 max-w-xl text-balance text-lg leading-relaxed">
@@ -40,8 +41,8 @@ export default function HeroSection() {
 
                                 <div className="flex flex-wrap items-center gap-4">
                                     <Button asChild size="lg" className="pr-5 h-12 text-base rounded-full shadow-lg shadow-primary/20">
-                                        <Link href="/login">
-                                            <span className="text-nowrap">Make an Appointment</span>
+                                        <Link href="/user/register">
+                                            <span className="text-nowrap">Get Started</span>
                                             <ChevronRight className="opacity-50 ml-1" />
                                         </Link>
                                     </Button>
@@ -141,6 +142,7 @@ export default function HeroSection() {
                         </div>
                     </div>
                 </div>
+                <LogoCloud/>
             </section>
         </main>
     )

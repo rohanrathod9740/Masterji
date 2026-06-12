@@ -23,19 +23,30 @@ export async function POST(request: NextRequest) {
     }
 
     // validated + transformed data
-    const {
-      userName,
-      userEmail,
-      userPhone,
-      userPassword,
+    let {
+      name,
+      email,
+      phone,
+      password,
+      dob,
+      type,
+      nameOfConsultancy,
+      address,
     } = result.data;
+    name = name?.trim().toLowerCase();
+    email = email?.trim().toLowerCase();
+    phone = phone?.trim().toLowerCase();
+    password = password?.trim().toLowerCase();
+    dob = dob?.trim().toLowerCase();
+    nameOfConsultancy = nameOfConsultancy?.trim().toLowerCase();
+    address = address?.trim().toLowerCase();
 
     // check existing user
     const existingUser = await prisma.user.findFirst({
       where: {
         OR: [
-          { email: userEmail },
-          { phone: userPhone },
+          { email: email },
+          { phone: phone },
         ],
       },
     });
@@ -51,14 +62,18 @@ export async function POST(request: NextRequest) {
     }
 
     // hash password
-    const hashedPassword = await hashPassword(userPassword);
+    const hashedPassword = await hashPassword(password);
 
     // create user
     const user = await prisma.user.create({
       data: {
-        name: userName,
-        email: userEmail,
-        phone: userPhone,
+        name: name,
+        email: email,
+        phone: phone,
+        dob:new Date(dob),
+        type:type,
+        nameOfConsultancy:nameOfConsultancy,
+        address:address,
         password: hashedPassword,
       },
     });
