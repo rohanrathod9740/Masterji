@@ -40,6 +40,7 @@ export type AttachmentMinAggregateOutputType = {
   clientId: string | null
   interactionId: string | null
   taskId: string | null
+  appointmentId: string | null
   fileName: string | null
   fileType: string | null
   fileUrl: string | null
@@ -53,6 +54,7 @@ export type AttachmentMaxAggregateOutputType = {
   clientId: string | null
   interactionId: string | null
   taskId: string | null
+  appointmentId: string | null
   fileName: string | null
   fileType: string | null
   fileUrl: string | null
@@ -66,6 +68,7 @@ export type AttachmentCountAggregateOutputType = {
   clientId: number
   interactionId: number
   taskId: number
+  appointmentId: number
   fileName: number
   fileType: number
   fileUrl: number
@@ -89,6 +92,7 @@ export type AttachmentMinAggregateInputType = {
   clientId?: true
   interactionId?: true
   taskId?: true
+  appointmentId?: true
   fileName?: true
   fileType?: true
   fileUrl?: true
@@ -102,6 +106,7 @@ export type AttachmentMaxAggregateInputType = {
   clientId?: true
   interactionId?: true
   taskId?: true
+  appointmentId?: true
   fileName?: true
   fileType?: true
   fileUrl?: true
@@ -115,6 +120,7 @@ export type AttachmentCountAggregateInputType = {
   clientId?: true
   interactionId?: true
   taskId?: true
+  appointmentId?: true
   fileName?: true
   fileType?: true
   fileUrl?: true
@@ -215,6 +221,7 @@ export type AttachmentGroupByOutputType = {
   clientId: string | null
   interactionId: string | null
   taskId: string | null
+  appointmentId: string | null
   fileName: string
   fileType: string
   fileUrl: string
@@ -251,6 +258,7 @@ export type AttachmentWhereInput = {
   clientId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   interactionId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   taskId?: Prisma.StringNullableFilter<"Attachment"> | string | null
+  appointmentId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   fileName?: Prisma.StringFilter<"Attachment"> | string
   fileType?: Prisma.StringFilter<"Attachment"> | string
   fileUrl?: Prisma.StringFilter<"Attachment"> | string
@@ -259,6 +267,7 @@ export type AttachmentWhereInput = {
   client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   interaction?: Prisma.XOR<Prisma.InteractionNullableScalarRelationFilter, Prisma.InteractionWhereInput> | null
   task?: Prisma.XOR<Prisma.TaskNullableScalarRelationFilter, Prisma.TaskWhereInput> | null
+  appointment?: Prisma.XOR<Prisma.AppointmentNullableScalarRelationFilter, Prisma.AppointmentWhereInput> | null
 }
 
 export type AttachmentOrderByWithRelationInput = {
@@ -267,6 +276,7 @@ export type AttachmentOrderByWithRelationInput = {
   clientId?: Prisma.SortOrderInput | Prisma.SortOrder
   interactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   taskId?: Prisma.SortOrderInput | Prisma.SortOrder
+  appointmentId?: Prisma.SortOrderInput | Prisma.SortOrder
   fileName?: Prisma.SortOrder
   fileType?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
@@ -275,6 +285,7 @@ export type AttachmentOrderByWithRelationInput = {
   client?: Prisma.ClientOrderByWithRelationInput
   interaction?: Prisma.InteractionOrderByWithRelationInput
   task?: Prisma.TaskOrderByWithRelationInput
+  appointment?: Prisma.AppointmentOrderByWithRelationInput
 }
 
 export type AttachmentWhereUniqueInput = Prisma.AtLeast<{
@@ -286,6 +297,7 @@ export type AttachmentWhereUniqueInput = Prisma.AtLeast<{
   clientId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   interactionId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   taskId?: Prisma.StringNullableFilter<"Attachment"> | string | null
+  appointmentId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   fileName?: Prisma.StringFilter<"Attachment"> | string
   fileType?: Prisma.StringFilter<"Attachment"> | string
   fileUrl?: Prisma.StringFilter<"Attachment"> | string
@@ -294,6 +306,7 @@ export type AttachmentWhereUniqueInput = Prisma.AtLeast<{
   client?: Prisma.XOR<Prisma.ClientNullableScalarRelationFilter, Prisma.ClientWhereInput> | null
   interaction?: Prisma.XOR<Prisma.InteractionNullableScalarRelationFilter, Prisma.InteractionWhereInput> | null
   task?: Prisma.XOR<Prisma.TaskNullableScalarRelationFilter, Prisma.TaskWhereInput> | null
+  appointment?: Prisma.XOR<Prisma.AppointmentNullableScalarRelationFilter, Prisma.AppointmentWhereInput> | null
 }, "id">
 
 export type AttachmentOrderByWithAggregationInput = {
@@ -302,6 +315,7 @@ export type AttachmentOrderByWithAggregationInput = {
   clientId?: Prisma.SortOrderInput | Prisma.SortOrder
   interactionId?: Prisma.SortOrderInput | Prisma.SortOrder
   taskId?: Prisma.SortOrderInput | Prisma.SortOrder
+  appointmentId?: Prisma.SortOrderInput | Prisma.SortOrder
   fileName?: Prisma.SortOrder
   fileType?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
@@ -323,6 +337,7 @@ export type AttachmentScalarWhereWithAggregatesInput = {
   clientId?: Prisma.StringNullableWithAggregatesFilter<"Attachment"> | string | null
   interactionId?: Prisma.StringNullableWithAggregatesFilter<"Attachment"> | string | null
   taskId?: Prisma.StringNullableWithAggregatesFilter<"Attachment"> | string | null
+  appointmentId?: Prisma.StringNullableWithAggregatesFilter<"Attachment"> | string | null
   fileName?: Prisma.StringWithAggregatesFilter<"Attachment"> | string
   fileType?: Prisma.StringWithAggregatesFilter<"Attachment"> | string
   fileUrl?: Prisma.StringWithAggregatesFilter<"Attachment"> | string
@@ -341,6 +356,7 @@ export type AttachmentCreateInput = {
   client?: Prisma.ClientCreateNestedOneWithoutAttachmentsInput
   interaction?: Prisma.InteractionCreateNestedOneWithoutAttachmentsInput
   task?: Prisma.TaskCreateNestedOneWithoutAttachmentsInput
+  appointment?: Prisma.AppointmentCreateNestedOneWithoutAppointmentDocsInput
 }
 
 export type AttachmentUncheckedCreateInput = {
@@ -349,6 +365,7 @@ export type AttachmentUncheckedCreateInput = {
   clientId?: string | null
   interactionId?: string | null
   taskId?: string | null
+  appointmentId?: string | null
   fileName: string
   fileType: string
   fileUrl: string
@@ -367,6 +384,7 @@ export type AttachmentUpdateInput = {
   client?: Prisma.ClientUpdateOneWithoutAttachmentsNestedInput
   interaction?: Prisma.InteractionUpdateOneWithoutAttachmentsNestedInput
   task?: Prisma.TaskUpdateOneWithoutAttachmentsNestedInput
+  appointment?: Prisma.AppointmentUpdateOneWithoutAppointmentDocsNestedInput
 }
 
 export type AttachmentUncheckedUpdateInput = {
@@ -375,6 +393,7 @@ export type AttachmentUncheckedUpdateInput = {
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appointmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -388,6 +407,7 @@ export type AttachmentCreateManyInput = {
   clientId?: string | null
   interactionId?: string | null
   taskId?: string | null
+  appointmentId?: string | null
   fileName: string
   fileType: string
   fileUrl: string
@@ -411,6 +431,7 @@ export type AttachmentUncheckedUpdateManyInput = {
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appointmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -434,6 +455,7 @@ export type AttachmentCountOrderByAggregateInput = {
   clientId?: Prisma.SortOrder
   interactionId?: Prisma.SortOrder
   taskId?: Prisma.SortOrder
+  appointmentId?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
   fileType?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
@@ -451,6 +473,7 @@ export type AttachmentMaxOrderByAggregateInput = {
   clientId?: Prisma.SortOrder
   interactionId?: Prisma.SortOrder
   taskId?: Prisma.SortOrder
+  appointmentId?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
   fileType?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
@@ -464,6 +487,7 @@ export type AttachmentMinOrderByAggregateInput = {
   clientId?: Prisma.SortOrder
   interactionId?: Prisma.SortOrder
   taskId?: Prisma.SortOrder
+  appointmentId?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
   fileType?: Prisma.SortOrder
   fileUrl?: Prisma.SortOrder
@@ -514,6 +538,48 @@ export type AttachmentUncheckedUpdateManyWithoutClientNestedInput = {
   connect?: Prisma.AttachmentWhereUniqueInput | Prisma.AttachmentWhereUniqueInput[]
   update?: Prisma.AttachmentUpdateWithWhereUniqueWithoutClientInput | Prisma.AttachmentUpdateWithWhereUniqueWithoutClientInput[]
   updateMany?: Prisma.AttachmentUpdateManyWithWhereWithoutClientInput | Prisma.AttachmentUpdateManyWithWhereWithoutClientInput[]
+  deleteMany?: Prisma.AttachmentScalarWhereInput | Prisma.AttachmentScalarWhereInput[]
+}
+
+export type AttachmentCreateNestedManyWithoutAppointmentInput = {
+  create?: Prisma.XOR<Prisma.AttachmentCreateWithoutAppointmentInput, Prisma.AttachmentUncheckedCreateWithoutAppointmentInput> | Prisma.AttachmentCreateWithoutAppointmentInput[] | Prisma.AttachmentUncheckedCreateWithoutAppointmentInput[]
+  connectOrCreate?: Prisma.AttachmentCreateOrConnectWithoutAppointmentInput | Prisma.AttachmentCreateOrConnectWithoutAppointmentInput[]
+  createMany?: Prisma.AttachmentCreateManyAppointmentInputEnvelope
+  connect?: Prisma.AttachmentWhereUniqueInput | Prisma.AttachmentWhereUniqueInput[]
+}
+
+export type AttachmentUncheckedCreateNestedManyWithoutAppointmentInput = {
+  create?: Prisma.XOR<Prisma.AttachmentCreateWithoutAppointmentInput, Prisma.AttachmentUncheckedCreateWithoutAppointmentInput> | Prisma.AttachmentCreateWithoutAppointmentInput[] | Prisma.AttachmentUncheckedCreateWithoutAppointmentInput[]
+  connectOrCreate?: Prisma.AttachmentCreateOrConnectWithoutAppointmentInput | Prisma.AttachmentCreateOrConnectWithoutAppointmentInput[]
+  createMany?: Prisma.AttachmentCreateManyAppointmentInputEnvelope
+  connect?: Prisma.AttachmentWhereUniqueInput | Prisma.AttachmentWhereUniqueInput[]
+}
+
+export type AttachmentUpdateManyWithoutAppointmentNestedInput = {
+  create?: Prisma.XOR<Prisma.AttachmentCreateWithoutAppointmentInput, Prisma.AttachmentUncheckedCreateWithoutAppointmentInput> | Prisma.AttachmentCreateWithoutAppointmentInput[] | Prisma.AttachmentUncheckedCreateWithoutAppointmentInput[]
+  connectOrCreate?: Prisma.AttachmentCreateOrConnectWithoutAppointmentInput | Prisma.AttachmentCreateOrConnectWithoutAppointmentInput[]
+  upsert?: Prisma.AttachmentUpsertWithWhereUniqueWithoutAppointmentInput | Prisma.AttachmentUpsertWithWhereUniqueWithoutAppointmentInput[]
+  createMany?: Prisma.AttachmentCreateManyAppointmentInputEnvelope
+  set?: Prisma.AttachmentWhereUniqueInput | Prisma.AttachmentWhereUniqueInput[]
+  disconnect?: Prisma.AttachmentWhereUniqueInput | Prisma.AttachmentWhereUniqueInput[]
+  delete?: Prisma.AttachmentWhereUniqueInput | Prisma.AttachmentWhereUniqueInput[]
+  connect?: Prisma.AttachmentWhereUniqueInput | Prisma.AttachmentWhereUniqueInput[]
+  update?: Prisma.AttachmentUpdateWithWhereUniqueWithoutAppointmentInput | Prisma.AttachmentUpdateWithWhereUniqueWithoutAppointmentInput[]
+  updateMany?: Prisma.AttachmentUpdateManyWithWhereWithoutAppointmentInput | Prisma.AttachmentUpdateManyWithWhereWithoutAppointmentInput[]
+  deleteMany?: Prisma.AttachmentScalarWhereInput | Prisma.AttachmentScalarWhereInput[]
+}
+
+export type AttachmentUncheckedUpdateManyWithoutAppointmentNestedInput = {
+  create?: Prisma.XOR<Prisma.AttachmentCreateWithoutAppointmentInput, Prisma.AttachmentUncheckedCreateWithoutAppointmentInput> | Prisma.AttachmentCreateWithoutAppointmentInput[] | Prisma.AttachmentUncheckedCreateWithoutAppointmentInput[]
+  connectOrCreate?: Prisma.AttachmentCreateOrConnectWithoutAppointmentInput | Prisma.AttachmentCreateOrConnectWithoutAppointmentInput[]
+  upsert?: Prisma.AttachmentUpsertWithWhereUniqueWithoutAppointmentInput | Prisma.AttachmentUpsertWithWhereUniqueWithoutAppointmentInput[]
+  createMany?: Prisma.AttachmentCreateManyAppointmentInputEnvelope
+  set?: Prisma.AttachmentWhereUniqueInput | Prisma.AttachmentWhereUniqueInput[]
+  disconnect?: Prisma.AttachmentWhereUniqueInput | Prisma.AttachmentWhereUniqueInput[]
+  delete?: Prisma.AttachmentWhereUniqueInput | Prisma.AttachmentWhereUniqueInput[]
+  connect?: Prisma.AttachmentWhereUniqueInput | Prisma.AttachmentWhereUniqueInput[]
+  update?: Prisma.AttachmentUpdateWithWhereUniqueWithoutAppointmentInput | Prisma.AttachmentUpdateWithWhereUniqueWithoutAppointmentInput[]
+  updateMany?: Prisma.AttachmentUpdateManyWithWhereWithoutAppointmentInput | Prisma.AttachmentUpdateManyWithWhereWithoutAppointmentInput[]
   deleteMany?: Prisma.AttachmentScalarWhereInput | Prisma.AttachmentScalarWhereInput[]
 }
 
@@ -619,6 +685,7 @@ export type AttachmentCreateWithoutClientInput = {
   createdAt?: Date | string
   interaction?: Prisma.InteractionCreateNestedOneWithoutAttachmentsInput
   task?: Prisma.TaskCreateNestedOneWithoutAttachmentsInput
+  appointment?: Prisma.AppointmentCreateNestedOneWithoutAppointmentDocsInput
 }
 
 export type AttachmentUncheckedCreateWithoutClientInput = {
@@ -626,6 +693,7 @@ export type AttachmentUncheckedCreateWithoutClientInput = {
   userId?: string | null
   interactionId?: string | null
   taskId?: string | null
+  appointmentId?: string | null
   fileName: string
   fileType: string
   fileUrl: string
@@ -668,11 +736,64 @@ export type AttachmentScalarWhereInput = {
   clientId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   interactionId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   taskId?: Prisma.StringNullableFilter<"Attachment"> | string | null
+  appointmentId?: Prisma.StringNullableFilter<"Attachment"> | string | null
   fileName?: Prisma.StringFilter<"Attachment"> | string
   fileType?: Prisma.StringFilter<"Attachment"> | string
   fileUrl?: Prisma.StringFilter<"Attachment"> | string
   fileSize?: Prisma.IntNullableFilter<"Attachment"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Attachment"> | Date | string
+}
+
+export type AttachmentCreateWithoutAppointmentInput = {
+  id?: string
+  userId?: string | null
+  fileName: string
+  fileType: string
+  fileUrl: string
+  fileSize?: number | null
+  createdAt?: Date | string
+  client?: Prisma.ClientCreateNestedOneWithoutAttachmentsInput
+  interaction?: Prisma.InteractionCreateNestedOneWithoutAttachmentsInput
+  task?: Prisma.TaskCreateNestedOneWithoutAttachmentsInput
+}
+
+export type AttachmentUncheckedCreateWithoutAppointmentInput = {
+  id?: string
+  userId?: string | null
+  clientId?: string | null
+  interactionId?: string | null
+  taskId?: string | null
+  fileName: string
+  fileType: string
+  fileUrl: string
+  fileSize?: number | null
+  createdAt?: Date | string
+}
+
+export type AttachmentCreateOrConnectWithoutAppointmentInput = {
+  where: Prisma.AttachmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.AttachmentCreateWithoutAppointmentInput, Prisma.AttachmentUncheckedCreateWithoutAppointmentInput>
+}
+
+export type AttachmentCreateManyAppointmentInputEnvelope = {
+  data: Prisma.AttachmentCreateManyAppointmentInput | Prisma.AttachmentCreateManyAppointmentInput[]
+  skipDuplicates?: boolean
+}
+
+export type AttachmentUpsertWithWhereUniqueWithoutAppointmentInput = {
+  where: Prisma.AttachmentWhereUniqueInput
+  update: Prisma.XOR<Prisma.AttachmentUpdateWithoutAppointmentInput, Prisma.AttachmentUncheckedUpdateWithoutAppointmentInput>
+  create: Prisma.XOR<Prisma.AttachmentCreateWithoutAppointmentInput, Prisma.AttachmentUncheckedCreateWithoutAppointmentInput>
+}
+
+export type AttachmentUpdateWithWhereUniqueWithoutAppointmentInput = {
+  where: Prisma.AttachmentWhereUniqueInput
+  data: Prisma.XOR<Prisma.AttachmentUpdateWithoutAppointmentInput, Prisma.AttachmentUncheckedUpdateWithoutAppointmentInput>
+}
+
+export type AttachmentUpdateManyWithWhereWithoutAppointmentInput = {
+  where: Prisma.AttachmentScalarWhereInput
+  data: Prisma.XOR<Prisma.AttachmentUpdateManyMutationInput, Prisma.AttachmentUncheckedUpdateManyWithoutAppointmentInput>
 }
 
 export type AttachmentCreateWithoutInteractionInput = {
@@ -685,6 +806,7 @@ export type AttachmentCreateWithoutInteractionInput = {
   createdAt?: Date | string
   client?: Prisma.ClientCreateNestedOneWithoutAttachmentsInput
   task?: Prisma.TaskCreateNestedOneWithoutAttachmentsInput
+  appointment?: Prisma.AppointmentCreateNestedOneWithoutAppointmentDocsInput
 }
 
 export type AttachmentUncheckedCreateWithoutInteractionInput = {
@@ -692,6 +814,7 @@ export type AttachmentUncheckedCreateWithoutInteractionInput = {
   userId?: string | null
   clientId?: string | null
   taskId?: string | null
+  appointmentId?: string | null
   fileName: string
   fileType: string
   fileUrl: string
@@ -735,6 +858,7 @@ export type AttachmentCreateWithoutTaskInput = {
   createdAt?: Date | string
   client?: Prisma.ClientCreateNestedOneWithoutAttachmentsInput
   interaction?: Prisma.InteractionCreateNestedOneWithoutAttachmentsInput
+  appointment?: Prisma.AppointmentCreateNestedOneWithoutAppointmentDocsInput
 }
 
 export type AttachmentUncheckedCreateWithoutTaskInput = {
@@ -742,6 +866,7 @@ export type AttachmentUncheckedCreateWithoutTaskInput = {
   userId?: string | null
   clientId?: string | null
   interactionId?: string | null
+  appointmentId?: string | null
   fileName: string
   fileType: string
   fileUrl: string
@@ -780,6 +905,7 @@ export type AttachmentCreateManyClientInput = {
   userId?: string | null
   interactionId?: string | null
   taskId?: string | null
+  appointmentId?: string | null
   fileName: string
   fileType: string
   fileUrl: string
@@ -797,6 +923,7 @@ export type AttachmentUpdateWithoutClientInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   interaction?: Prisma.InteractionUpdateOneWithoutAttachmentsNestedInput
   task?: Prisma.TaskUpdateOneWithoutAttachmentsNestedInput
+  appointment?: Prisma.AppointmentUpdateOneWithoutAppointmentDocsNestedInput
 }
 
 export type AttachmentUncheckedUpdateWithoutClientInput = {
@@ -804,6 +931,7 @@ export type AttachmentUncheckedUpdateWithoutClientInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appointmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -814,6 +942,59 @@ export type AttachmentUncheckedUpdateWithoutClientInput = {
 export type AttachmentUncheckedUpdateManyWithoutClientInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appointmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileName?: Prisma.StringFieldUpdateOperationsInput | string
+  fileType?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AttachmentCreateManyAppointmentInput = {
+  id?: string
+  userId?: string | null
+  clientId?: string | null
+  interactionId?: string | null
+  taskId?: string | null
+  fileName: string
+  fileType: string
+  fileUrl: string
+  fileSize?: number | null
+  createdAt?: Date | string
+}
+
+export type AttachmentUpdateWithoutAppointmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileName?: Prisma.StringFieldUpdateOperationsInput | string
+  fileType?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  client?: Prisma.ClientUpdateOneWithoutAttachmentsNestedInput
+  interaction?: Prisma.InteractionUpdateOneWithoutAttachmentsNestedInput
+  task?: Prisma.TaskUpdateOneWithoutAttachmentsNestedInput
+}
+
+export type AttachmentUncheckedUpdateWithoutAppointmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  fileName?: Prisma.StringFieldUpdateOperationsInput | string
+  fileType?: Prisma.StringFieldUpdateOperationsInput | string
+  fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
+  fileSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type AttachmentUncheckedUpdateManyWithoutAppointmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
@@ -828,6 +1009,7 @@ export type AttachmentCreateManyInteractionInput = {
   userId?: string | null
   clientId?: string | null
   taskId?: string | null
+  appointmentId?: string | null
   fileName: string
   fileType: string
   fileUrl: string
@@ -845,6 +1027,7 @@ export type AttachmentUpdateWithoutInteractionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneWithoutAttachmentsNestedInput
   task?: Prisma.TaskUpdateOneWithoutAttachmentsNestedInput
+  appointment?: Prisma.AppointmentUpdateOneWithoutAppointmentDocsNestedInput
 }
 
 export type AttachmentUncheckedUpdateWithoutInteractionInput = {
@@ -852,6 +1035,7 @@ export type AttachmentUncheckedUpdateWithoutInteractionInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appointmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -864,6 +1048,7 @@ export type AttachmentUncheckedUpdateManyWithoutInteractionInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   taskId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appointmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -876,6 +1061,7 @@ export type AttachmentCreateManyTaskInput = {
   userId?: string | null
   clientId?: string | null
   interactionId?: string | null
+  appointmentId?: string | null
   fileName: string
   fileType: string
   fileUrl: string
@@ -893,6 +1079,7 @@ export type AttachmentUpdateWithoutTaskInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneWithoutAttachmentsNestedInput
   interaction?: Prisma.InteractionUpdateOneWithoutAttachmentsNestedInput
+  appointment?: Prisma.AppointmentUpdateOneWithoutAppointmentDocsNestedInput
 }
 
 export type AttachmentUncheckedUpdateWithoutTaskInput = {
@@ -900,6 +1087,7 @@ export type AttachmentUncheckedUpdateWithoutTaskInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appointmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -912,6 +1100,7 @@ export type AttachmentUncheckedUpdateManyWithoutTaskInput = {
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   clientId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   interactionId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  appointmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   fileType?: Prisma.StringFieldUpdateOperationsInput | string
   fileUrl?: Prisma.StringFieldUpdateOperationsInput | string
@@ -927,6 +1116,7 @@ export type AttachmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   clientId?: boolean
   interactionId?: boolean
   taskId?: boolean
+  appointmentId?: boolean
   fileName?: boolean
   fileType?: boolean
   fileUrl?: boolean
@@ -935,6 +1125,7 @@ export type AttachmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   client?: boolean | Prisma.Attachment$clientArgs<ExtArgs>
   interaction?: boolean | Prisma.Attachment$interactionArgs<ExtArgs>
   task?: boolean | Prisma.Attachment$taskArgs<ExtArgs>
+  appointment?: boolean | Prisma.Attachment$appointmentArgs<ExtArgs>
 }, ExtArgs["result"]["attachment"]>
 
 export type AttachmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -943,6 +1134,7 @@ export type AttachmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   clientId?: boolean
   interactionId?: boolean
   taskId?: boolean
+  appointmentId?: boolean
   fileName?: boolean
   fileType?: boolean
   fileUrl?: boolean
@@ -951,6 +1143,7 @@ export type AttachmentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
   client?: boolean | Prisma.Attachment$clientArgs<ExtArgs>
   interaction?: boolean | Prisma.Attachment$interactionArgs<ExtArgs>
   task?: boolean | Prisma.Attachment$taskArgs<ExtArgs>
+  appointment?: boolean | Prisma.Attachment$appointmentArgs<ExtArgs>
 }, ExtArgs["result"]["attachment"]>
 
 export type AttachmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -959,6 +1152,7 @@ export type AttachmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   clientId?: boolean
   interactionId?: boolean
   taskId?: boolean
+  appointmentId?: boolean
   fileName?: boolean
   fileType?: boolean
   fileUrl?: boolean
@@ -967,6 +1161,7 @@ export type AttachmentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
   client?: boolean | Prisma.Attachment$clientArgs<ExtArgs>
   interaction?: boolean | Prisma.Attachment$interactionArgs<ExtArgs>
   task?: boolean | Prisma.Attachment$taskArgs<ExtArgs>
+  appointment?: boolean | Prisma.Attachment$appointmentArgs<ExtArgs>
 }, ExtArgs["result"]["attachment"]>
 
 export type AttachmentSelectScalar = {
@@ -975,6 +1170,7 @@ export type AttachmentSelectScalar = {
   clientId?: boolean
   interactionId?: boolean
   taskId?: boolean
+  appointmentId?: boolean
   fileName?: boolean
   fileType?: boolean
   fileUrl?: boolean
@@ -982,21 +1178,24 @@ export type AttachmentSelectScalar = {
   createdAt?: boolean
 }
 
-export type AttachmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "clientId" | "interactionId" | "taskId" | "fileName" | "fileType" | "fileUrl" | "fileSize" | "createdAt", ExtArgs["result"]["attachment"]>
+export type AttachmentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "clientId" | "interactionId" | "taskId" | "appointmentId" | "fileName" | "fileType" | "fileUrl" | "fileSize" | "createdAt", ExtArgs["result"]["attachment"]>
 export type AttachmentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.Attachment$clientArgs<ExtArgs>
   interaction?: boolean | Prisma.Attachment$interactionArgs<ExtArgs>
   task?: boolean | Prisma.Attachment$taskArgs<ExtArgs>
+  appointment?: boolean | Prisma.Attachment$appointmentArgs<ExtArgs>
 }
 export type AttachmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.Attachment$clientArgs<ExtArgs>
   interaction?: boolean | Prisma.Attachment$interactionArgs<ExtArgs>
   task?: boolean | Prisma.Attachment$taskArgs<ExtArgs>
+  appointment?: boolean | Prisma.Attachment$appointmentArgs<ExtArgs>
 }
 export type AttachmentIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   client?: boolean | Prisma.Attachment$clientArgs<ExtArgs>
   interaction?: boolean | Prisma.Attachment$interactionArgs<ExtArgs>
   task?: boolean | Prisma.Attachment$taskArgs<ExtArgs>
+  appointment?: boolean | Prisma.Attachment$appointmentArgs<ExtArgs>
 }
 
 export type $AttachmentPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1005,6 +1204,7 @@ export type $AttachmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     client: Prisma.$ClientPayload<ExtArgs> | null
     interaction: Prisma.$InteractionPayload<ExtArgs> | null
     task: Prisma.$TaskPayload<ExtArgs> | null
+    appointment: Prisma.$AppointmentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1012,6 +1212,7 @@ export type $AttachmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     clientId: string | null
     interactionId: string | null
     taskId: string | null
+    appointmentId: string | null
     fileName: string
     fileType: string
     fileUrl: string
@@ -1414,6 +1615,7 @@ export interface Prisma__AttachmentClient<T, Null = never, ExtArgs extends runti
   client<T extends Prisma.Attachment$clientArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Attachment$clientArgs<ExtArgs>>): Prisma.Prisma__ClientClient<runtime.Types.Result.GetResult<Prisma.$ClientPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   interaction<T extends Prisma.Attachment$interactionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Attachment$interactionArgs<ExtArgs>>): Prisma.Prisma__InteractionClient<runtime.Types.Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   task<T extends Prisma.Attachment$taskArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Attachment$taskArgs<ExtArgs>>): Prisma.Prisma__TaskClient<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  appointment<T extends Prisma.Attachment$appointmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Attachment$appointmentArgs<ExtArgs>>): Prisma.Prisma__AppointmentClient<runtime.Types.Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1448,6 +1650,7 @@ export interface AttachmentFieldRefs {
   readonly clientId: Prisma.FieldRef<"Attachment", 'String'>
   readonly interactionId: Prisma.FieldRef<"Attachment", 'String'>
   readonly taskId: Prisma.FieldRef<"Attachment", 'String'>
+  readonly appointmentId: Prisma.FieldRef<"Attachment", 'String'>
   readonly fileName: Prisma.FieldRef<"Attachment", 'String'>
   readonly fileType: Prisma.FieldRef<"Attachment", 'String'>
   readonly fileUrl: Prisma.FieldRef<"Attachment", 'String'>
@@ -1908,6 +2111,25 @@ export type Attachment$taskArgs<ExtArgs extends runtime.Types.Extensions.Interna
    */
   include?: Prisma.TaskInclude<ExtArgs> | null
   where?: Prisma.TaskWhereInput
+}
+
+/**
+ * Attachment.appointment
+ */
+export type Attachment$appointmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Appointment
+   */
+  select?: Prisma.AppointmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Appointment
+   */
+  omit?: Prisma.AppointmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AppointmentInclude<ExtArgs> | null
+  where?: Prisma.AppointmentWhereInput
 }
 
 /**

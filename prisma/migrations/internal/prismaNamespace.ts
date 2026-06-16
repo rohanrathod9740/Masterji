@@ -386,13 +386,16 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Client: 'Client',
+  UserSlots: 'UserSlots',
   Appointment: 'Appointment',
   Attachment: 'Attachment',
   Interaction: 'Interaction',
   Commitment: 'Commitment',
   Case: 'Case',
   Task: 'Task',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  Payment: 'Payment',
+  RazorpayWebhook: 'RazorpayWebhook'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +411,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "client" | "appointment" | "attachment" | "interaction" | "commitment" | "case" | "task" | "auditLog"
+    modelProps: "user" | "client" | "userSlots" | "appointment" | "attachment" | "interaction" | "commitment" | "case" | "task" | "auditLog" | "payment" | "razorpayWebhook"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -557,6 +560,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ClientCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ClientCountAggregateOutputType> | number
+        }
+      }
+    }
+    UserSlots: {
+      payload: Prisma.$UserSlotsPayload<ExtArgs>
+      fields: Prisma.UserSlotsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserSlotsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSlotsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserSlotsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSlotsPayload>
+        }
+        findFirst: {
+          args: Prisma.UserSlotsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSlotsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserSlotsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSlotsPayload>
+        }
+        findMany: {
+          args: Prisma.UserSlotsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSlotsPayload>[]
+        }
+        create: {
+          args: Prisma.UserSlotsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSlotsPayload>
+        }
+        createMany: {
+          args: Prisma.UserSlotsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserSlotsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSlotsPayload>[]
+        }
+        delete: {
+          args: Prisma.UserSlotsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSlotsPayload>
+        }
+        update: {
+          args: Prisma.UserSlotsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSlotsPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserSlotsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserSlotsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserSlotsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSlotsPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserSlotsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserSlotsPayload>
+        }
+        aggregate: {
+          args: Prisma.UserSlotsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserSlots>
+        }
+        groupBy: {
+          args: Prisma.UserSlotsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserSlotsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserSlotsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserSlotsCountAggregateOutputType> | number
         }
       }
     }
@@ -1078,6 +1155,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Payment: {
+      payload: Prisma.$PaymentPayload<ExtArgs>
+      fields: Prisma.PaymentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PaymentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PaymentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        findFirst: {
+          args: Prisma.PaymentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PaymentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        findMany: {
+          args: Prisma.PaymentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+        }
+        create: {
+          args: Prisma.PaymentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        createMany: {
+          args: Prisma.PaymentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PaymentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+        }
+        delete: {
+          args: Prisma.PaymentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        update: {
+          args: Prisma.PaymentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        deleteMany: {
+          args: Prisma.PaymentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PaymentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PaymentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>[]
+        }
+        upsert: {
+          args: Prisma.PaymentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PaymentPayload>
+        }
+        aggregate: {
+          args: Prisma.PaymentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePayment>
+        }
+        groupBy: {
+          args: Prisma.PaymentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PaymentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PaymentCountAggregateOutputType> | number
+        }
+      }
+    }
+    RazorpayWebhook: {
+      payload: Prisma.$RazorpayWebhookPayload<ExtArgs>
+      fields: Prisma.RazorpayWebhookFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RazorpayWebhookFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RazorpayWebhookFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookPayload>
+        }
+        findFirst: {
+          args: Prisma.RazorpayWebhookFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RazorpayWebhookFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookPayload>
+        }
+        findMany: {
+          args: Prisma.RazorpayWebhookFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookPayload>[]
+        }
+        create: {
+          args: Prisma.RazorpayWebhookCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookPayload>
+        }
+        createMany: {
+          args: Prisma.RazorpayWebhookCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RazorpayWebhookCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookPayload>[]
+        }
+        delete: {
+          args: Prisma.RazorpayWebhookDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookPayload>
+        }
+        update: {
+          args: Prisma.RazorpayWebhookUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookPayload>
+        }
+        deleteMany: {
+          args: Prisma.RazorpayWebhookDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RazorpayWebhookUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RazorpayWebhookUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookPayload>[]
+        }
+        upsert: {
+          args: Prisma.RazorpayWebhookUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RazorpayWebhookPayload>
+        }
+        aggregate: {
+          args: Prisma.RazorpayWebhookAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRazorpayWebhook>
+        }
+        groupBy: {
+          args: Prisma.RazorpayWebhookGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RazorpayWebhookGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RazorpayWebhookCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RazorpayWebhookCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1135,11 +1360,11 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const ClientScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   name: 'name',
   email: 'email',
   phone: 'phone',
   companyName: 'companyName',
+  password: 'password',
   type: 'type',
   status: 'status',
   tags: 'tags',
@@ -1154,18 +1379,29 @@ export const ClientScalarFieldEnum = {
 export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
 
 
-export const AppointmentScalarFieldEnum = {
+export const UserSlotsScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   clientId: 'clientId',
-  appointmentType: 'appointmentType',
+  dayOfWeek: 'dayOfWeek',
+  startTime: 'startTime',
+  endTime: 'endTime'
+} as const
+
+export type UserSlotsScalarFieldEnum = (typeof UserSlotsScalarFieldEnum)[keyof typeof UserSlotsScalarFieldEnum]
+
+
+export const AppointmentScalarFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
   appointmentDate: 'appointmentDate',
-  duration: 'duration',
+  appointmentTime: 'appointmentTime',
   meetingMode: 'meetingMode',
-  appointmentStatus: 'appointmentStatus',
-  notes: 'notes',
+  status: 'status',
+  purpose: 'purpose',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  userId: 'userId'
 } as const
 
 export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
@@ -1177,6 +1413,7 @@ export const AttachmentScalarFieldEnum = {
   clientId: 'clientId',
   interactionId: 'interactionId',
   taskId: 'taskId',
+  appointmentId: 'appointmentId',
   fileName: 'fileName',
   fileType: 'fileType',
   fileUrl: 'fileUrl',
@@ -1258,6 +1495,40 @@ export const AuditLogScalarFieldEnum = {
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  clientId: 'clientId',
+  orderId: 'orderId',
+  razorpayOrderId: 'razorpayOrderId',
+  razorpayPaymentId: 'razorpayPaymentId',
+  razorpaySignature: 'razorpaySignature',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  method: 'method',
+  description: 'description',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const RazorpayWebhookScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  eventType: 'eventType',
+  paymentId: 'paymentId',
+  payload: 'payload',
+  processed: 'processed',
+  createdAt: 'createdAt'
+} as const
+
+export type RazorpayWebhookScalarFieldEnum = (typeof RazorpayWebhookScalarFieldEnum)[keyof typeof RazorpayWebhookScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1272,6 +1543,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1372,20 +1650,6 @@ export type EnumClientStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
  * Reference to a field of type 'ClientStatus[]'
  */
 export type ListEnumClientStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClientStatus[]'>
-    
-
-
-/**
- * Reference to a field of type 'AppointmentType'
- */
-export type EnumAppointmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AppointmentType'>
-    
-
-
-/**
- * Reference to a field of type 'AppointmentType[]'
- */
-export type ListEnumAppointmentTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AppointmentType[]'>
     
 
 
@@ -1530,6 +1794,41 @@ export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
 
 
 /**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentStatus'
+ */
+export type EnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'PaymentStatus[]'
+ */
+export type ListEnumPaymentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PaymentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1654,6 +1953,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   client?: Prisma.ClientOmit
+  userSlots?: Prisma.UserSlotsOmit
   appointment?: Prisma.AppointmentOmit
   attachment?: Prisma.AttachmentOmit
   interaction?: Prisma.InteractionOmit
@@ -1661,6 +1961,8 @@ export type GlobalOmitConfig = {
   case?: Prisma.CaseOmit
   task?: Prisma.TaskOmit
   auditLog?: Prisma.AuditLogOmit
+  payment?: Prisma.PaymentOmit
+  razorpayWebhook?: Prisma.RazorpayWebhookOmit
 }
 
 /* Types for Logging */

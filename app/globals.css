@@ -129,6 +129,61 @@
   html {
     @apply font-sans;
     }
+  h1 { @apply text-3xl font-bold tracking-tight; }
+  h2 { @apply text-2xl font-semibold tracking-tight; }
+  h3 { @apply text-lg font-semibold tracking-tight; }
+}
+
+/* ── Modern Card & Component Styles ── */
+.card {
+  @apply bg-white rounded-lg border border-gray-200 shadow-sm transition-all duration-200;
+}
+.card:hover {
+  @apply shadow-md border-gray-300;
+}
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  @apply bg-primary text-primary-foreground border-none rounded-md font-semibold cursor-pointer transition-all duration-200 py-2.5 px-4;
+}
+.btn-primary:hover:not(:disabled) { 
+  @apply bg-primary/90 shadow-md;
+}
+.btn-primary:active:not(:disabled) { 
+  @apply scale-95;
+}
+.btn-primary:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.btn-ghost {
+  @apply bg-transparent text-foreground border border-gray-200 rounded-md font-medium cursor-pointer transition-all duration-200 py-2.5 px-4;
+}
+.btn-ghost:hover:not(:disabled) {
+  @apply bg-gray-50 border-gray-300;
+}
+
+.btn-secondary {
+  @apply bg-secondary text-secondary-foreground border-none rounded-md font-semibold cursor-pointer transition-all duration-200 py-2.5 px-4;
+}
+.btn-secondary:hover:not(:disabled) {
+  @apply bg-secondary/80 shadow-md;
+}
+
+.section-card {
+  @apply bg-white rounded-lg border border-gray-200 shadow-sm;
+}
+
+.stat-card {
+  @apply bg-white rounded-lg p-3 sm:p-4 border border-gray-200 shadow-sm transition-all duration-200;
+}
+.stat-card:hover {
+  @apply shadow-md border-gray-300;
+}
+
+.metric-item {
+  @apply rounded-lg border border-gray-200 p-3 sm:p-4 bg-white;
 }
 
 /* ── Landing page utilities ── */
@@ -154,85 +209,33 @@
 }
 
 .feat-card {
-  transition: transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s;
+  @apply rounded-lg border border-gray-200 p-6 transition-all duration-200;
 }
 .feat-card:hover {
-  transform: translateY(-5px);
+  @apply shadow-md border-gray-300 -translate-y-1;
 }
 
 .nav-link {
-  position: relative;
-  color: var(--muted-foreground);
-  font-size: 0.9rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 0.2s;
+  @apply relative text-gray-600 text-sm bg-none border-none cursor-pointer transition-colors duration-200 hover:text-foreground;
 }
 .nav-link::after {
   content: '';
   position: absolute;
   bottom: -2px; left: 0;
-  width: 0; height: 1.5px;
-  background: linear-gradient(90deg, var(--chart-1), var(--chart-2));
+  width: 0; height: 2px;
+  background: var(--primary);
   transition: width 0.3s;
 }
-.nav-link:hover { color: var(--foreground); }
 .nav-link:hover::after { width: 100%; }
 
-.btn-primary {
-  position: relative;
-  overflow: hidden;
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border: none;
-  border-radius: var(--radius-xl);
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.15s;
-}
-.btn-primary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, oklch(from var(--primary) l c h / 0.3), transparent);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-.btn-primary:hover::before { opacity: 1; }
-.btn-primary:active { transform: translateY(0); }
 
-.btn-ghost {
-  background: transparent;
-  color: var(--muted-foreground);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  font-weight: 500;
-  cursor: pointer;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
-}
-.btn-ghost:hover {
-  border-color: var(--ring);
-  color: var(--foreground);
-  background: color-mix(in oklch, var(--primary) 8%, transparent);
-}
 
 .chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: var(--radius-4xl);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.03em;
+  @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold tracking-wide;
 }
 
 .preview-card {
-  background: color-mix(in oklch, var(--card) 40%, transparent);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  @apply bg-gray-50 border border-gray-200 rounded-lg p-4;
 }
 
 @keyframes fadeUp {

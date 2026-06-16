@@ -22,20 +22,20 @@ export async function POST(request: NextRequest) {
 
     // validated data
     const {
-      clientEmail,
-      clientPhone,
-      clientPassword,
+      email,
+      phone,
+      password,
     } = result.data;
 
     // find user
     const orConditions = [];
 
-    if (clientEmail) {
-      orConditions.push({ email: clientEmail });
+    if (email) {
+      orConditions.push({ email: email });
     }
 
-    if (clientPhone) {
-      orConditions.push({ phone: clientPhone });
+    if (phone) {
+      orConditions.push({ phone: phone });
     }
 
     const client = await prisma.client.findFirst({
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
 
     // verify password
     const isPasswordValid = await verifyPassword(
-      clientPassword || "",
+      password || "",
       client.passwordHash
     );
 
@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
     );
 
     // set cookie
-    response.cookies.set("token", token, {
+    response.cookies.set("clientAuthToken", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",

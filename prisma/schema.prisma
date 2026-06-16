@@ -8,14 +8,15 @@ datasource db {
 }
 
 enum ClientType {
-  consulting_client
-  retained_client
-  one_time_client
-  lead
+  strategy_consulting
+  operations_consulting
+  it_consulting
+  marketing_consulting
+  human_resources_consulting
   other
 }
 
-enum UserType{
+enum UserType {
   it
   healthcare
   realestate
@@ -35,7 +36,7 @@ enum InteractionType {
   call
   treatment_session
   review_meeting
-  project_discussion 
+  project_discussion
   support_call
 }
 
@@ -45,32 +46,27 @@ enum TaskPriority {
   high
   critical
 }
+
 enum TaskStatus {
   pending
   in_progress
   done
   overdue
 }
-enum AppointmentType {
-  consultation
-  follow_up
-  review
-  onboarding
-  other
-}
+
 enum MeetingMode {
-  in_person
-  phone
-  video
+  office_meet
+  online_meet
   other
 }
+
 enum AppointmentStatus {
+  pending_for_approval
   scheduled
-  completed
   rescheduled
-  cancelled
   missed
 }
+
 enum AuditAction {
   created
   updated
@@ -96,46 +92,43 @@ enum CommitmentStatus {
   missed
 }
 
-
 model User {
-  id        String   @id @default(uuid())
-  name      String?  
-  dob       DateTime
-  type      UserType @default(it)
-  email     String   @unique
-  phone     String  @unique
+  id                String      @id @default(uuid())
+  name              String?
+  dob               DateTime
+  type              UserType    @default(it)
+  email             String      @unique
+  phone             String      @unique
   nameOfConsultancy String
-  address   String
-  password String
-  createdAt DateTime @default(now())
-  
+  address           String
+  password          String
+  createdAt         DateTime    @default(now())
+  slots             UserSlots[]
 
-  clients Client[]
   interactions Interaction[]
   commitments  Commitment[]
   appointments Appointment[]
-  auditLogs AuditLog[]
-  cases Case[]
-  tasks Task[]
+  auditLogs    AuditLog[]
+  cases        Case[]
+  tasks        Task[]
+  payments     Payment[]
 }
 
-
-model Client{
-  id     String     @id @default(uuid())
-  userId String
-  user   User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  name  String
-  email String
-  phone String
-  companyName String?
-  type  ClientType?
-  status ClientStatus? @default(active)
-  tags  String[] @default([])
-  address String
-  dob DateTime
-  internalNotes String[] @default([])
-  passwordHash String
+model Client {
+  id            String        @id @default(uuid())
+  name          String
+  email         String
+  phone         String
+  companyName   String?
+  password      String?
+  type          ClientType?
+  status        ClientStatus? @default(active)
+  tags          String[]      @default([])
+  address       String
+  dob           DateTime
+  internalNotes String[]      @default([])
+  passwordHash  String
+  slots         UserSlots[]   @relation("ClientSlots")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -143,63 +136,71 @@ model Client{
   interactions Interaction[]
   tasks        Task[]
   appointments Appointment[]
-  attachments Attachment[]
+  attachments  Attachment[]
   commitments  Commitment[]
   cases        Case[]
+  payments     Payment[]
 
-  @@index([userId, name])
-  @@index([userId, email])
-  @@index([userId, status])
   @@index([id, status])
 }
 
+model UserSlots {
+  id       String  @id @default(uuid())
+  userId   String
+  clientId String?
+  user     User    @relation(fields: [userId], references: [id])
+  client   Client? @relation("ClientSlots", fields: [clientId], references: [id])
 
-model Appointment{
-  id String @id @default (uuid())
-  userId String
-  clientId String
+  dayOfWeek Int
 
-  user User @relation(fields: [userId],references:[id], onDelete:Cascade)
-  client Client @relation(fields: [clientId],references:[id], onDelete:Cascade)
+  startTime DateTime
+  endTime   DateTime
+}
 
-  appointmentType AppointmentType
-  appointmentDate DateTime
-  duration Int
-  meetingMode MeetingMode
-  appointmentStatus AppointmentStatus @default(scheduled)
-  notes  String?
+model Appointment {
+  id              String            @id @default(uuid())
+  clientId        String
+  client          Client            @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  appointmentDate DateTime          @default(now())
+  appointmentTime String         
+  appointmentDocs Attachment[]      @relation("AppointmentDocs")
+  meetingMode     MeetingMode       @default(office_meet)
+  status          AppointmentStatus @default(pending_for_approval)
+  purpose         String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  user      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 
-  @@index([userId,appointmentDate])
   @@index([clientId, appointmentDate])
-  @@index([userId,appointmentStatus])
 }
 
+model Attachment {
+  id     String  @id @default(uuid())
+  userId String? // Uploader (internal)
 
-model Attachment{
-  id String @id @default(uuid())
-  userId        String?  // Uploader (internal)
+  clientId      String? // Client owner
+  interactionId String? // Related interaction
+  taskId        String?
+  appointmentId String? // Supporting doc for an appointment
 
-  clientId      String?  // Client owner
-  interactionId String?  // Related interaction
-  taskId String?
+  client      Client?      @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  interaction Interaction? @relation(fields: [interactionId], references: [id], onDelete: Cascade)
+  task        Task?        @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  appointment Appointment? @relation("AppointmentDocs", fields: [appointmentId], references: [id], onDelete: Cascade)
 
-  client        Client?      @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  interaction   Interaction? @relation(fields: [interactionId], references: [id], onDelete: Cascade)
-  task          Task?        @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  fileName String
+  fileType String // pdf | png | jpg | jpeg | docx
+  fileUrl  String
+  fileSize Int? // bytes
 
-  fileName      String
-  fileType      String   // pdf | png | jpg | jpeg | docx
-  fileUrl       String
-  fileSize      Int?     // bytes
-
-  createdAt     DateTime @default(now())
+  createdAt DateTime @default(now())
 
   @@index([clientId])
   @@index([interactionId])
   @@index([taskId])
+  @@index([appointmentId])
 }
 
 model Interaction {
@@ -210,13 +211,14 @@ model Interaction {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
-  interactionType       InteractionType?
-  notes      String?
-  audioUrl   String?
-  transcript String?
-  interactionDate DateTime  @default(now())
-  commitments Commitment[]
-  attachments Attachment[]
+  interactionType InteractionType?
+  notes           String?
+  audioUrl        String?
+  transcript      String?
+  interactionDate DateTime         @default(now())
+  commitments     Commitment[]
+  attachments     Attachment[]
+
   @@index([clientId, interactionDate(sort: Desc)])
   @@index([userId])
 }
@@ -269,14 +271,14 @@ model Task {
   userId   String
   clientId String?
   caseId   String?
-  
+
   user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   client Client? @relation(fields: [clientId], references: [id], onDelete: SetNull)
   case   Case?   @relation(fields: [caseId], references: [id], onDelete: SetNull)
 
-  title      String
-  remindAt   DateTime
-  status     TaskStatus @default(pending)
+  title    String
+  remindAt DateTime
+  status   TaskStatus @default(pending)
 
   createdAt DateTime @default(now())
 
@@ -287,18 +289,75 @@ model Task {
 }
 
 model AuditLog {
-  id         String          @id @default(uuid())
-  userId     String?         // Null if system-triggered (e.g. overdue automation)
-  user       User?           @relation(fields: [userId], references: [id], onDelete: SetNull)
+  id     String  @id @default(uuid())
+  userId String? // Null if system-triggered (e.g. overdue automation)
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
 
   recordType AuditRecordType
   recordId   String
   action     AuditAction
-  before     Json?           // State snapshot before change
-  after      Json?           // State snapshot after change
+  before     Json? // State snapshot before change
+  after      Json? // State snapshot after change
 
-  timestamp  DateTime        @default(now())
+  timestamp DateTime @default(now())
 
   @@index([recordType, recordId])
   @@index([userId, timestamp])
+}
+
+model Payment {
+  id String @id @default(uuid())
+
+  userId   String
+  clientId String
+  user     User   @relation(fields: [userId], references: [id])
+  client   Client @relation(fields: [clientId], references: [id])
+
+  // Your internal order reference
+  orderId String?
+
+  // Razorpay identifiers
+  razorpayOrderId   String? @unique
+  razorpayPaymentId String? @unique
+  razorpaySignature String?
+
+  amount   Decimal @db.Decimal(10, 2)
+  currency String  @default("INR")
+
+  status PaymentStatus @default(CREATED)
+
+  method      String?
+  description String?
+
+  paidAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  webhooks RazorpayWebhook[]
+}
+
+model RazorpayWebhook {
+  id String @id @default(cuid())
+
+  eventId   String? @unique
+  eventType String
+
+  paymentId String?
+  payment   Payment? @relation(fields: [paymentId], references: [id])
+
+  payload Json
+
+  processed Boolean @default(false)
+
+  createdAt DateTime @default(now())
+}
+
+enum PaymentStatus {
+  CREATED
+  AUTHORIZED
+  CAPTURED
+  PAID
+  FAILED
+  REFUNDED
+  CANCELLED
 }

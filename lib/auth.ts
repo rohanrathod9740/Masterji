@@ -1,4 +1,4 @@
-import { User } from "@/prisma/migrations/client";
+import { User, Client } from "@/prisma/migrations/client";
 import bcrypt from "bcryptjs"
 import jwt,{JwtPayload} from "jsonwebtoken"
 import { cookies } from "next/headers";
@@ -84,6 +84,39 @@ export const getCurrentUser =  async ():Promise<User | null> => {
     }
     catch(error){
         console.error("getCurrentUser error:", error);
+        return null;
+    }
+}
+
+/** Reads the clientAuthToken cookie and returns the matching Client or null. */
+export const getCurrentClient = async (): Promise<Omit<Client, "passwordHash"> | null> => {
+    try {
+        const cookieStore = await cookies();
+        const token = cookieStore.get("clientAuthToken")?.value;
+
+        if (!token) return null;
+
+        let decoded;
+        try {
+            decoded = verifyToken(token);
+        } catch (tokenError) {
+            console.log("Client token verification failed:", tokenError);
+            return null;
+        }
+
+        if (!decoded.userId) return null;
+
+        const clientFromDb = await prisma.client.findUnique({
+            where: { id: decoded.userId },
+        });
+
+        if (!clientFromDb) return null;
+
+        // Strip passwordHash before returning
+        const { passwordHash: _ph, ...safeClient } = clientFromDb;
+        return safeClient;
+    } catch (error) {
+        console.error("getCurrentClient error:", error);
         return null;
     }
 }

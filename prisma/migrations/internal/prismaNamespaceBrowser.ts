@@ -53,13 +53,16 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Client: 'Client',
+  UserSlots: 'UserSlots',
   Appointment: 'Appointment',
   Attachment: 'Attachment',
   Interaction: 'Interaction',
   Commitment: 'Commitment',
   Case: 'Case',
   Task: 'Task',
-  AuditLog: 'AuditLog'
+  AuditLog: 'AuditLog',
+  Payment: 'Payment',
+  RazorpayWebhook: 'RazorpayWebhook'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -96,11 +99,11 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 
 export const ClientScalarFieldEnum = {
   id: 'id',
-  userId: 'userId',
   name: 'name',
   email: 'email',
   phone: 'phone',
   companyName: 'companyName',
+  password: 'password',
   type: 'type',
   status: 'status',
   tags: 'tags',
@@ -115,18 +118,29 @@ export const ClientScalarFieldEnum = {
 export type ClientScalarFieldEnum = (typeof ClientScalarFieldEnum)[keyof typeof ClientScalarFieldEnum]
 
 
-export const AppointmentScalarFieldEnum = {
+export const UserSlotsScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   clientId: 'clientId',
-  appointmentType: 'appointmentType',
+  dayOfWeek: 'dayOfWeek',
+  startTime: 'startTime',
+  endTime: 'endTime'
+} as const
+
+export type UserSlotsScalarFieldEnum = (typeof UserSlotsScalarFieldEnum)[keyof typeof UserSlotsScalarFieldEnum]
+
+
+export const AppointmentScalarFieldEnum = {
+  id: 'id',
+  clientId: 'clientId',
   appointmentDate: 'appointmentDate',
-  duration: 'duration',
+  appointmentTime: 'appointmentTime',
   meetingMode: 'meetingMode',
-  appointmentStatus: 'appointmentStatus',
-  notes: 'notes',
+  status: 'status',
+  purpose: 'purpose',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  userId: 'userId'
 } as const
 
 export type AppointmentScalarFieldEnum = (typeof AppointmentScalarFieldEnum)[keyof typeof AppointmentScalarFieldEnum]
@@ -138,6 +152,7 @@ export const AttachmentScalarFieldEnum = {
   clientId: 'clientId',
   interactionId: 'interactionId',
   taskId: 'taskId',
+  appointmentId: 'appointmentId',
   fileName: 'fileName',
   fileType: 'fileType',
   fileUrl: 'fileUrl',
@@ -219,6 +234,40 @@ export const AuditLogScalarFieldEnum = {
 export type AuditLogScalarFieldEnum = (typeof AuditLogScalarFieldEnum)[keyof typeof AuditLogScalarFieldEnum]
 
 
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  clientId: 'clientId',
+  orderId: 'orderId',
+  razorpayOrderId: 'razorpayOrderId',
+  razorpayPaymentId: 'razorpayPaymentId',
+  razorpaySignature: 'razorpaySignature',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  method: 'method',
+  description: 'description',
+  paidAt: 'paidAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const RazorpayWebhookScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  eventType: 'eventType',
+  paymentId: 'paymentId',
+  payload: 'payload',
+  processed: 'processed',
+  createdAt: 'createdAt'
+} as const
+
+export type RazorpayWebhookScalarFieldEnum = (typeof RazorpayWebhookScalarFieldEnum)[keyof typeof RazorpayWebhookScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -233,6 +282,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {

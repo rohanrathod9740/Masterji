@@ -27,6 +27,9 @@ export async function POST(request: NextRequest) {
       password,
     } = result.data;
 
+    console.log(email)
+    console.log(password)
+
     // find user
     const orConditions = [];
 
@@ -59,6 +62,7 @@ export async function POST(request: NextRequest) {
       password,
       user.password
     );
+    console.log(isPasswordValid)
 
     if (!isPasswordValid) {
       return NextResponse.json(

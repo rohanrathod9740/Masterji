@@ -46,6 +46,12 @@ export default function HeroSection() {
                                             <ChevronRight className="opacity-50 ml-1" />
                                         </Link>
                                     </Button>
+                                    <Button asChild size="lg" className="pr-5 h-12 text-base rounded-full shadow-lg shadow-primary/20">
+                                        <Link href="/tenant/client/create/appointment">
+                                            <span className="text-nowrap">Make an Appointment</span>
+                                            <ChevronRight className="opacity-50 ml-1" />
+                                        </Link>
+                                    </Button>
                                     <Button asChild size="lg" variant="outline" className="gap-2 h-12 text-base rounded-full">
                                         <Link href="#features">
                                             <span className="text-nowrap">See Features</span>

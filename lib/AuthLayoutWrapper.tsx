@@ -19,15 +19,20 @@
           pathname === "/" ||
           pathname?.startsWith("/user/login") ||
           pathname?.startsWith("/user/register");
-
         if (!isPublicRoute) {
           router.replace("/user/login");
         }
       }
 
-      // Authenticated user routing - can only access /app and /app/* routes
-       if (isAuthenticated) {
+      // Authenticated user routing — redirect away from public routes only
+      if (isAuthenticated) {
+        const isPublicRoute =
+          pathname === "/" ||
+          pathname?.startsWith("/user/login") ||
+          pathname?.startsWith("/user/register");
+        if (isPublicRoute) {
           router.replace("/tenant/user");
+        }
       }
     }, [isAuthenticated, pathname, router]);
   

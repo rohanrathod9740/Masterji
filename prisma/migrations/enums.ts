@@ -10,10 +10,11 @@
 */
 
 export const ClientType = {
-  consulting_client: 'consulting_client',
-  retained_client: 'retained_client',
-  one_time_client: 'one_time_client',
-  lead: 'lead',
+  strategy_consulting: 'strategy_consulting',
+  operations_consulting: 'operations_consulting',
+  it_consulting: 'it_consulting',
+  marketing_consulting: 'marketing_consulting',
+  human_resources_consulting: 'human_resources_consulting',
   other: 'other'
 } as const
 
@@ -73,21 +74,9 @@ export const TaskStatus = {
 export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]
 
 
-export const AppointmentType = {
-  consultation: 'consultation',
-  follow_up: 'follow_up',
-  review: 'review',
-  onboarding: 'onboarding',
-  other: 'other'
-} as const
-
-export type AppointmentType = (typeof AppointmentType)[keyof typeof AppointmentType]
-
-
 export const MeetingMode = {
-  in_person: 'in_person',
-  phone: 'phone',
-  video: 'video',
+  office_meet: 'office_meet',
+  online_meet: 'online_meet',
   other: 'other'
 } as const
 
@@ -95,10 +84,9 @@ export type MeetingMode = (typeof MeetingMode)[keyof typeof MeetingMode]
 
 
 export const AppointmentStatus = {
+  pending_for_approval: 'pending_for_approval',
   scheduled: 'scheduled',
-  completed: 'completed',
   rescheduled: 'rescheduled',
-  cancelled: 'cancelled',
   missed: 'missed'
 } as const
 
@@ -140,3 +128,16 @@ export const CommitmentStatus = {
 } as const
 
 export type CommitmentStatus = (typeof CommitmentStatus)[keyof typeof CommitmentStatus]
+
+
+export const PaymentStatus = {
+  CREATED: 'CREATED',
+  AUTHORIZED: 'AUTHORIZED',
+  CAPTURED: 'CAPTURED',
+  PAID: 'PAID',
+  FAILED: 'FAILED',
+  REFUNDED: 'REFUNDED',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type PaymentStatus = (typeof PaymentStatus)[keyof typeof PaymentStatus]

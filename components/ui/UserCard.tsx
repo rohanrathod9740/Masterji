@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardHeader,
@@ -9,11 +9,40 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { useUser } from "@/lib/UserProvider";
-
+import { useRouter } from "next/navigation";
 
 
 export default function UserCard() {
-    const { user } = useUser();
+  const [logoutPressed,setLogoutPressed]= useState(false);
+  const router = useRouter();
+
+  const handleLogOut = async () =>{
+    setLogoutPressed(true);
+    try{
+        const response = await fetch("/api/user/auth/logout",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+
+        const data = await response.json();
+
+        if(!response.ok){
+            throw new Error(data.message || "Logout failed");
+        }
+        else{
+         router.refresh(); 
+        }
+    }catch(error){
+        console.error("Logout error:", error);
+        alert("Logout failed. Please try again.");
+    }finally{
+        setLogoutPressed(false);
+    }
+  };
+
+  const { user } = useUser();
     if(!user){
         return <div className="text-sm text-muted-foreground">No user data</div>;
     }
@@ -23,8 +52,14 @@ export default function UserCard() {
     <Card className="max-w-md">
       <CardHeader className="flex items-center justify-between">
         <div>
-          <CardTitle>{user.name}</CardTitle>
-          {user.name && <CardDescription>{user.name}</CardDescription>}
+          <CardTitle>
+            {
+              user.name
+                ? user.name.charAt(0).toUpperCase() + user.name.slice(1)
+                : ""
+            }
+          </CardTitle>
+          {user.name && <CardDescription>{user.nameOfConsultancy}</CardDescription>}
         </div>
 
         
@@ -44,8 +79,25 @@ export default function UserCard() {
                 <span>{user.phone}</span>
               </div>
             )}
+
+            {user.address && (
+              <div>
+                <strong>Address:</strong> <br/>
+                <span className="break-all">
+                  {user.address}
+                </span>
+              </div>
+            )}
             
           </div>
+
+          <button className="mt-4 w-full font-medium py-2 px-4 rounded-md transition btn-primary">
+            Edit Profile
+          </button>
+
+          <button onClick={handleLogOut} disabled={logoutPressed} className="mt-4 w-full font-medium py-2 px-4 rounded-md transition bg-red-500 text-white hover:bg-red-600 disabled:opacity-60">
+            Logout
+          </button>
         </CardContent>
 
       <CardFooter />

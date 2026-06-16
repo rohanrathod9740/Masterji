@@ -35,8 +35,8 @@ export async function POST(request: NextRequest) {
     } = result.data;
     name = name?.trim().toLowerCase();
     email = email?.trim().toLowerCase();
-    phone = phone?.trim().toLowerCase();
-    password = password?.trim().toLowerCase();
+    phone = phone?.trim();
+    // NOTE: password must NOT be transformed — bcrypt is case-sensitive
     dob = dob?.trim().toLowerCase();
     nameOfConsultancy = nameOfConsultancy?.trim().toLowerCase();
     address = address?.trim().toLowerCase();
@@ -113,3 +113,11 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+
+
+
+
+
+
+// ── Create schema ─────────────────────────────────────────────────────────

@@ -26,11 +26,11 @@ export type AggregateClient = {
 
 export type ClientMinAggregateOutputType = {
   id: string | null
-  userId: string | null
   name: string | null
   email: string | null
   phone: string | null
   companyName: string | null
+  password: string | null
   type: $Enums.ClientType | null
   status: $Enums.ClientStatus | null
   address: string | null
@@ -42,11 +42,11 @@ export type ClientMinAggregateOutputType = {
 
 export type ClientMaxAggregateOutputType = {
   id: string | null
-  userId: string | null
   name: string | null
   email: string | null
   phone: string | null
   companyName: string | null
+  password: string | null
   type: $Enums.ClientType | null
   status: $Enums.ClientStatus | null
   address: string | null
@@ -58,11 +58,11 @@ export type ClientMaxAggregateOutputType = {
 
 export type ClientCountAggregateOutputType = {
   id: number
-  userId: number
   name: number
   email: number
   phone: number
   companyName: number
+  password: number
   type: number
   status: number
   tags: number
@@ -78,11 +78,11 @@ export type ClientCountAggregateOutputType = {
 
 export type ClientMinAggregateInputType = {
   id?: true
-  userId?: true
   name?: true
   email?: true
   phone?: true
   companyName?: true
+  password?: true
   type?: true
   status?: true
   address?: true
@@ -94,11 +94,11 @@ export type ClientMinAggregateInputType = {
 
 export type ClientMaxAggregateInputType = {
   id?: true
-  userId?: true
   name?: true
   email?: true
   phone?: true
   companyName?: true
+  password?: true
   type?: true
   status?: true
   address?: true
@@ -110,11 +110,11 @@ export type ClientMaxAggregateInputType = {
 
 export type ClientCountAggregateInputType = {
   id?: true
-  userId?: true
   name?: true
   email?: true
   phone?: true
   companyName?: true
+  password?: true
   type?: true
   status?: true
   tags?: true
@@ -201,11 +201,11 @@ export type ClientGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 
 export type ClientGroupByOutputType = {
   id: string
-  userId: string
   name: string
   email: string
   phone: string
   companyName: string | null
+  password: string | null
   type: $Enums.ClientType | null
   status: $Enums.ClientStatus | null
   tags: string[]
@@ -240,11 +240,11 @@ export type ClientWhereInput = {
   OR?: Prisma.ClientWhereInput[]
   NOT?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[]
   id?: Prisma.StringFilter<"Client"> | string
-  userId?: Prisma.StringFilter<"Client"> | string
   name?: Prisma.StringFilter<"Client"> | string
   email?: Prisma.StringFilter<"Client"> | string
   phone?: Prisma.StringFilter<"Client"> | string
   companyName?: Prisma.StringNullableFilter<"Client"> | string | null
+  password?: Prisma.StringNullableFilter<"Client"> | string | null
   type?: Prisma.EnumClientTypeNullableFilter<"Client"> | $Enums.ClientType | null
   status?: Prisma.EnumClientStatusNullableFilter<"Client"> | $Enums.ClientStatus | null
   tags?: Prisma.StringNullableListFilter<"Client">
@@ -254,22 +254,23 @@ export type ClientWhereInput = {
   passwordHash?: Prisma.StringFilter<"Client"> | string
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  slots?: Prisma.UserSlotsListRelationFilter
   interactions?: Prisma.InteractionListRelationFilter
   tasks?: Prisma.TaskListRelationFilter
   appointments?: Prisma.AppointmentListRelationFilter
   attachments?: Prisma.AttachmentListRelationFilter
   commitments?: Prisma.CommitmentListRelationFilter
   cases?: Prisma.CaseListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }
 
 export type ClientOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   companyName?: Prisma.SortOrderInput | Prisma.SortOrder
+  password?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
@@ -279,13 +280,14 @@ export type ClientOrderByWithRelationInput = {
   passwordHash?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  user?: Prisma.UserOrderByWithRelationInput
+  slots?: Prisma.UserSlotsOrderByRelationAggregateInput
   interactions?: Prisma.InteractionOrderByRelationAggregateInput
   tasks?: Prisma.TaskOrderByRelationAggregateInput
   appointments?: Prisma.AppointmentOrderByRelationAggregateInput
   attachments?: Prisma.AttachmentOrderByRelationAggregateInput
   commitments?: Prisma.CommitmentOrderByRelationAggregateInput
   cases?: Prisma.CaseOrderByRelationAggregateInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
 }
 
 export type ClientWhereUniqueInput = Prisma.AtLeast<{
@@ -293,11 +295,11 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[]
   OR?: Prisma.ClientWhereInput[]
   NOT?: Prisma.ClientWhereInput | Prisma.ClientWhereInput[]
-  userId?: Prisma.StringFilter<"Client"> | string
   name?: Prisma.StringFilter<"Client"> | string
   email?: Prisma.StringFilter<"Client"> | string
   phone?: Prisma.StringFilter<"Client"> | string
   companyName?: Prisma.StringNullableFilter<"Client"> | string | null
+  password?: Prisma.StringNullableFilter<"Client"> | string | null
   type?: Prisma.EnumClientTypeNullableFilter<"Client"> | $Enums.ClientType | null
   status?: Prisma.EnumClientStatusNullableFilter<"Client"> | $Enums.ClientStatus | null
   tags?: Prisma.StringNullableListFilter<"Client">
@@ -307,22 +309,23 @@ export type ClientWhereUniqueInput = Prisma.AtLeast<{
   passwordHash?: Prisma.StringFilter<"Client"> | string
   createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
-  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  slots?: Prisma.UserSlotsListRelationFilter
   interactions?: Prisma.InteractionListRelationFilter
   tasks?: Prisma.TaskListRelationFilter
   appointments?: Prisma.AppointmentListRelationFilter
   attachments?: Prisma.AttachmentListRelationFilter
   commitments?: Prisma.CommitmentListRelationFilter
   cases?: Prisma.CaseListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
 }, "id">
 
 export type ClientOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   companyName?: Prisma.SortOrderInput | Prisma.SortOrder
+  password?: Prisma.SortOrderInput | Prisma.SortOrder
   type?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
@@ -342,11 +345,11 @@ export type ClientScalarWhereWithAggregatesInput = {
   OR?: Prisma.ClientScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ClientScalarWhereWithAggregatesInput | Prisma.ClientScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Client"> | string
-  userId?: Prisma.StringWithAggregatesFilter<"Client"> | string
   name?: Prisma.StringWithAggregatesFilter<"Client"> | string
   email?: Prisma.StringWithAggregatesFilter<"Client"> | string
   phone?: Prisma.StringWithAggregatesFilter<"Client"> | string
   companyName?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
+  password?: Prisma.StringNullableWithAggregatesFilter<"Client"> | string | null
   type?: Prisma.EnumClientTypeNullableWithAggregatesFilter<"Client"> | $Enums.ClientType | null
   status?: Prisma.EnumClientStatusNullableWithAggregatesFilter<"Client"> | $Enums.ClientStatus | null
   tags?: Prisma.StringNullableListFilter<"Client">
@@ -364,6 +367,7 @@ export type ClientCreateInput = {
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -373,22 +377,23 @@ export type ClientCreateInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutClientsInput
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateInput = {
   id?: string
-  userId: string
   name: string
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -398,12 +403,14 @@ export type ClientUncheckedCreateInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientUpdateInput = {
@@ -412,6 +419,7 @@ export type ClientUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -421,22 +429,23 @@ export type ClientUpdateInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutClientsNestedInput
+  slots?: Prisma.UserSlotsUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -446,21 +455,23 @@ export type ClientUncheckedUpdateInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientCreateManyInput = {
   id?: string
-  userId: string
   name: string
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -478,6 +489,7 @@ export type ClientUpdateManyMutationInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -491,11 +503,11 @@ export type ClientUpdateManyMutationInput = {
 
 export type ClientUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -505,16 +517,6 @@ export type ClientUncheckedUpdateManyInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type ClientListRelationFilter = {
-  every?: Prisma.ClientWhereInput
-  some?: Prisma.ClientWhereInput
-  none?: Prisma.ClientWhereInput
-}
-
-export type ClientOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type StringNullableListFilter<$PrismaModel = never> = {
@@ -527,11 +529,11 @@ export type StringNullableListFilter<$PrismaModel = never> = {
 
 export type ClientCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
+  password?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   tags?: Prisma.SortOrder
@@ -545,11 +547,11 @@ export type ClientCountOrderByAggregateInput = {
 
 export type ClientMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
+  password?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   address?: Prisma.SortOrder
@@ -561,11 +563,11 @@ export type ClientMaxOrderByAggregateInput = {
 
 export type ClientMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   companyName?: Prisma.SortOrder
+  password?: Prisma.SortOrder
   type?: Prisma.SortOrder
   status?: Prisma.SortOrder
   address?: Prisma.SortOrder
@@ -575,56 +577,14 @@ export type ClientMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type ClientScalarRelationFilter = {
-  is?: Prisma.ClientWhereInput
-  isNot?: Prisma.ClientWhereInput
-}
-
 export type ClientNullableScalarRelationFilter = {
   is?: Prisma.ClientWhereInput | null
   isNot?: Prisma.ClientWhereInput | null
 }
 
-export type ClientCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ClientCreateWithoutUserInput, Prisma.ClientUncheckedCreateWithoutUserInput> | Prisma.ClientCreateWithoutUserInput[] | Prisma.ClientUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutUserInput | Prisma.ClientCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.ClientCreateManyUserInputEnvelope
-  connect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-}
-
-export type ClientUncheckedCreateNestedManyWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.ClientCreateWithoutUserInput, Prisma.ClientUncheckedCreateWithoutUserInput> | Prisma.ClientCreateWithoutUserInput[] | Prisma.ClientUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutUserInput | Prisma.ClientCreateOrConnectWithoutUserInput[]
-  createMany?: Prisma.ClientCreateManyUserInputEnvelope
-  connect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-}
-
-export type ClientUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ClientCreateWithoutUserInput, Prisma.ClientUncheckedCreateWithoutUserInput> | Prisma.ClientCreateWithoutUserInput[] | Prisma.ClientUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutUserInput | Prisma.ClientCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.ClientUpsertWithWhereUniqueWithoutUserInput | Prisma.ClientUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.ClientCreateManyUserInputEnvelope
-  set?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-  disconnect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-  delete?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-  connect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-  update?: Prisma.ClientUpdateWithWhereUniqueWithoutUserInput | Prisma.ClientUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.ClientUpdateManyWithWhereWithoutUserInput | Prisma.ClientUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
-}
-
-export type ClientUncheckedUpdateManyWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.ClientCreateWithoutUserInput, Prisma.ClientUncheckedCreateWithoutUserInput> | Prisma.ClientCreateWithoutUserInput[] | Prisma.ClientUncheckedCreateWithoutUserInput[]
-  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutUserInput | Prisma.ClientCreateOrConnectWithoutUserInput[]
-  upsert?: Prisma.ClientUpsertWithWhereUniqueWithoutUserInput | Prisma.ClientUpsertWithWhereUniqueWithoutUserInput[]
-  createMany?: Prisma.ClientCreateManyUserInputEnvelope
-  set?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-  disconnect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-  delete?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-  connect?: Prisma.ClientWhereUniqueInput | Prisma.ClientWhereUniqueInput[]
-  update?: Prisma.ClientUpdateWithWhereUniqueWithoutUserInput | Prisma.ClientUpdateWithWhereUniqueWithoutUserInput[]
-  updateMany?: Prisma.ClientUpdateManyWithWhereWithoutUserInput | Prisma.ClientUpdateManyWithWhereWithoutUserInput[]
-  deleteMany?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
+export type ClientScalarRelationFilter = {
+  is?: Prisma.ClientWhereInput
+  isNot?: Prisma.ClientWhereInput
 }
 
 export type ClientCreatetagsInput = {
@@ -651,6 +611,22 @@ export type ClientUpdatetagsInput = {
 export type ClientUpdateinternalNotesInput = {
   set?: string[]
   push?: string | string[]
+}
+
+export type ClientCreateNestedOneWithoutSlotsInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutSlotsInput, Prisma.ClientUncheckedCreateWithoutSlotsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutSlotsInput
+  connect?: Prisma.ClientWhereUniqueInput
+}
+
+export type ClientUpdateOneWithoutSlotsNestedInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutSlotsInput, Prisma.ClientUncheckedCreateWithoutSlotsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutSlotsInput
+  upsert?: Prisma.ClientUpsertWithoutSlotsInput
+  disconnect?: Prisma.ClientWhereInput | boolean
+  delete?: Prisma.ClientWhereInput | boolean
+  connect?: Prisma.ClientWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutSlotsInput, Prisma.ClientUpdateWithoutSlotsInput>, Prisma.ClientUncheckedUpdateWithoutSlotsInput>
 }
 
 export type ClientCreateNestedOneWithoutAppointmentsInput = {
@@ -741,12 +717,27 @@ export type ClientUpdateOneWithoutTasksNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutTasksInput, Prisma.ClientUpdateWithoutTasksInput>, Prisma.ClientUncheckedUpdateWithoutTasksInput>
 }
 
-export type ClientCreateWithoutUserInput = {
+export type ClientCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutPaymentsInput, Prisma.ClientUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.ClientWhereUniqueInput
+}
+
+export type ClientUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ClientCreateWithoutPaymentsInput, Prisma.ClientUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.ClientCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.ClientUpsertWithoutPaymentsInput
+  connect?: Prisma.ClientWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClientUpdateToOneWithWhereWithoutPaymentsInput, Prisma.ClientUpdateWithoutPaymentsInput>, Prisma.ClientUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type ClientCreateWithoutSlotsInput = {
   id?: string
   name: string
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -762,14 +753,16 @@ export type ClientCreateWithoutUserInput = {
   attachments?: Prisma.AttachmentCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutClientInput
 }
 
-export type ClientUncheckedCreateWithoutUserInput = {
+export type ClientUncheckedCreateWithoutSlotsInput = {
   id?: string
   name: string
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -785,53 +778,73 @@ export type ClientUncheckedCreateWithoutUserInput = {
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutClientInput
 }
 
-export type ClientCreateOrConnectWithoutUserInput = {
+export type ClientCreateOrConnectWithoutSlotsInput = {
   where: Prisma.ClientWhereUniqueInput
-  create: Prisma.XOR<Prisma.ClientCreateWithoutUserInput, Prisma.ClientUncheckedCreateWithoutUserInput>
+  create: Prisma.XOR<Prisma.ClientCreateWithoutSlotsInput, Prisma.ClientUncheckedCreateWithoutSlotsInput>
 }
 
-export type ClientCreateManyUserInputEnvelope = {
-  data: Prisma.ClientCreateManyUserInput | Prisma.ClientCreateManyUserInput[]
-  skipDuplicates?: boolean
+export type ClientUpsertWithoutSlotsInput = {
+  update: Prisma.XOR<Prisma.ClientUpdateWithoutSlotsInput, Prisma.ClientUncheckedUpdateWithoutSlotsInput>
+  create: Prisma.XOR<Prisma.ClientCreateWithoutSlotsInput, Prisma.ClientUncheckedCreateWithoutSlotsInput>
+  where?: Prisma.ClientWhereInput
 }
 
-export type ClientUpsertWithWhereUniqueWithoutUserInput = {
-  where: Prisma.ClientWhereUniqueInput
-  update: Prisma.XOR<Prisma.ClientUpdateWithoutUserInput, Prisma.ClientUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.ClientCreateWithoutUserInput, Prisma.ClientUncheckedCreateWithoutUserInput>
+export type ClientUpdateToOneWithWhereWithoutSlotsInput = {
+  where?: Prisma.ClientWhereInput
+  data: Prisma.XOR<Prisma.ClientUpdateWithoutSlotsInput, Prisma.ClientUncheckedUpdateWithoutSlotsInput>
 }
 
-export type ClientUpdateWithWhereUniqueWithoutUserInput = {
-  where: Prisma.ClientWhereUniqueInput
-  data: Prisma.XOR<Prisma.ClientUpdateWithoutUserInput, Prisma.ClientUncheckedUpdateWithoutUserInput>
+export type ClientUpdateWithoutSlotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
+  status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
+  tags?: Prisma.ClientUpdatetagsInput | string[]
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  internalNotes?: Prisma.ClientUpdateinternalNotesInput | string[]
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  interactions?: Prisma.InteractionUpdateManyWithoutClientNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutClientNestedInput
+  appointments?: Prisma.AppointmentUpdateManyWithoutClientNestedInput
+  attachments?: Prisma.AttachmentUpdateManyWithoutClientNestedInput
+  commitments?: Prisma.CommitmentUpdateManyWithoutClientNestedInput
+  cases?: Prisma.CaseUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutClientNestedInput
 }
 
-export type ClientUpdateManyWithWhereWithoutUserInput = {
-  where: Prisma.ClientScalarWhereInput
-  data: Prisma.XOR<Prisma.ClientUpdateManyMutationInput, Prisma.ClientUncheckedUpdateManyWithoutUserInput>
-}
-
-export type ClientScalarWhereInput = {
-  AND?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
-  OR?: Prisma.ClientScalarWhereInput[]
-  NOT?: Prisma.ClientScalarWhereInput | Prisma.ClientScalarWhereInput[]
-  id?: Prisma.StringFilter<"Client"> | string
-  userId?: Prisma.StringFilter<"Client"> | string
-  name?: Prisma.StringFilter<"Client"> | string
-  email?: Prisma.StringFilter<"Client"> | string
-  phone?: Prisma.StringFilter<"Client"> | string
-  companyName?: Prisma.StringNullableFilter<"Client"> | string | null
-  type?: Prisma.EnumClientTypeNullableFilter<"Client"> | $Enums.ClientType | null
-  status?: Prisma.EnumClientStatusNullableFilter<"Client"> | $Enums.ClientStatus | null
-  tags?: Prisma.StringNullableListFilter<"Client">
-  address?: Prisma.StringFilter<"Client"> | string
-  dob?: Prisma.DateTimeFilter<"Client"> | Date | string
-  internalNotes?: Prisma.StringNullableListFilter<"Client">
-  passwordHash?: Prisma.StringFilter<"Client"> | string
-  createdAt?: Prisma.DateTimeFilter<"Client"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Client"> | Date | string
+export type ClientUncheckedUpdateWithoutSlotsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
+  status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
+  tags?: Prisma.ClientUpdatetagsInput | string[]
+  address?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  internalNotes?: Prisma.ClientUpdateinternalNotesInput | string[]
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutClientNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutClientNestedInput
+  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClientNestedInput
+  attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutClientNestedInput
+  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutClientNestedInput
+  cases?: Prisma.CaseUncheckedUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientCreateWithoutAppointmentsInput = {
@@ -840,6 +853,7 @@ export type ClientCreateWithoutAppointmentsInput = {
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -849,21 +863,22 @@ export type ClientCreateWithoutAppointmentsInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutClientsInput
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateWithoutAppointmentsInput = {
   id?: string
-  userId: string
   name: string
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -873,11 +888,13 @@ export type ClientUncheckedCreateWithoutAppointmentsInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientCreateOrConnectWithoutAppointmentsInput = {
@@ -902,6 +919,7 @@ export type ClientUpdateWithoutAppointmentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -911,21 +929,22 @@ export type ClientUpdateWithoutAppointmentsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutClientsNestedInput
+  slots?: Prisma.UserSlotsUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutAppointmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -935,11 +954,13 @@ export type ClientUncheckedUpdateWithoutAppointmentsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientCreateWithoutAttachmentsInput = {
@@ -948,6 +969,7 @@ export type ClientCreateWithoutAttachmentsInput = {
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -957,21 +979,22 @@ export type ClientCreateWithoutAttachmentsInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutClientsInput
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateWithoutAttachmentsInput = {
   id?: string
-  userId: string
   name: string
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -981,11 +1004,13 @@ export type ClientUncheckedCreateWithoutAttachmentsInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientCreateOrConnectWithoutAttachmentsInput = {
@@ -1010,6 +1035,7 @@ export type ClientUpdateWithoutAttachmentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1019,21 +1045,22 @@ export type ClientUpdateWithoutAttachmentsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutClientsNestedInput
+  slots?: Prisma.UserSlotsUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutAttachmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1043,11 +1070,13 @@ export type ClientUncheckedUpdateWithoutAttachmentsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientCreateWithoutInteractionsInput = {
@@ -1056,6 +1085,7 @@ export type ClientCreateWithoutInteractionsInput = {
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -1065,21 +1095,22 @@ export type ClientCreateWithoutInteractionsInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutClientsInput
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateWithoutInteractionsInput = {
   id?: string
-  userId: string
   name: string
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -1089,11 +1120,13 @@ export type ClientUncheckedCreateWithoutInteractionsInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientCreateOrConnectWithoutInteractionsInput = {
@@ -1118,6 +1151,7 @@ export type ClientUpdateWithoutInteractionsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1127,21 +1161,22 @@ export type ClientUpdateWithoutInteractionsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutClientsNestedInput
+  slots?: Prisma.UserSlotsUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutInteractionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1151,11 +1186,13 @@ export type ClientUncheckedUpdateWithoutInteractionsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientCreateWithoutCommitmentsInput = {
@@ -1164,6 +1201,7 @@ export type ClientCreateWithoutCommitmentsInput = {
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -1173,21 +1211,22 @@ export type ClientCreateWithoutCommitmentsInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutClientsInput
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateWithoutCommitmentsInput = {
   id?: string
-  userId: string
   name: string
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -1197,11 +1236,13 @@ export type ClientUncheckedCreateWithoutCommitmentsInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientCreateOrConnectWithoutCommitmentsInput = {
@@ -1226,6 +1267,7 @@ export type ClientUpdateWithoutCommitmentsInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1235,21 +1277,22 @@ export type ClientUpdateWithoutCommitmentsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutClientsNestedInput
+  slots?: Prisma.UserSlotsUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutCommitmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1259,11 +1302,13 @@ export type ClientUncheckedUpdateWithoutCommitmentsInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientCreateWithoutCasesInput = {
@@ -1272,6 +1317,7 @@ export type ClientCreateWithoutCasesInput = {
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -1281,21 +1327,22 @@ export type ClientCreateWithoutCasesInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutClientsInput
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateWithoutCasesInput = {
   id?: string
-  userId: string
   name: string
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -1305,11 +1352,13 @@ export type ClientUncheckedCreateWithoutCasesInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutClientInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientCreateOrConnectWithoutCasesInput = {
@@ -1334,6 +1383,7 @@ export type ClientUpdateWithoutCasesInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1343,21 +1393,22 @@ export type ClientUpdateWithoutCasesInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutClientsNestedInput
+  slots?: Prisma.UserSlotsUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1367,11 +1418,13 @@ export type ClientUncheckedUpdateWithoutCasesInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutClientNestedInput
 }
 
 export type ClientCreateWithoutTasksInput = {
@@ -1380,6 +1433,7 @@ export type ClientCreateWithoutTasksInput = {
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -1389,21 +1443,22 @@ export type ClientCreateWithoutTasksInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutClientsInput
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutClientInput
 }
 
 export type ClientUncheckedCreateWithoutTasksInput = {
   id?: string
-  userId: string
   name: string
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -1413,11 +1468,13 @@ export type ClientUncheckedCreateWithoutTasksInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutClientInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutClientInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClientInput
   attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutClientInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutClientInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutClientInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutClientInput
 }
 
 export type ClientCreateOrConnectWithoutTasksInput = {
@@ -1442,6 +1499,7 @@ export type ClientUpdateWithoutTasksInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1451,21 +1509,22 @@ export type ClientUpdateWithoutTasksInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutClientsNestedInput
+  slots?: Prisma.UserSlotsUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutClientNestedInput
 }
 
 export type ClientUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1475,19 +1534,22 @@ export type ClientUncheckedUpdateWithoutTasksInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClientNestedInput
   attachments?: Prisma.AttachmentUncheckedUpdateManyWithoutClientNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutClientNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutClientNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutClientNestedInput
 }
 
-export type ClientCreateManyUserInput = {
+export type ClientCreateWithoutPaymentsInput = {
   id?: string
   name: string
   email: string
   phone: string
   companyName?: string | null
+  password?: string | null
   type?: $Enums.ClientType | null
   status?: $Enums.ClientStatus | null
   tags?: Prisma.ClientCreatetagsInput | string[]
@@ -1497,14 +1559,63 @@ export type ClientCreateManyUserInput = {
   passwordHash: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutClientInput
+  interactions?: Prisma.InteractionCreateNestedManyWithoutClientInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutClientInput
+  appointments?: Prisma.AppointmentCreateNestedManyWithoutClientInput
+  attachments?: Prisma.AttachmentCreateNestedManyWithoutClientInput
+  commitments?: Prisma.CommitmentCreateNestedManyWithoutClientInput
+  cases?: Prisma.CaseCreateNestedManyWithoutClientInput
 }
 
-export type ClientUpdateWithoutUserInput = {
+export type ClientUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  name: string
+  email: string
+  phone: string
+  companyName?: string | null
+  password?: string | null
+  type?: $Enums.ClientType | null
+  status?: $Enums.ClientStatus | null
+  tags?: Prisma.ClientCreatetagsInput | string[]
+  address: string
+  dob: Date | string
+  internalNotes?: Prisma.ClientCreateinternalNotesInput | string[]
+  passwordHash: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutClientInput
+  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutClientInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutClientInput
+  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutClientInput
+  attachments?: Prisma.AttachmentUncheckedCreateNestedManyWithoutClientInput
+  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutClientInput
+  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutClientInput
+}
+
+export type ClientCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.ClientWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClientCreateWithoutPaymentsInput, Prisma.ClientUncheckedCreateWithoutPaymentsInput>
+}
+
+export type ClientUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.ClientUpdateWithoutPaymentsInput, Prisma.ClientUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.ClientCreateWithoutPaymentsInput, Prisma.ClientUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.ClientWhereInput
+}
+
+export type ClientUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.ClientWhereInput
+  data: Prisma.XOR<Prisma.ClientUpdateWithoutPaymentsInput, Prisma.ClientUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type ClientUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1514,6 +1625,7 @@ export type ClientUpdateWithoutUserInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slots?: Prisma.UserSlotsUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutClientNestedInput
@@ -1522,12 +1634,13 @@ export type ClientUpdateWithoutUserInput = {
   cases?: Prisma.CaseUpdateManyWithoutClientNestedInput
 }
 
-export type ClientUncheckedUpdateWithoutUserInput = {
+export type ClientUncheckedUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  password?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
   status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
   tags?: Prisma.ClientUpdatetagsInput | string[]
@@ -1537,6 +1650,7 @@ export type ClientUncheckedUpdateWithoutUserInput = {
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutClientNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutClientNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutClientNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutClientNestedInput
@@ -1545,44 +1659,31 @@ export type ClientUncheckedUpdateWithoutUserInput = {
   cases?: Prisma.CaseUncheckedUpdateManyWithoutClientNestedInput
 }
 
-export type ClientUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  phone?: Prisma.StringFieldUpdateOperationsInput | string
-  companyName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  type?: Prisma.NullableEnumClientTypeFieldUpdateOperationsInput | $Enums.ClientType | null
-  status?: Prisma.NullableEnumClientStatusFieldUpdateOperationsInput | $Enums.ClientStatus | null
-  tags?: Prisma.ClientUpdatetagsInput | string[]
-  address?: Prisma.StringFieldUpdateOperationsInput | string
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  internalNotes?: Prisma.ClientUpdateinternalNotesInput | string[]
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
 
 /**
  * Count Type ClientCountOutputType
  */
 
 export type ClientCountOutputType = {
+  slots: number
   interactions: number
   tasks: number
   appointments: number
   attachments: number
   commitments: number
   cases: number
+  payments: number
 }
 
 export type ClientCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  slots?: boolean | ClientCountOutputTypeCountSlotsArgs
   interactions?: boolean | ClientCountOutputTypeCountInteractionsArgs
   tasks?: boolean | ClientCountOutputTypeCountTasksArgs
   appointments?: boolean | ClientCountOutputTypeCountAppointmentsArgs
   attachments?: boolean | ClientCountOutputTypeCountAttachmentsArgs
   commitments?: boolean | ClientCountOutputTypeCountCommitmentsArgs
   cases?: boolean | ClientCountOutputTypeCountCasesArgs
+  payments?: boolean | ClientCountOutputTypeCountPaymentsArgs
 }
 
 /**
@@ -1593,6 +1694,13 @@ export type ClientCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exten
    * Select specific fields to fetch from the ClientCountOutputType
    */
   select?: Prisma.ClientCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ClientCountOutputType without action
+ */
+export type ClientCountOutputTypeCountSlotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserSlotsWhereInput
 }
 
 /**
@@ -1637,14 +1745,21 @@ export type ClientCountOutputTypeCountCasesArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.CaseWhereInput
 }
 
+/**
+ * ClientCountOutputType without action
+ */
+export type ClientCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
+
 
 export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
   name?: boolean
   email?: boolean
   phone?: boolean
   companyName?: boolean
+  password?: boolean
   type?: boolean
   status?: boolean
   tags?: boolean
@@ -1654,23 +1769,24 @@ export type ClientSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   passwordHash?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  slots?: boolean | Prisma.Client$slotsArgs<ExtArgs>
   interactions?: boolean | Prisma.Client$interactionsArgs<ExtArgs>
   tasks?: boolean | Prisma.Client$tasksArgs<ExtArgs>
   appointments?: boolean | Prisma.Client$appointmentsArgs<ExtArgs>
   attachments?: boolean | Prisma.Client$attachmentsArgs<ExtArgs>
   commitments?: boolean | Prisma.Client$commitmentsArgs<ExtArgs>
   cases?: boolean | Prisma.Client$casesArgs<ExtArgs>
+  payments?: boolean | Prisma.Client$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
 export type ClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
   name?: boolean
   email?: boolean
   phone?: boolean
   companyName?: boolean
+  password?: boolean
   type?: boolean
   status?: boolean
   tags?: boolean
@@ -1680,16 +1796,15 @@ export type ClientSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   passwordHash?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
 export type ClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  userId?: boolean
   name?: boolean
   email?: boolean
   phone?: boolean
   companyName?: boolean
+  password?: boolean
   type?: boolean
   status?: boolean
   tags?: boolean
@@ -1699,16 +1814,15 @@ export type ClientSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   passwordHash?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["client"]>
 
 export type ClientSelectScalar = {
   id?: boolean
-  userId?: boolean
   name?: boolean
   email?: boolean
   phone?: boolean
   companyName?: boolean
+  password?: boolean
   type?: boolean
   status?: boolean
   tags?: boolean
@@ -1720,42 +1834,40 @@ export type ClientSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "email" | "phone" | "companyName" | "type" | "status" | "tags" | "address" | "dob" | "internalNotes" | "passwordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
+export type ClientOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "phone" | "companyName" | "password" | "type" | "status" | "tags" | "address" | "dob" | "internalNotes" | "passwordHash" | "createdAt" | "updatedAt", ExtArgs["result"]["client"]>
 export type ClientInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  slots?: boolean | Prisma.Client$slotsArgs<ExtArgs>
   interactions?: boolean | Prisma.Client$interactionsArgs<ExtArgs>
   tasks?: boolean | Prisma.Client$tasksArgs<ExtArgs>
   appointments?: boolean | Prisma.Client$appointmentsArgs<ExtArgs>
   attachments?: boolean | Prisma.Client$attachmentsArgs<ExtArgs>
   commitments?: boolean | Prisma.Client$commitmentsArgs<ExtArgs>
   cases?: boolean | Prisma.Client$casesArgs<ExtArgs>
+  payments?: boolean | Prisma.Client$paymentsArgs<ExtArgs>
   _count?: boolean | Prisma.ClientCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type ClientIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-}
-export type ClientIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-}
+export type ClientIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ClientIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $ClientPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Client"
   objects: {
-    user: Prisma.$UserPayload<ExtArgs>
+    slots: Prisma.$UserSlotsPayload<ExtArgs>[]
     interactions: Prisma.$InteractionPayload<ExtArgs>[]
     tasks: Prisma.$TaskPayload<ExtArgs>[]
     appointments: Prisma.$AppointmentPayload<ExtArgs>[]
     attachments: Prisma.$AttachmentPayload<ExtArgs>[]
     commitments: Prisma.$CommitmentPayload<ExtArgs>[]
     cases: Prisma.$CasePayload<ExtArgs>[]
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    userId: string
     name: string
     email: string
     phone: string
     companyName: string | null
+    password: string | null
     type: $Enums.ClientType | null
     status: $Enums.ClientStatus | null
     tags: string[]
@@ -2159,13 +2271,14 @@ readonly fields: ClientFieldRefs;
  */
 export interface Prisma__ClientClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  slots<T extends Prisma.Client$slotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$slotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserSlotsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   interactions<T extends Prisma.Client$interactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$interactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tasks<T extends Prisma.Client$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   appointments<T extends Prisma.Client$appointmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   attachments<T extends Prisma.Client$attachmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$attachmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttachmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   commitments<T extends Prisma.Client$commitmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$commitmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommitmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cases<T extends Prisma.Client$casesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$casesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.Client$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Client$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2196,11 +2309,11 @@ export interface Prisma__ClientClient<T, Null = never, ExtArgs extends runtime.T
  */
 export interface ClientFieldRefs {
   readonly id: Prisma.FieldRef<"Client", 'String'>
-  readonly userId: Prisma.FieldRef<"Client", 'String'>
   readonly name: Prisma.FieldRef<"Client", 'String'>
   readonly email: Prisma.FieldRef<"Client", 'String'>
   readonly phone: Prisma.FieldRef<"Client", 'String'>
   readonly companyName: Prisma.FieldRef<"Client", 'String'>
+  readonly password: Prisma.FieldRef<"Client", 'String'>
   readonly type: Prisma.FieldRef<"Client", 'ClientType'>
   readonly status: Prisma.FieldRef<"Client", 'ClientStatus'>
   readonly tags: Prisma.FieldRef<"Client", 'String[]'>
@@ -2464,10 +2577,6 @@ export type ClientCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    */
   data: Prisma.ClientCreateManyInput | Prisma.ClientCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ClientIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2538,10 +2647,6 @@ export type ClientUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    * Limit how many Clients to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.ClientIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2608,6 +2713,30 @@ export type ClientDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * Limit how many Clients to delete.
    */
   limit?: number
+}
+
+/**
+ * Client.slots
+ */
+export type Client$slotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserSlots
+   */
+  select?: Prisma.UserSlotsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserSlots
+   */
+  omit?: Prisma.UserSlotsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserSlotsInclude<ExtArgs> | null
+  where?: Prisma.UserSlotsWhereInput
+  orderBy?: Prisma.UserSlotsOrderByWithRelationInput | Prisma.UserSlotsOrderByWithRelationInput[]
+  cursor?: Prisma.UserSlotsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserSlotsScalarFieldEnum | Prisma.UserSlotsScalarFieldEnum[]
 }
 
 /**
@@ -2752,6 +2881,30 @@ export type Client$casesArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.CaseScalarFieldEnum | Prisma.CaseScalarFieldEnum[]
+}
+
+/**
+ * Client.payments
+ */
+export type Client$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

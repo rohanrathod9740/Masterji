@@ -52,6 +52,11 @@ export type User = Prisma.UserModel
  */
 export type Client = Prisma.ClientModel
 /**
+ * Model UserSlots
+ * 
+ */
+export type UserSlots = Prisma.UserSlotsModel
+/**
  * Model Appointment
  * 
  */
@@ -86,3 +91,13 @@ export type Task = Prisma.TaskModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
+ * Model RazorpayWebhook
+ * 
+ */
+export type RazorpayWebhook = Prisma.RazorpayWebhookModel

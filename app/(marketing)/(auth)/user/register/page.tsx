@@ -334,9 +334,6 @@ export default function SignupPage() {
               </a>
               <br/>
 
-
-
-
             </p>
           </div>
         </div>
