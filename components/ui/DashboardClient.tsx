@@ -172,6 +172,7 @@ export default function DashboardClient() {
       setIsLoading(true);
       const response = await fetch("/api/user/dashboard");
       if (!response.ok) throw new Error("Failed to fetch dashboard data");
+
       const data: DashboardData = await response.json();
       setFetchedData(data);
     } catch (err) {

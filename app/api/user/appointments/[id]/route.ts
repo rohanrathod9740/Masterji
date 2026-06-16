@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { appointmentUpdateSchema } from "@/schemas/appointmentSchema";
 import { AppointmentStatus, MeetingMode } from "@/prisma/migrations/client";
+import { updateAppointmentSchema } from "@/schemas/appointmentSchema";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -88,22 +88,8 @@ export async function PATCH(
     }
 
     const body = await request.json();
-    const validatedData = appointmentUpdateSchema.parse(body);
+    const validatedData = updateAppointmentSchema.parse(body);
 
-
-    // If clientId is being updated, verify it belongs to user
-    if (validatedData.clientId) {
-      const client = await prisma.client.findUnique({
-        where: { id: validatedData.clientId },
-      });
-
-      if (!client || client.userId !== user.id) {
-        return NextResponse.json(
-          { message: "Client not found or unauthorized" },
-          { status: 404 }
-        );
-      }
-    }
 
     const updatedAppointment = await prisma.appointment.update({
       where: { id: params.id },

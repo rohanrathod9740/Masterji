@@ -12,29 +12,30 @@
     const router = useRouter();
     const pathname = usePathname();
   
+    const isPublicRoute =
+      pathname === "/" ||
+      pathname?.startsWith("/user/login") ||
+      pathname?.startsWith("/user/register") ||
+      pathname?.startsWith("/client/login") ||
+      pathname?.startsWith("/client/register") ||
+      pathname?.startsWith("/client/appointment");
+
     useEffect(() => {
-      // Unauthenticated user routing - can only access /, /login, /register
-      if (!isAuthenticated) {
-        const isPublicRoute =
-          pathname === "/" ||
-          pathname?.startsWith("/user/login") ||
-          pathname?.startsWith("/user/register");
-        if (!isPublicRoute) {
-          router.replace("/user/login");
-        }
+      // Unauthenticated user routing - can only access public routes
+      if (!isAuthenticated && !isPublicRoute) {
+        router.replace("/user/login");
       }
 
-      // Authenticated user routing — redirect away from public routes only
+      // Authenticated user routing — redirect away from user-auth public routes only
       if (isAuthenticated) {
-        const isPublicRoute =
-          pathname === "/" ||
+        const isUserAuthRoute =
           pathname?.startsWith("/user/login") ||
           pathname?.startsWith("/user/register");
-        if (isPublicRoute) {
-          router.replace("/tenant/user");
+        if (isUserAuthRoute) {
+          router.replace("/tenant/user/dashboard");
         }
       }
-    }, [isAuthenticated, pathname, router]);
+    }, [isAuthenticated, isPublicRoute, pathname, router]);
   
     return <>{children}</>;
   }

@@ -7,7 +7,7 @@ import {
   CheckCircledIcon,
   PersonIcon,
 } from "@radix-ui/react-icons";
-import SectionNav from "../../../components/ui/SectionNav";
+import SectionNav from "../../../../../components/ui/SectionNav";
 import DashboardClient from "@/components/ui/DashboardClient";
 
 import { getCurrentUser } from "@/lib/auth";
@@ -45,14 +45,14 @@ function SectionHeader({
 }
 
 export default async function DashboardPage() {
-const user = await getCurrentUser();
+  const user = await getCurrentUser();
   if (!user) redirect("/user/login");
 
-  return(
-  <div className="pb-32 space-y-8">
-    <DashboardClient />
-  </div>
+  return (
+    <div className="pb-32 space-y-8">
+      <DashboardClient />
+    </div>
 
   )
-  
+
 }

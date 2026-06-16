@@ -1,8 +1,8 @@
 import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { appointmentSchema } from "@/schemas/appointmentSchema";
 import { NextRequest, NextResponse } from "next/server";
 import { AppointmentStatus, MeetingMode, Prisma } from "@/prisma/migrations/client";
+import { createAppointmentSchema } from "@/schemas/appointmentSchema";
 
 // GET /api/user/appointments
 export async function GET(request: NextRequest) {

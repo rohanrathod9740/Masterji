@@ -135,16 +135,16 @@ export async function GET(){
       }),
 
       // ── Clients ───────────────────────────────────────────────────────────────
-
       // Total active clients
       prisma.client.count({
-        where: { userId: user.id, status: "active" },
+        where: {
+          status: "active",
+        },
       }),
 
       // New clients this month
       prisma.client.count({
         where: {
-          userId: user.id,
           createdAt: { gte: thirtyDaysAgo },
         },
       }),
@@ -152,7 +152,6 @@ export async function GET(){
       // At-risk: active clients with no interaction in 14 days
       prisma.client.findMany({
         where: {
-          userId: user.id,
           status: "active",
           interactions: {
             none: {
@@ -178,7 +177,7 @@ export async function GET(){
 
       // All active clients for portfolio breakdown
       prisma.client.findMany({
-        where: { userId: user.id, status: "active" },
+        where: { status: "active" },
         select: { type: true },
       }),
     ]);

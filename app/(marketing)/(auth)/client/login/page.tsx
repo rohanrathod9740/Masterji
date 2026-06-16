@@ -33,6 +33,7 @@ export default function ClientLoginPage() {
   const [loginMethod, setLoginMethod] = useState<LoginMethod>("email");
   const [isLoading, setIsLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const [formData, setFormData] = useState({
     email: "",
@@ -40,7 +41,6 @@ export default function ClientLoginPage() {
     password: "",
   });
 
-  // Auto-advance slides
   useEffect(() => {
     const timer = setInterval(
       () => setCurrentSlide((p) => (p + 1) % slides.length),
@@ -53,22 +53,39 @@ export default function ClientLoginPage() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setApiError(null);
+    setFieldErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
     setApiError(null);
+    setFieldErrors({});
 
-    const payload: Record<string, string> = {
-      password: formData.password,
-    };
-
-    if (loginMethod === "email") {
-      payload.email = formData.email;
-    } else {
-      payload.phone = formData.phone;
+    if (!formData.password.trim()) {
+      setFieldErrors({ password: "Password is required" });
+      return;
     }
+
+    if (loginMethod === "email" && !formData.email.trim()) {
+      setFieldErrors({ email: "Email is required" });
+      return;
+    }
+
+    if (loginMethod === "phone" && !formData.phone.trim()) {
+      setFieldErrors({ phone: "Phone is required" });
+      return;
+    }
+
+    setIsLoading(true);
+
+    // Build payload matching loginClientSchema keys exactly.
+    // Only send the field for the active method — the other key is
+    // omitted (not just empty) so `.refine` validates correctly and
+    // the unused field's regex/email check is never triggered.
+    const payload: Record<string, string> =
+      loginMethod === "email"
+        ? { email: formData.email.trim().toLowerCase(), password: formData.password }
+        : { phone: formData.phone.trim(), password: formData.password };
 
     try {
       const res = await fetch("/api/client/auth/login", {
@@ -84,7 +101,6 @@ export default function ClientLoginPage() {
         return;
       }
 
-      // Cookie is set by the API — navigate to dashboard
       router.push("/tenant/client/dashboard");
     } catch {
       setApiError("Network error. Please check your connection.");
@@ -94,12 +110,11 @@ export default function ClientLoginPage() {
   };
 
   const inputCls =
-    "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm";
+    "w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-800 text-sm";
 
   return (
     <div className="min-h-screen">
       <div className="grid min-h-screen lg:grid-cols-[30%_60%]">
-
         {/* ── Left: Image carousel ─────────────────────────────────────── */}
         <div className="relative hidden lg:block overflow-hidden">
           {slides.map((item, index) => (
@@ -124,7 +139,6 @@ export default function ClientLoginPage() {
             </div>
           ))}
 
-          {/* Slide indicators */}
           <div className="absolute bottom-8 left-12 z-10 flex gap-3">
             {slides.map((_, idx) => (
               <button
@@ -152,18 +166,19 @@ export default function ClientLoginPage() {
             </p>
 
             <Card className="p-6">
-              {/* Error banner */}
               {apiError && (
                 <div className="mb-4 rounded-md bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
                   {apiError}
                 </div>
               )}
 
-              {/* Login method toggle */}
               <div className="mb-5 flex rounded-md overflow-hidden border border-gray-300">
                 <button
                   type="button"
-                  onClick={() => setLoginMethod("email")}
+                  onClick={() => {
+                    setLoginMethod("email");
+                    setFieldErrors({});
+                  }}
                   className={`flex-1 py-2 text-sm font-medium transition-colors ${
                     loginMethod === "email"
                       ? "bg-indigo-600 text-white"
@@ -174,7 +189,10 @@ export default function ClientLoginPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setLoginMethod("phone")}
+                  onClick={() => {
+                    setLoginMethod("phone");
+                    setFieldErrors({});
+                  }}
                   className={`flex-1 py-2 text-sm font-medium transition-colors ${
                     loginMethod === "phone"
                       ? "bg-indigo-600 text-white"
@@ -186,7 +204,6 @@ export default function ClientLoginPage() {
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-                {/* Email or Phone */}
                 {loginMethod === "email" ? (
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -203,6 +220,9 @@ export default function ClientLoginPage() {
                       autoComplete="email"
                       className={inputCls}
                     />
+                    {fieldErrors.email && (
+                      <p className="mt-1 text-xs text-red-600">{fieldErrors.email}</p>
+                    )}
                   </div>
                 ) : (
                   <div>
@@ -220,10 +240,12 @@ export default function ClientLoginPage() {
                       autoComplete="tel"
                       className={inputCls}
                     />
+                    {fieldErrors.phone && (
+                      <p className="mt-1 text-xs text-red-600">{fieldErrors.phone}</p>
+                    )}
                   </div>
                 )}
 
-                {/* Password */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Password
@@ -239,6 +261,9 @@ export default function ClientLoginPage() {
                     autoComplete="current-password"
                     className={inputCls}
                   />
+                  {fieldErrors.password && (
+                    <p className="mt-1 text-xs text-red-600">{fieldErrors.password}</p>
+                  )}
                 </div>
 
                 <Button
@@ -255,7 +280,7 @@ export default function ClientLoginPage() {
             <p className="mt-4 text-center text-sm text-gray-600">
               New here?{" "}
               <a
-                href="/tenant/client/create/appointment"
+                href="/tenant/client/appointment"
                 className="font-bold hover:underline text-indigo-600"
               >
                 Book your first appointment
