@@ -31,7 +31,6 @@ export default async function ClientDashboardLayout({ children }: Props) {
   return (
     <html className={cn(googleSans.variable, googleSans.className, googleSans)}>
       <body>
-    <AuthLayoutWrapper isAuthenticated={!!client}>
     <ClientProvider initialClient={client}>
       <ClientHeader />
       <main className="min-h-screen w-full bg-gray-50 pt-20">
@@ -40,7 +39,6 @@ export default async function ClientDashboardLayout({ children }: Props) {
         </div>
       </main>
     </ClientProvider>
-    </AuthLayoutWrapper>
     </body>
     </html>
   );

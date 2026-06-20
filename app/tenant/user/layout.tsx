@@ -32,7 +32,6 @@ export default async function UserDashboardLayout({ children }: Props) {
   return (
     <html className={cn(googleSans.variable, googleSans.className, googleSans)}>
       <body>
-    <AuthLayoutWrapper isAuthenticated={!!user}>
     <UserProvider initialUser={user}>
       <Header />
       <main className="min-h-screen w-full bg-gray-50 pt-20">
@@ -41,7 +40,6 @@ export default async function UserDashboardLayout({ children }: Props) {
         </div>
       </main>
     </UserProvider>
-    </AuthLayoutWrapper>
     </body>
     </html>
   );
