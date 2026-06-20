@@ -5,6 +5,7 @@ import ClientProvider from "@/lib/ClientProvider";
 import ClientHeader from "@/components/ui/layout/ClientHeader";
 import {prisma} from "@/lib/db"
 import {cn} from "@/lib/utils"
+import AuthLayoutWrapper from "@/lib/AuthLayoutWrapper";
 import "@/app/globals.css";
 
 type Props = {
@@ -30,6 +31,7 @@ export default async function ClientDashboardLayout({ children }: Props) {
   return (
     <html className={cn(googleSans.variable, googleSans.className, googleSans)}>
       <body>
+    <AuthLayoutWrapper isAuthenticated={!!client}>
     <ClientProvider initialClient={client}>
       <ClientHeader />
       <main className="min-h-screen w-full bg-gray-50 pt-20">
@@ -38,6 +40,7 @@ export default async function ClientDashboardLayout({ children }: Props) {
         </div>
       </main>
     </ClientProvider>
+    </AuthLayoutWrapper>
     </body>
     </html>
   );

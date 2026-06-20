@@ -8,7 +8,7 @@ import {prisma} from "@/lib/db"
 import {cn} from "@/lib/utils"
 import "@/app/globals.css";
 import Header from "@/components/ui/layout/Header";
-import AuthProvider from "@/lib/AuthLayoutWrapper"
+import AuthLayoutWrapper from "@/lib/AuthLayoutWrapper"
 
 type Props = {
   children: ReactNode;
@@ -32,6 +32,7 @@ export default async function UserDashboardLayout({ children }: Props) {
   return (
     <html className={cn(googleSans.variable, googleSans.className, googleSans)}>
       <body>
+    <AuthLayoutWrapper isAuthenticated={!!user}>
     <UserProvider initialUser={user}>
       <Header />
       <main className="min-h-screen w-full bg-gray-50 pt-20">
@@ -40,6 +41,7 @@ export default async function UserDashboardLayout({ children }: Props) {
         </div>
       </main>
     </UserProvider>
+    </AuthLayoutWrapper>
     </body>
     </html>
   );

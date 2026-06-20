@@ -25,18 +25,13 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getCurrentUser();
-  const client=await getCurrentClient();
-  const isAuthenticated = !!user  || !!client
   return (
     <html
       lang="en"
       className={cn("h-full", "antialiased", googleSans.variable)}
     >
       <body className="min-h-screen w-full overflow-x-hidden flex flex-col">
-        <AuthLayoutWrapper isAuthenticated={isAuthenticated}>
           {children}
-        </AuthLayoutWrapper>
       </body>
     </html>
   );
