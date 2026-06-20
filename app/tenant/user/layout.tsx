@@ -8,6 +8,7 @@ import {prisma} from "@/lib/db"
 import {cn} from "@/lib/utils"
 import "@/app/globals.css";
 import Header from "@/components/ui/layout/Header";
+import AuthProvider from "@/lib/AuthLayoutWrapper"
 
 type Props = {
   children: ReactNode;
@@ -24,9 +25,8 @@ const googleSans= Google_Sans({
 export default async function UserDashboardLayout({ children }: Props) {
   const user = await getCurrentUser();
 
-  // Not authenticated — bounce to user login
-  if (!user) {
-    redirect("/tenant/user/login");
+ if (!user) {
+    redirect("/user/login");
   }
 
   return (

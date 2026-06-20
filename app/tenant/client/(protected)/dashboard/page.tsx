@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useClient } from "@/lib/ClientProvider";
-import { ArrowRightIcon, CalendarIcon, FileTextIcon } from "@radix-ui/react-icons";
+import { ArrowRightIcon, CalendarIcon } from "@radix-ui/react-icons";
 import { SlidersHorizontal, X } from "lucide-react";
 import { format, isToday, isFuture } from "date-fns";
 
@@ -15,15 +15,6 @@ type Appointment = {
   meetingMode: string;
   status: string;
   purpose?: string | null;
-};
-
-type Attachment = {
-  id: string;
-  fileName: string;
-  fileType: string;
-  fileUrl: string;
-  fileSize?: number | null;
-  createdAt: string;
 };
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
@@ -39,17 +30,6 @@ const MODE_LABEL: Record<string, string> = {
   office_meet: "In-person",
   online_meet: "Online",
   other: "Other",
-};
-
-function sizeLabel(bytes?: number | null) {
-  if (!bytes) return null;
-  return bytes > 1024 * 1024
-    ? `${(bytes / (1024 * 1024)).toFixed(1)} MB`
-    : `${(bytes / 1024).toFixed(0)} KB`;
-}
-
-const FILE_ICON: Record<string, string> = {
-  pdf: "📄", png: "🖼️", jpg: "🖼️", jpeg: "🖼️", docx: "📝", doc: "📝",
 };
 
 // ── Sub-components ──────────────────────────────────────────────────────────
@@ -79,30 +59,6 @@ function ApptRow({ appt }: { appt: Appointment }) {
   );
 }
 
-function DocRow({ doc }: { doc: Attachment }) {
-  const ext = doc.fileName.split(".").pop()?.toLowerCase() ?? "";
-  const icon = FILE_ICON[ext] ?? "📎";
-  const size = sizeLabel(doc.fileSize);
-  return (
-    <a
-      href={doc.fileUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center gap-3 px-4 py-3.5 rounded-xl border border-gray-100 bg-white hover:bg-gray-50 transition-colors group"
-    >
-      <span className="text-xl leading-none shrink-0">{icon}</span>
-      <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium text-gray-900 truncate">{doc.fileName}</div>
-        <div className="text-xs text-gray-400 mt-0.5">
-          {format(new Date(doc.createdAt), "dd MMM yyyy")}
-          {size && <span className="ml-2">{size}</span>}
-        </div>
-      </div>
-      <ArrowRightIcon className="w-4 h-4 text-gray-300 group-hover:text-gray-500 shrink-0 transition-colors" />
-    </a>
-  );
-}
-
 // ── Filter Panel ─────────────────────────────────────────────────────────────
 
 type ApptFilter = { today: boolean; upcoming: boolean };
@@ -129,61 +85,43 @@ function FilterPanel({ open, onClose, apptFilter, setApptFilter }: FilterPanelPr
   return (
     <div
       ref={ref}
-      className="absolute right-0 top-full mt-2 z-30 w-56 bg-white rounded-2xl border border-gray-100 shadow-xl p-4 space-y-4"
+      className="absolute right-0 top-full mt-2 z-30 w-56 bg-white rounded-2xl border border-gray-100 shadow-xl p-4"
     >
-      {/* Appointments group */}
-      <div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-          <CalendarIcon className="w-3.5 h-3.5" />
-          Appointments
-        </div>
-        <label className="flex items-center gap-2 py-1 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={apptFilter.today}
-            onChange={(e) => setApptFilter((p) => ({ ...p, today: e.target.checked }))}
-            className="w-4 h-4 rounded accent-blue-600"
-          />
-          <span className="text-sm text-gray-700">Today</span>
-        </label>
-        <label className="flex items-center gap-2 py-1 cursor-pointer">
-          <input
-            type="checkbox"
-            checked={apptFilter.upcoming}
-            onChange={(e) => setApptFilter((p) => ({ ...p, upcoming: e.target.checked }))}
-            className="w-4 h-4 rounded accent-blue-600"
-          />
-          <span className="text-sm text-gray-700">Upcoming</span>
-        </label>
+      <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
+        <CalendarIcon className="w-3.5 h-3.5" />
+        Appointments
       </div>
-
-      {/* Documents group */}
-      <div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
-          <FileTextIcon className="w-3.5 h-3.5" />
-          Documents
-        </div>
-        <p className="text-xs text-gray-400">All documents shown</p>
-      </div>
+      <label className="flex items-center gap-2 py-1 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={apptFilter.today}
+          onChange={(e) => setApptFilter((p) => ({ ...p, today: e.target.checked }))}
+          className="w-4 h-4 rounded accent-blue-600"
+        />
+        <span className="text-sm text-gray-700">Today</span>
+      </label>
+      <label className="flex items-center gap-2 py-1 cursor-pointer">
+        <input
+          type="checkbox"
+          checked={apptFilter.upcoming}
+          onChange={(e) => setApptFilter((p) => ({ ...p, upcoming: e.target.checked }))}
+          className="w-4 h-4 rounded accent-blue-600"
+        />
+        <span className="text-sm text-gray-700">Upcoming</span>
+      </label>
     </div>
   );
 }
 
 // ── Main ─────────────────────────────────────────────────────────────────────
 
-type Tab = "appointments" | "documents";
-
 export default function ClientDashboardPage() {
   const { client } = useClient();
 
-  const [activeTab, setActiveTab] = useState<Tab>("appointments");
   const [filterOpen, setFilterOpen] = useState(false);
   const [apptFilter, setApptFilter] = useState<ApptFilter>({ today: false, upcoming: false });
-
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [documents, setDocuments] = useState<Attachment[]>([]);
   const [loadingAppts, setLoadingAppts] = useState(true);
-  const [loadingDocs, setLoadingDocs] = useState(true);
 
   useEffect(() => {
     fetch("/api/client/appointments")
@@ -191,17 +129,10 @@ export default function ClientDashboardPage() {
       .then((json) => { if (json.success) setAppointments(json.data ?? []); })
       .catch(() => {})
       .finally(() => setLoadingAppts(false));
-
-    fetch("/api/client/documents")
-      .then((r) => r.json())
-      .then((json) => { if (json.success) setDocuments(json.data ?? []); })
-      .catch(() => {})
-      .finally(() => setLoadingDocs(false));
   }, []);
 
   if (!client) return null;
 
-  // ── Apply appointment filters ─────────────────────────────────────────────
   const filterActive = apptFilter.today || apptFilter.upcoming;
   const filteredAppts = appointments.filter((a) => {
     if (!filterActive) return true;
@@ -211,92 +142,60 @@ export default function ClientDashboardPage() {
     return false;
   });
 
-  const loading = activeTab === "appointments" ? loadingAppts : loadingDocs;
-
   return (
     <div className="pb-28 space-y-5">
       <h1 className="text-lg font-semibold text-gray-800">
         Welcome, <span className="text-blue-700">{client.name}</span>
       </h1>
 
-      {/* ── Tab bar + Filter ─────────────────────────────────────────────── */}
+      {/* ── Header + Filter ───────────────────────────────────────────────── */}
       <div className="flex items-center gap-2 relative">
-        {/* Tabs */}
-        <div className="flex gap-1 p-1 bg-gray-100 rounded-xl flex-1 w-fit">
-          {(["appointments", "documents"] as Tab[]).map((t) => (
-            <button
-              key={t}
-              id={`client-tab-${t}`}
-              onClick={() => setActiveTab(t)}
-              className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all capitalize ${
-                activeTab === t
-                  ? "bg-white text-blue-700 shadow-sm"
-                  : "text-gray-500 hover:text-gray-700"
-              }`}
-            >
-              {t}
-            </button>
-          ))}
+        <h2 className="text-sm font-semibold text-gray-600 flex-1">Appointments</h2>
+
+        <div className="relative">
+          <button
+            id="client-filter-btn"
+            onClick={() => setFilterOpen((p) => !p)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-sm font-medium transition-colors ${
+              filterOpen || filterActive
+                ? "bg-blue-600 text-white border-blue-600"
+                : "bg-white text-gray-600 border-gray-200 hover:border-gray-300"
+            }`}
+          >
+            {filterOpen ? <X className="w-3.5 h-3.5" /> : <SlidersHorizontal className="w-3.5 h-3.5" />}
+            Filter
+            {filterActive && (
+              <span className="ml-1 w-4 h-4 rounded-full bg-white text-blue-600 text-xs font-bold flex items-center justify-center">
+                {(apptFilter.today ? 1 : 0) + (apptFilter.upcoming ? 1 : 0)}
+              </span>
+            )}
+          </button>
+
+          <FilterPanel
+            open={filterOpen}
+            onClose={() => setFilterOpen(false)}
+            apptFilter={apptFilter}
+            setApptFilter={setApptFilter}
+          />
         </div>
-
-        {/* Filter button (only for appointments) */}
-        {activeTab === "appointments" && (
-          <div className="relative">
-            <button
-              id="client-filter-btn"
-              onClick={() => setFilterOpen((p) => !p)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-sm font-medium transition-colors ${
-                filterOpen || filterActive
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white text-gray-600 border-gray-200 hover:border-gray-300"
-              }`}
-            >
-              {filterOpen ? <X className="w-3.5 h-3.5" /> : <SlidersHorizontal className="w-3.5 h-3.5" />}
-              Filter
-              {filterActive && (
-                <span className="ml-1 w-4 h-4 rounded-full bg-white text-blue-600 text-xs font-bold flex items-center justify-center">
-                  {(apptFilter.today ? 1 : 0) + (apptFilter.upcoming ? 1 : 0)}
-                </span>
-              )}
-            </button>
-
-            <FilterPanel
-              open={filterOpen}
-              onClose={() => setFilterOpen(false)}
-              apptFilter={apptFilter}
-              setApptFilter={setApptFilter}
-            />
-          </div>
-        )}
       </div>
 
       {/* ── Content ──────────────────────────────────────────────────────── */}
-      {loading ? (
-        <div className="flex items-center justify-center h-40 text-gray-400 text-sm">
+      {loadingAppts ? (
+        <div className="flex h-40 items-center justify-center text-sm text-gray-400">
           Loading…
         </div>
-      ) : activeTab === "appointments" ? (
-        filteredAppts.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-40 text-gray-400 gap-2">
-            <CalendarIcon className="w-7 h-7 opacity-30" />
-            <p className="text-sm">{filterActive ? "No appointments match the filter" : "No appointments yet"}</p>
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {filteredAppts.map((a) => (
-              <ApptRow key={a.id} appt={a} />
-            ))}
-          </div>
-        )
-      ) : documents.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-40 text-gray-400 gap-2">
-          <FileTextIcon className="w-7 h-7 opacity-30" />
-          <p className="text-sm">No documents yet</p>
+      ) : filteredAppts.length === 0 ? (
+        <div className="flex h-40 flex-col items-center justify-center gap-2 text-gray-400">
+          <CalendarIcon className="h-7 w-7 opacity-30" />
+          <p className="text-sm">
+            {filterActive ? "No appointments match the filter" : "No appointments yet"}
+          </p>
         </div>
       ) : (
         <div className="space-y-2">
-          {documents.map((d) => (
-            <DocRow key={d.id} doc={d} />
+          {filteredAppts.map((a) => (
+            <ApptRow key={a.id} appt={a} />
           ))}
         </div>
       )}

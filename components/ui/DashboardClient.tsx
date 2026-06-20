@@ -206,7 +206,7 @@ export default function DashboardClient() {
 
   return (
     <div className="pb-28 space-y-5">
-      <h1>Client Dashboard</h1>
+      <h1>Admin Dashboard</h1>
 
     <div className="m-auto size-fit block p-5">
         <SectionNav selectedSection={activeSection} onSelect={setActiveSection} />

@@ -23,6 +23,7 @@ import {
   ArrowRight,
   X,
 } from "lucide-react";
+import Link from "next/link";
 
 // ── Enum values ────────────────────────────────────────────────────────────
 const CLIENT_TYPES = [
@@ -291,7 +292,20 @@ export default function ClientOnboardingPage() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+
       <div className="mx-auto max-w-6xl px-4 py-10 lg:px-8">
+
+
+      <div className="absolute inset-x-0 top-5 flex justify-center">
+        <Link
+        href="/"
+        aria-label="home">
+        <span className="select-none inline-block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-3xl font-bold tracking-tight text-transparent">
+          Ayushman.
+        </span>
+        </Link>
+      </div>
+
 
         {/* ── Top bar ─────────────────────────────────────────────────── */}
         <div className="mb-8 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">

@@ -24,7 +24,7 @@ export default async function ClientDashboardLayout({ children }: Props) {
 
   // Not authenticated — bounce to client login
   if (!client) {
-    redirect("/tenant/client/login");
+    redirect("/client/login");
   }
 
   return (

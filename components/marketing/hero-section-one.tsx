@@ -29,10 +29,9 @@ export default function HeroSection() {
                         {/* Left: Copy */}
                         <div className="flex-1 max-w-2xl fade-up">
                                 <h1 className="text-balance text-4xl font-black md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
-                                    AI Assistance that {' '}
-                                    <span className="grad-text">Consultants</span>{' '}
+                                    AI Assistance that uplevels your{' '}
+                                    <span className="grad-text">Consultancy Services</span>{' '}
                                     <br/>
-                                    Need.
                                 </h1>
 
                                 <p className="text-muted-foreground my-8 max-w-xl text-balance text-lg leading-relaxed">
@@ -42,13 +41,13 @@ export default function HeroSection() {
                                 <div className="flex flex-wrap items-center gap-4">
                                     <Button asChild size="lg" className="pr-5 h-12 text-base rounded-full shadow-lg shadow-primary/20">
                                         <Link href="/user/register">
-                                            <span className="text-nowrap">Get Started</span>
+                                            <span className="text-nowrap">Consultant Onboard</span>
                                             <ChevronRight className="opacity-50 ml-1" />
                                         </Link>
                                     </Button>
                                     <Button asChild size="lg" className="pr-5 h-12 text-base rounded-full shadow-lg shadow-primary/20">
                                         <Link href="client/appointment">
-                                            <span className="text-nowrap">Make an Appointment</span>
+                                            <span className="text-nowrap">Client Onboard</span>
                                             <ChevronRight className="opacity-50 ml-1" />
                                         </Link>
                                     </Button>

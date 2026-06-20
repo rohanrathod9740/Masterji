@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const slides = [
   {
@@ -156,9 +157,13 @@ export default function ClientLoginPage() {
         {/* ── Right: Login form ─────────────────────────────────────────── */}
         <div className="flex items-center justify-center bg-white p-6">
           <div className="w-full max-w-md">
+            <Link
+            href="/"
+            aria-label="home">
             <span className="bg-linear-to-r select-none font-bold text-4xl from-blue-600 to-purple-600 bg-clip-text text-transparent">
               Ayushman.
             </span>
+            </Link>
 
             <h2 className="mt-2 mb-1 text-xl font-bold">Client Login</h2>
             <p className="mb-6 text-gray-600 text-sm">

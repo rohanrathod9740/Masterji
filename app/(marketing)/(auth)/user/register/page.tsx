@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { checkPasswordStrength, type PasswordStrengthResult } from "@/lib/passwordStrength";
+import Link from "next/link";
 
 const professions = [
   {
@@ -136,9 +137,14 @@ export default function SignupPage() {
         <div className="flex items-center justify-center bg-white p-3">
 
           <div className="w-full max-w-md">
+            <Link
+              href="/"
+              aria-label="home"
+              className="flex items-center space-x-2">
               <span className="bg-linear-to-r select-none font-bold text-4xl from-blue-600 to-purple-600 bg-clip-text text-transparent">
                    Ayushman.
               </span>
+            </Link>
             <h2 className="mb-4 text-xl font-bold">
               Consultant Signup
             </h2>

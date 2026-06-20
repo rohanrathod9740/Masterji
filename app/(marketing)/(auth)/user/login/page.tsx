@@ -47,7 +47,7 @@ export default function LoginPage() {
 
       // Success — refresh server state first, then navigate
       router.refresh();
-      router.push("/tenant/user");
+      router.push("/tenant/user/dashboard");
       // Keep loading=true until navigation completes to avoid flash
     } catch {
       setError("An error occurred. Please try again.");
@@ -59,9 +59,13 @@ export default function LoginPage() {
     <div className="w-full min-h-screen flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
+          <Link
+          href="/"
+          aria-label="home">
           <span className="bg-gradient-to-r select-none font-bold text-4xl from-blue-600 to-purple-600 bg-clip-text text-transparent">
             Ayushman.
           </span>
+          </Link>
           <h2 className="mb-4 text-xl font-bold">
             Consultant Signin
           </h2>
