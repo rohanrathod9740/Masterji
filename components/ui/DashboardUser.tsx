@@ -161,7 +161,7 @@ function SectionHeader({
   );
 }
 
-export default function DashboardClient() {
+export default function DashboardUser() {
   const [activeSection, setActiveSection] = useState("appointments");
   const [fetchedData, setFetchedData] = useState<DashboardData | null>(null);
   const [isLoading, setIsLoading] = useState(true);

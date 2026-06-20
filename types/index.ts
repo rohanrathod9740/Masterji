@@ -171,3 +171,12 @@ export  interface Transcriber {
   start: (audioData: AudioBuffer | undefined) => void
   output?: TranscriberData
 }
+
+export type Appointment = {
+  id: string;
+  appointmentDate: string;
+  appointmentTime: string;
+  meetingMode: string;
+  status: string;
+  purpose?: string | null;
+};
