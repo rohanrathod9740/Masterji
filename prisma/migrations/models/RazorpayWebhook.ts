@@ -397,10 +397,6 @@ export type RazorpayWebhookUncheckedUpdateManyWithoutPaymentNestedInput = {
   deleteMany?: Prisma.RazorpayWebhookScalarWhereInput | Prisma.RazorpayWebhookScalarWhereInput[]
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type RazorpayWebhookCreateWithoutPaymentInput = {
   id?: string
   eventId?: string | null

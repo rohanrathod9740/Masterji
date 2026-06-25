@@ -469,14 +469,6 @@ export type UserSlotsUncheckedUpdateManyWithoutClientNestedInput = {
   deleteMany?: Prisma.UserSlotsScalarWhereInput | Prisma.UserSlotsScalarWhereInput[]
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type UserSlotsCreateWithoutUserInput = {
   id?: string
   dayOfWeek: number

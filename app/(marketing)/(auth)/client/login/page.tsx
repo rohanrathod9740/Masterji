@@ -102,7 +102,7 @@ export default function ClientLoginPage() {
         return;
       }
 
-      router.push("/tenant/client/dashboard");
+      router.push("/tenant/client");
     } catch {
       setApiError("Network error. Please check your connection.");
     } finally {
@@ -285,10 +285,10 @@ export default function ClientLoginPage() {
             <p className="mt-4 text-center text-sm text-gray-600">
               New here?{" "}
               <a
-                href="/tenant/client/appointment"
+                href="/client/onboard"
                 className="font-bold hover:underline text-indigo-600"
               >
-                Book your first appointment
+                New Client? Register Here
               </a>
             </p>
           </div>

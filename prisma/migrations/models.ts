@@ -8,6 +8,10 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/ConsultantTag'
+export type * from './models/Language'
+export type * from './models/Certification'
+export type * from './models/Review'
 export type * from './models/User'
 export type * from './models/Client'
 export type * from './models/UserSlots'

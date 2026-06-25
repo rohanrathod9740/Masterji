@@ -9,7 +9,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="pb-32 space-y-8">
+    <div >
       <DashboardUser />
     </div>
   );

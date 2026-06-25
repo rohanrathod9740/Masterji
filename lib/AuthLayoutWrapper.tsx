@@ -44,7 +44,7 @@
 
         if(isClientAuthRoute){
           router.refresh();
-          router.replace("/tenant/client/dashboard");
+          router.replace("/tenant/client");
         }
       }
     }, [isAuthenticated, isPublicRoute, pathname, router]);

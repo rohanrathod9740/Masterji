@@ -46,7 +46,7 @@ export default function HeroSection() {
                                         </Link>
                                     </Button>
                                     <Button asChild size="lg" className="pr-5 h-12 text-base rounded-full shadow-lg shadow-primary/20">
-                                        <Link href="client/appointment">
+                                        <Link href="client/onboard">
                                             <span className="text-nowrap">Client Onboard</span>
                                             <ChevronRight className="opacity-50 ml-1" />
                                         </Link>

@@ -13,6 +13,8 @@ import {
 } from '@/components/ui/layout/dialog'
 import { useClient } from '@/lib/ClientProvider'
 import { useRouter } from 'next/navigation'
+import { Search } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 const sideBarItems = [
     { name: 'Appointments', href: '#appointments' },
@@ -23,8 +25,13 @@ const sideBarItems = [
 function ClientHeader() {
     const [menuState, setMenuState] = React.useState(false)
     const [isScrolled, setIsScrolled] = React.useState(false)
+    const [search, setSearch] = React.useState("")
+    const pathname = usePathname()
     const { client } = useClient()
     const router = useRouter()
+    const showConsultantSearch =
+    pathname === "/tenant/client" // change this to your actual route
+
 
     React.useEffect(() => {
         const handleScroll = () => {
@@ -36,7 +43,7 @@ function ClientHeader() {
 
     const handleLogout = async () => {
         await fetch('/api/client/auth/logout', { method: 'POST' })
-        router.push('/tenant/client/login')
+        router.push('/')
     }
 
     return (
@@ -86,6 +93,21 @@ function ClientHeader() {
                                         )}
                                     />
                                 </button>
+
+                                <div className="flex items-center gap-4">
+                                        {showConsultantSearch && (
+                                            <div className="hidden md:flex items-center bg-white rounded-lg px-3 py-2 w-80">
+                                                <Search className="w-4 h-4 text-gray-500" />
+                                                <input
+                                                    type="text"
+                                                    placeholder="Search consultants..."
+                                                    value={search}
+                                                    onChange={(e) => setSearch(e.target.value)}
+                                                    className="ml-2 w-full outline-none text-sm"
+                                                />
+                                            </div>
+                                        )}
+                                </div>
 
                                 {/* Desktop profile dialog */}
                                 <div className="hidden lg:flex">

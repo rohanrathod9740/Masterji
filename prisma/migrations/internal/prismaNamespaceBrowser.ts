@@ -51,6 +51,10 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  ConsultantTag: 'ConsultantTag',
+  Language: 'Language',
+  Certification: 'Certification',
+  Review: 'Review',
   User: 'User',
   Client: 'Client',
   UserSlots: 'UserSlots',
@@ -81,16 +85,74 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const ConsultantTagScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type ConsultantTagScalarFieldEnum = (typeof ConsultantTagScalarFieldEnum)[keyof typeof ConsultantTagScalarFieldEnum]
+
+
+export const LanguageScalarFieldEnum = {
+  id: 'id',
+  name: 'name'
+} as const
+
+export type LanguageScalarFieldEnum = (typeof LanguageScalarFieldEnum)[keyof typeof LanguageScalarFieldEnum]
+
+
+export const CertificationScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  issuer: 'issuer',
+  issuedAt: 'issuedAt',
+  expiresAt: 'expiresAt',
+  credentialUrl: 'credentialUrl',
+  consultantId: 'consultantId'
+} as const
+
+export type CertificationScalarFieldEnum = (typeof CertificationScalarFieldEnum)[keyof typeof CertificationScalarFieldEnum]
+
+
+export const ReviewScalarFieldEnum = {
+  id: 'id',
+  rating: 'rating',
+  comment: 'comment',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  clientId: 'clientId'
+} as const
+
+export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  dob: 'dob',
-  type: 'type',
-  email: 'email',
   phone: 'phone',
-  nameOfConsultancy: 'nameOfConsultancy',
-  address: 'address',
+  email: 'email',
   password: 'password',
+  name: 'name',
+  profilePicture: 'profilePicture',
+  headline: 'headline',
+  bio: 'bio',
+  dob: 'dob',
+  nameOfConsultancy: 'nameOfConsultancy',
+  yearsOfExperience: 'yearsOfExperience',
+  designation: 'designation',
+  address: 'address',
+  city: 'city',
+  state: 'state',
+  country: 'country',
+  timezone: 'timezone',
+  appointmentFee: 'appointmentFee',
+  website: 'website',
+  linkedinUrl: 'linkedinUrl',
+  portfolioUrl: 'portfolioUrl',
+  resumeUrl: 'resumeUrl',
+  isVerified: 'isVerified',
+  isFeatured: 'isFeatured',
+  avgReviews: 'avgReviews',
   createdAt: 'createdAt'
 } as const
 

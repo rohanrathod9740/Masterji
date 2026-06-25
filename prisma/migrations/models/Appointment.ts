@@ -184,7 +184,7 @@ export type AppointmentGroupByOutputType = {
   appointmentTime: string
   meetingMode: $Enums.MeetingMode
   status: $Enums.AppointmentStatus
-  purpose: string | null
+  purpose: string
   createdAt: Date
   updatedAt: Date
   userId: string | null
@@ -218,7 +218,7 @@ export type AppointmentWhereInput = {
   appointmentTime?: Prisma.StringFilter<"Appointment"> | string
   meetingMode?: Prisma.EnumMeetingModeFilter<"Appointment"> | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-  purpose?: Prisma.StringNullableFilter<"Appointment"> | string | null
+  purpose?: Prisma.StringFilter<"Appointment"> | string
   createdAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   userId?: Prisma.StringNullableFilter<"Appointment"> | string | null
@@ -234,7 +234,7 @@ export type AppointmentOrderByWithRelationInput = {
   appointmentTime?: Prisma.SortOrder
   meetingMode?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  purpose?: Prisma.SortOrderInput | Prisma.SortOrder
+  purpose?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -253,7 +253,7 @@ export type AppointmentWhereUniqueInput = Prisma.AtLeast<{
   appointmentTime?: Prisma.StringFilter<"Appointment"> | string
   meetingMode?: Prisma.EnumMeetingModeFilter<"Appointment"> | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-  purpose?: Prisma.StringNullableFilter<"Appointment"> | string | null
+  purpose?: Prisma.StringFilter<"Appointment"> | string
   createdAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   userId?: Prisma.StringNullableFilter<"Appointment"> | string | null
@@ -269,7 +269,7 @@ export type AppointmentOrderByWithAggregationInput = {
   appointmentTime?: Prisma.SortOrder
   meetingMode?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  purpose?: Prisma.SortOrderInput | Prisma.SortOrder
+  purpose?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   userId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -288,7 +288,7 @@ export type AppointmentScalarWhereWithAggregatesInput = {
   appointmentTime?: Prisma.StringWithAggregatesFilter<"Appointment"> | string
   meetingMode?: Prisma.EnumMeetingModeWithAggregatesFilter<"Appointment"> | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusWithAggregatesFilter<"Appointment"> | $Enums.AppointmentStatus
-  purpose?: Prisma.StringNullableWithAggregatesFilter<"Appointment"> | string | null
+  purpose?: Prisma.StringWithAggregatesFilter<"Appointment"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Appointment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Appointment"> | Date | string
   userId?: Prisma.StringNullableWithAggregatesFilter<"Appointment"> | string | null
@@ -300,7 +300,7 @@ export type AppointmentCreateInput = {
   appointmentTime: string
   meetingMode?: $Enums.MeetingMode
   status?: $Enums.AppointmentStatus
-  purpose?: string | null
+  purpose: string
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutAppointmentsInput
@@ -315,7 +315,7 @@ export type AppointmentUncheckedCreateInput = {
   appointmentTime: string
   meetingMode?: $Enums.MeetingMode
   status?: $Enums.AppointmentStatus
-  purpose?: string | null
+  purpose: string
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -328,7 +328,7 @@ export type AppointmentUpdateInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -343,7 +343,7 @@ export type AppointmentUncheckedUpdateInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -357,7 +357,7 @@ export type AppointmentCreateManyInput = {
   appointmentTime: string
   meetingMode?: $Enums.MeetingMode
   status?: $Enums.AppointmentStatus
-  purpose?: string | null
+  purpose: string
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -369,7 +369,7 @@ export type AppointmentUpdateManyMutationInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -381,7 +381,7 @@ export type AppointmentUncheckedUpdateManyInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -555,7 +555,7 @@ export type AppointmentCreateWithoutUserInput = {
   appointmentTime: string
   meetingMode?: $Enums.MeetingMode
   status?: $Enums.AppointmentStatus
-  purpose?: string | null
+  purpose: string
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutAppointmentsInput
@@ -569,7 +569,7 @@ export type AppointmentUncheckedCreateWithoutUserInput = {
   appointmentTime: string
   meetingMode?: $Enums.MeetingMode
   status?: $Enums.AppointmentStatus
-  purpose?: string | null
+  purpose: string
   createdAt?: Date | string
   updatedAt?: Date | string
   appointmentDocs?: Prisma.AttachmentUncheckedCreateNestedManyWithoutAppointmentInput
@@ -611,7 +611,7 @@ export type AppointmentScalarWhereInput = {
   appointmentTime?: Prisma.StringFilter<"Appointment"> | string
   meetingMode?: Prisma.EnumMeetingModeFilter<"Appointment"> | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-  purpose?: Prisma.StringNullableFilter<"Appointment"> | string | null
+  purpose?: Prisma.StringFilter<"Appointment"> | string
   createdAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Appointment"> | Date | string
   userId?: Prisma.StringNullableFilter<"Appointment"> | string | null
@@ -623,7 +623,7 @@ export type AppointmentCreateWithoutClientInput = {
   appointmentTime: string
   meetingMode?: $Enums.MeetingMode
   status?: $Enums.AppointmentStatus
-  purpose?: string | null
+  purpose: string
   createdAt?: Date | string
   updatedAt?: Date | string
   appointmentDocs?: Prisma.AttachmentCreateNestedManyWithoutAppointmentInput
@@ -636,7 +636,7 @@ export type AppointmentUncheckedCreateWithoutClientInput = {
   appointmentTime: string
   meetingMode?: $Enums.MeetingMode
   status?: $Enums.AppointmentStatus
-  purpose?: string | null
+  purpose: string
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -675,7 +675,7 @@ export type AppointmentCreateWithoutAppointmentDocsInput = {
   appointmentTime: string
   meetingMode?: $Enums.MeetingMode
   status?: $Enums.AppointmentStatus
-  purpose?: string | null
+  purpose: string
   createdAt?: Date | string
   updatedAt?: Date | string
   client: Prisma.ClientCreateNestedOneWithoutAppointmentsInput
@@ -689,7 +689,7 @@ export type AppointmentUncheckedCreateWithoutAppointmentDocsInput = {
   appointmentTime: string
   meetingMode?: $Enums.MeetingMode
   status?: $Enums.AppointmentStatus
-  purpose?: string | null
+  purpose: string
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -717,7 +717,7 @@ export type AppointmentUpdateWithoutAppointmentDocsInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -731,7 +731,7 @@ export type AppointmentUncheckedUpdateWithoutAppointmentDocsInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -744,7 +744,7 @@ export type AppointmentCreateManyUserInput = {
   appointmentTime: string
   meetingMode?: $Enums.MeetingMode
   status?: $Enums.AppointmentStatus
-  purpose?: string | null
+  purpose: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -755,7 +755,7 @@ export type AppointmentUpdateWithoutUserInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   client?: Prisma.ClientUpdateOneRequiredWithoutAppointmentsNestedInput
@@ -769,7 +769,7 @@ export type AppointmentUncheckedUpdateWithoutUserInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointmentDocs?: Prisma.AttachmentUncheckedUpdateManyWithoutAppointmentNestedInput
@@ -782,7 +782,7 @@ export type AppointmentUncheckedUpdateManyWithoutUserInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -793,7 +793,7 @@ export type AppointmentCreateManyClientInput = {
   appointmentTime: string
   meetingMode?: $Enums.MeetingMode
   status?: $Enums.AppointmentStatus
-  purpose?: string | null
+  purpose: string
   createdAt?: Date | string
   updatedAt?: Date | string
   userId?: string | null
@@ -805,7 +805,7 @@ export type AppointmentUpdateWithoutClientInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   appointmentDocs?: Prisma.AttachmentUpdateManyWithoutAppointmentNestedInput
@@ -818,7 +818,7 @@ export type AppointmentUncheckedUpdateWithoutClientInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -831,7 +831,7 @@ export type AppointmentUncheckedUpdateManyWithoutClientInput = {
   appointmentTime?: Prisma.StringFieldUpdateOperationsInput | string
   meetingMode?: Prisma.EnumMeetingModeFieldUpdateOperationsInput | $Enums.MeetingMode
   status?: Prisma.EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-  purpose?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  purpose?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -958,7 +958,7 @@ export type $AppointmentPayload<ExtArgs extends runtime.Types.Extensions.Interna
     appointmentTime: string
     meetingMode: $Enums.MeetingMode
     status: $Enums.AppointmentStatus
-    purpose: string | null
+    purpose: string
     createdAt: Date
     updatedAt: Date
     userId: string | null

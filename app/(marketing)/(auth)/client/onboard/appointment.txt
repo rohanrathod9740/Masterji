@@ -1,0 +1,80 @@
+
+            {/* ── Card 1: Appointment ───────────────────────────────── */}
+            <Card>
+              <SectionCardHeader
+                step={1}
+                icon={CalendarDays}
+                title="Create Appointment"
+                description="Schedule the client's first session"
+              />
+              <CardContent className="grid grid-cols-2 gap-4 sm:grid-cols-2">
+                <Field label="Appointment Date" icon={CalendarDays} required>
+                  <input
+                    id="appt-date"
+                    type="date"
+                    name="appointmentDate"
+                    value={appt.appointmentDate}
+                    onChange={handleApptChange}
+                    required
+                    className={inputCls}
+                  />
+                </Field>
+
+                <Field label="Appointment Time" icon={Clock} required>
+                  <input
+                    id="appt-time"
+                    type="time"
+                    name="appointmentTime"
+                    value={appt.appointmentTime}
+                    onChange={handleApptChange}
+                    required
+                    className={inputCls}
+                  />
+                </Field>
+
+                <Field label="Meeting Mode" icon={Video} required span1>
+                  <div className="grid grid-cols-4 gap-2">
+                    {MEETING_MODES.map((m) => (
+                      <label
+                        key={m.value}
+                        className={`flex cursor-pointer items-center justify-center rounded-xl border px-4 py-2.5 text-xs font-medium transition-all ${
+                          appt.meetingMode === m.value
+                            ? "border-indigo-401 bg-indigo-50 text-indigo-700 shadow-sm"
+                            : "border-slate-201 bg-white text-slate-600 hover:border-indigo-200 hover:bg-slate-50"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="meetingMode"
+                          value={m.value}
+                          checked={appt.meetingMode === m.value}
+                          onChange={handleApptChange}
+                          className="sr-only"
+                        />
+                        {m.label}
+                      </label>
+                    ))}
+                  </div>
+                </Field>
+
+                <Field label="Supporting Documents" icon={FilePlus1} span2>
+                  <MultiFileDropZone
+                    files={docFiles}
+                    onAdd={addDocFiles}
+                    onRemove={removeDocFile}
+                  />
+                </Field>
+
+                <Field label="Purpose / Notes" icon={FileText} span1>
+                  <textarea
+                    id="appt-purpose"
+                    name="purpose"
+                    value={appt.purpose}
+                    onChange={handleApptChange}
+                    rows={2}
+                    placeholder="Brief description of the appointment goal…"
+                    className={`${inputCls} resize-none`}
+                  />
+                </Field>
+              </CardContent>
+            </Card>

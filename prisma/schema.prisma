@@ -92,26 +92,94 @@ enum CommitmentStatus {
   missed
 }
 
+model ConsultantTag{
+  id     String @id @default(uuid())
+  name   String @unique
+  users User[] 
+}
+
+model Language {
+  id    String @id @default(uuid())
+  name  String @unique
+  users User[]
+}
+
+model Certification {
+  id          String   @id @default(uuid())
+  title       String
+  issuer      String
+  issuedAt    DateTime?
+  expiresAt   DateTime?
+  credentialUrl String?
+
+  consultantId String
+  consultant   User @relation(fields: [consultantId], references: [id])
+}
+
+
+model Review{
+  id      String      @id @default(uuid())
+  rating  Int         
+  comment String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  userId String
+  clientId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+}
+
 model User {
   id                String      @id @default(uuid())
-  name              String?
-  dob               DateTime
-  type              UserType    @default(it)
-  email             String      @unique
   phone             String      @unique
-  nameOfConsultancy String
-  address           String
+  email             String      @unique
   password          String
-  createdAt         DateTime    @default(now())
-  slots             UserSlots[]
+  review            Review[]
 
-  interactions Interaction[]
-  commitments  Commitment[]
-  appointments Appointment[]
-  auditLogs    AuditLog[]
-  cases        Case[]
-  tasks        Task[]
-  payments     Payment[]
+
+  name              String
+  profilePicture    String?
+  headline          String?
+  bio               String     @db.Text
+  dob               DateTime
+
+  nameOfConsultancy String
+  yearsOfExperience Int
+  designation       String
+  consultantTags    ConsultantTag[]
+  languages         Language[]
+  certifications    Certification[]
+
+
+  address           String?
+  city              String
+  state             String
+  country           String
+  timezone          String
+
+  appointmentFee    Int
+  website           String?
+  linkedinUrl       String?
+  portfolioUrl      String?
+  resumeUrl         String?
+
+
+    // Verification
+  isVerified        Boolean @default(false)
+  isFeatured        Boolean @default(false)
+
+
+  slots             UserSlots[]
+  interactions      Interaction[]
+  commitments       Commitment[]
+  appointments      Appointment[]
+  auditLogs         AuditLog[]
+  cases             Case[]
+  payments          Payment[]
+  tasks             Task[]
+  avgReviews        Float       @default(0.0)
+  createdAt         DateTime    @default(now())
 }
 
 model Client {
@@ -129,6 +197,7 @@ model Client {
   internalNotes String[]      @default([])
   passwordHash  String
   slots         UserSlots[]   @relation("ClientSlots")
+  review        Review[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -166,12 +235,12 @@ model Appointment {
   appointmentDocs Attachment[]      @relation("AppointmentDocs")
   meetingMode     MeetingMode       @default(office_meet)
   status          AppointmentStatus @default(pending_for_approval)
-  purpose         String?
+  purpose         String
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user      User?    @relation(fields: [userId], references: [id])
-  userId    String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User?    @relation(fields: [userId], references: [id])
+  userId          String?
 
   @@index([clientId, appointmentDate])
 }

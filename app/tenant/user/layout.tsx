@@ -34,8 +34,8 @@ export default async function UserDashboardLayout({ children }: Props) {
       <body>
     <UserProvider initialUser={user}>
       <Header />
-      <main className="min-h-screen w-full bg-gray-50 pt-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="min-h-screen w-full bg-gray-50 pt-10">
+        <div className="px-2 py-9">
           {children}
         </div>
       </main>

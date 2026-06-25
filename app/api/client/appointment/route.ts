@@ -7,7 +7,7 @@ import {ALLOWED_FILE_TYPES} from "@/schemas/attachmentSchema";
 
 // ── Zod schemas ────────────────────────────────────────────────────────────
 import { createClientSchema }      from "@/schemas/clientSchema";
-import { createAppointmentSchema } from "@/schemas/appointmentSchema";
+// import { createAppointmentSchema } from "@/schemas/appointmentSchema";
 import { createAttachmentSchema} from "@/schemas/attachmentSchema";
 
 // ── POST /api/client/appointment ──────────────────────────────────────────
@@ -86,55 +86,55 @@ export async function POST(req: NextRequest) {
     }
 
 
-  // ── 4. Validate appointment fields via Zod ───────────────────────────────
-  const appointmentDate = get("appointmentDate");
-  const appointmentTime = get("appointmentTime");
+  // // ── 4. Validate appointment fields via Zod ───────────────────────────────
+  // const appointmentDate = get("appointmentDate");
+  // const appointmentTime = get("appointmentTime");
 
-  const apptParse = createAppointmentSchema
-    .safeParse({
-      appointmentDate: appointmentDate,
-      appointmentTime: appointmentTime,
-      meetingMode:     get("meetingMode") || undefined,
-      purpose:         get("purpose")     || undefined,
-    });
+  // const apptParse = createAppointmentSchema
+  //   .safeParse({
+  //     appointmentDate: appointmentDate,
+  //     appointmentTime: appointmentTime,
+  //     meetingMode:     get("meetingMode") || undefined,
+  //     purpose:         get("purpose")     || undefined,
+  //   });
 
-  if (!apptParse.success) {
-    const errors = apptParse.error.flatten().fieldErrors;
-    return NextResponse.json(
-      { success: false, message: "Invalid appointment data.", errors },
-      { status: 422 }
-    );
-  }
+  // if (!apptParse.success) {
+  //   const errors = apptParse.error.flatten().fieldErrors;
+  //   return NextResponse.json(
+  //     { success: false, message: "Invalid appointment data.", errors },
+  //     { status: 422 }
+  //   );
+  // }
 
-  // ── 5. Validate uploaded files ────────────────────────────────────────────
-  const MAX_FILE_BYTES = 10 * 1024 * 1024;
-  const rawDocFiles = (formData.getAll("doc") as File[]).filter(
-    (f) => f instanceof File && f.size > 0
-  );
+  // // ── 5. Validate uploaded files ────────────────────────────────────────────
+  // const MAX_FILE_BYTES = 10 * 1024 * 1024;
+  // const rawDocFiles = (formData.getAll("doc") as File[]).filter(
+  //   (f) => f instanceof File && f.size > 0
+  // );
 
-  const oversized = rawDocFiles.filter((f) => f.size > MAX_FILE_BYTES);
-  if (oversized.length > 0) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: `File(s) exceed the 10 MB limit: ${oversized.map((f) => f.name).join(", ")}`,
-      },
-      { status: 413 }
-    );
-  }
+  // const oversized = rawDocFiles.filter((f) => f.size > MAX_FILE_BYTES);
+  // if (oversized.length > 0) {
+  //   return NextResponse.json(
+  //     {
+  //       success: false,
+  //       message: `File(s) exceed the 10 MB limit: ${oversized.map((f) => f.name).join(", ")}`,
+  //     },
+  //     { status: 413 }
+  //   );
+  // }
 
-  const invalidType = rawDocFiles.filter(
-    (f) => !ALLOWED_FILE_TYPES.includes(f.type as (typeof ALLOWED_FILE_TYPES)[number])
-  );
-  if (invalidType.length > 0) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: `Unsupported file type(s): ${invalidType.map((f) => f.name).join(", ")}. Allowed: PDF, PNG, JPG, DOC, DOCX`,
-      },
-      { status: 415 }
-    );
-  }
+  // const invalidType = rawDocFiles.filter(
+  //   (f) => !ALLOWED_FILE_TYPES.includes(f.type as (typeof ALLOWED_FILE_TYPES)[number])
+  // );
+  // if (invalidType.length > 0) {
+  //   return NextResponse.json(
+  //     {
+  //       success: false,
+  //       message: `Unsupported file type(s): ${invalidType.map((f) => f.name).join(", ")}. Allowed: PDF, PNG, JPG, DOC, DOCX`,
+  //     },
+  //     { status: 415 }
+  //   );
+  // }
 
   // ── 6. Hash the provided password ──────────────────────────────────
   const providedPassword = get("password");
@@ -151,107 +151,106 @@ export async function POST(req: NextRequest) {
   type UploadResult   = Awaited<ReturnType<typeof uploadSupportingDoc>>;
   let uploadResults: UploadResult[] = [];
 
-  if (rawDocFiles.length > 0) {
-    try {
-      uploadResults = await Promise.all(
-        rawDocFiles.map((f) => uploadSupportingDoc(f, appointmentId))
-      );
-    } catch (uploadErr) {
-      console.error("[upload]", uploadErr);
-      await deleteSupportingDocs(uploadResults.map((r) => r.path)).catch(console.error);
-      return NextResponse.json(
-        { success: false, message: "Failed to upload one or more supporting documents. Please try again." },
-        { status: 502 }
-      );
-    }
-  }
+  // if (rawDocFiles.length > 0) {
+  //   try {
+  //     uploadResults = await Promise.all(
+  //       rawDocFiles.map((f) => uploadSupportingDoc(f, appointmentId))
+  //     );
+  //   } catch (uploadErr) {
+  //     console.error("[upload]", uploadErr);
+  //     await deleteSupportingDocs(uploadResults.map((r) => r.path)).catch(console.error);
+  //     return NextResponse.json(
+  //       { success: false, message: "Failed to upload one or more supporting documents. Please try again." },
+  //       { status: 502 }
+  //     );
+  //   }
+  // }
 
   // ── 8. Validate each attachment record via Zod (before writing) ──────────
-  for (const ur of uploadResults) {
-    const attachParse = createAttachmentSchema.safeParse({
-      appointmentId: appointmentId,
-      fileName:      ur.fileName,
-      fileType:      ur.fileType,
-      fileUrl:       ur.publicUrl,
-      fileSize:      ur.fileSize,
-    });
-
-    if (!attachParse.success) {
-      // Clean up already-uploaded files and abort
-      await deleteSupportingDocs(uploadResults.map((r) => r.path)).catch(console.error);
-      return NextResponse.json(
-        {
-          success: false,
-          message: `Attachment metadata invalid for "${ur.fileName}".`,
-          errors:  attachParse.error.flatten().fieldErrors,
-        },
-        { status: 422 }
-      );
-    }
-  }
+  // for (const ur of uploadResults) {
+    // const attachParse = createAttachmentSchema.safeParse({
+      // appointmentId: appointmentId,
+      // fileName:      ur.fileName,
+      // fileType:      ur.fileType,
+      // fileUrl:       ur.publicUrl,
+      // fileSize:      ur.fileSize,
+    // });
+// 
+    // if (!attachParse.success) {
+      // await deleteSupportingDocs(uploadResults.map((r) => r.path)).catch(console.error);
+      // return NextResponse.json(
+        // {
+          // success: false,
+          // message: `Attachment metadata invalid for "${ur.fileName}".`,
+          // errors:  attachParse.error.flatten().fieldErrors,
+        // },
+        // { status: 422 }
+      // );
+    // }
+  // }
 
   // ── 9. Atomic DB transaction: Client → Appointment → Attachment[] ─────────
-  try {
-    const result = await prisma.$transaction(async (tx) => {
-      // Create client
-      const newClient = await tx.client.create({
-        data: {
-          name:         clientParse.data.name,
-          email:        clientParse.data.email,
-          phone:        clientParse.data.phone,
-          dob:          clientParse.data.dob,
-          address:      clientParse.data.address,
-          companyName:  clientParse.data.companyName ?? null,
-          type:         clientParse.data.type ?? null,
-          status:       clientParse.data.status ?? "active",
-          tags:         clientParse.data.tags,
-          passwordHash: passwordHash,
-        },
-      });
+  // try {
+    // const result = await prisma.$transaction(async (tx) => {
+      // const newClient = await tx.client.create({
+        // data: {
+          // name:         clientParse.data.name,
+          // email:        clientParse.data.email,
+          // phone:        clientParse.data.phone,
+          // dob:          clientParse.data.dob,
+          // address:      clientParse.data.address,
+          // companyName:  clientParse.data.companyName ?? null,
+          // type:         clientParse.data.type ?? null,
+          // status:       clientParse.data.status ?? "active",
+          // tags:         clientParse.data.tags,
+          // passwordHash: passwordHash,
+        // },
+      // });
+// 
+      // const newAppointment = await tx.appointment.create({
+        // data: {
+          // id:              appointmentId,
+          // clientId:        newClient.id,
+          // appointmentDate: apptParse.data.appointmentDate,
+          // appointmentTime:apptParse.data.appointmentTime,
+          // meetingMode:     apptParse.data.meetingMode,
+          // purpose:         apptParse.data.purpose  ?? null,
+        // },
+      // });
+// 
+      // const newAttachments = await Promise.all(
+        // uploadResults.map((ur) =>
+          // tx.attachment.create({
+            // data: {
+              // clientId:      newClient.id,
+              // appointmentId: appointmentId,
+              // fileName:      ur.fileName,
+              // fileType:      ur.fileType,
+              // fileUrl:       ur.publicUrl,
+              // fileSize:      ur.fileSize,
+            // },
+          // })
+        // )
+      // );
 
-      // Create appointment (pre-generated ID matches storage paths)
-      const newAppointment = await tx.appointment.create({
-        data: {
-          id:              appointmentId,
-          clientId:        newClient.id,
-          appointmentDate: apptParse.data.appointmentDate,
-          appointmentTime:apptParse.data.appointmentTime,
-          meetingMode:     apptParse.data.meetingMode,
-          purpose:         apptParse.data.purpose  ?? null,
-        },
-      });
-
-      // Create one Attachment record per uploaded doc
-      const newAttachments = await Promise.all(
-        uploadResults.map((ur) =>
-          tx.attachment.create({
-            data: {
-              clientId:      newClient.id,
-              appointmentId: appointmentId,
-              fileName:      ur.fileName,
-              fileType:      ur.fileType,
-              fileUrl:       ur.publicUrl,
-              fileSize:      ur.fileSize,
-            },
-          })
-        )
-      );
-
-      return { client: newClient, appointment: newAppointment, attachments: newAttachments };
-    });
-
-    // Strip passwordHash from the response
-    const { passwordHash: _ph, ...safeClient } = result.client;
-    
-
-    return NextResponse.json(
+      try{
+        const result = await prisma.client.create({
+          data: {
+            name:         clientParse.data.name,
+            email:        clientParse.data.email,
+            phone:        clientParse.data.phone,
+            dob:          clientParse.data.dob,
+            address:      clientParse.data.address,
+            companyName:  clientParse.data.companyName ?? null,
+            passwordHash: passwordHash,
+          },
+        })
+      return NextResponse.json(
       {
         success: true,
-        message: "Client and appointment created successfully.",
+        message: "Client created successfully.",
         data: {
-          client:      safeClient,
-          appointment: result.appointment,
-          attachments: result.attachments,
+          client:      clientParse.data,
         },
       },
       { status: 201 }
@@ -259,27 +258,25 @@ export async function POST(req: NextRequest) {
   } catch (error: unknown) {
     console.error("[POST /api/client/appointment]", error);
 
-    // Clean up uploads on transaction failure
-    if (uploadResults.length > 0) {
-      await deleteSupportingDocs(uploadResults.map((r) => r.path)).catch(console.error);
-    }
-
-    // Prisma unique-constraint (P2002) — e.g. duplicate email or phone
-    if (
-      typeof error === "object" &&
-      error !== null &&
-      "code" in error &&
-      (error as { code: string }).code === "P2002"
-    ) {
-      const target = (error as { meta?: { target?: string[] } }).meta?.target ?? [];
-      return NextResponse.json(
-        {
-          success: false,
-          message: `A client with this ${target.join(" and ")} already exists.`,
-        },
-        { status: 409 }
-      );
-    }
+    // if (uploadResults.length > 0) {
+      // await deleteSupportingDocs(uploadResults.map((r) => r.path)).catch(console.error);
+    // }
+// 
+    // if (
+      // typeof error === "object" &&
+      // error !== null &&
+      // "code" in error &&
+      // (error as { code: string }).code === "P2002"
+    // ) {
+      // const target = (error as { meta?: { target?: string[] } }).meta?.target ?? [];
+      // return NextResponse.json(
+        // {
+          // success: false,
+          // message: `A client with this ${target.join(" and ")} already exists.`,
+        // },
+        // { status: 409 }
+      // );
+    // }
 
     return NextResponse.json(
       { success: false, message: "Internal server error." },

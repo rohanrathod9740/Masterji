@@ -20,87 +20,209 @@ export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayloa
 
 export type AggregateUser = {
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
 
+export type UserAvgAggregateOutputType = {
+  yearsOfExperience: number | null
+  appointmentFee: number | null
+  avgReviews: number | null
+}
+
+export type UserSumAggregateOutputType = {
+  yearsOfExperience: number | null
+  appointmentFee: number | null
+  avgReviews: number | null
+}
+
 export type UserMinAggregateOutputType = {
   id: string | null
-  name: string | null
-  dob: Date | null
-  type: $Enums.UserType | null
-  email: string | null
   phone: string | null
-  nameOfConsultancy: string | null
-  address: string | null
+  email: string | null
   password: string | null
+  name: string | null
+  profilePicture: string | null
+  headline: string | null
+  bio: string | null
+  dob: Date | null
+  nameOfConsultancy: string | null
+  yearsOfExperience: number | null
+  designation: string | null
+  address: string | null
+  city: string | null
+  state: string | null
+  country: string | null
+  timezone: string | null
+  appointmentFee: number | null
+  website: string | null
+  linkedinUrl: string | null
+  portfolioUrl: string | null
+  resumeUrl: string | null
+  isVerified: boolean | null
+  isFeatured: boolean | null
+  avgReviews: number | null
   createdAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
-  name: string | null
-  dob: Date | null
-  type: $Enums.UserType | null
-  email: string | null
   phone: string | null
-  nameOfConsultancy: string | null
-  address: string | null
+  email: string | null
   password: string | null
+  name: string | null
+  profilePicture: string | null
+  headline: string | null
+  bio: string | null
+  dob: Date | null
+  nameOfConsultancy: string | null
+  yearsOfExperience: number | null
+  designation: string | null
+  address: string | null
+  city: string | null
+  state: string | null
+  country: string | null
+  timezone: string | null
+  appointmentFee: number | null
+  website: string | null
+  linkedinUrl: string | null
+  portfolioUrl: string | null
+  resumeUrl: string | null
+  isVerified: boolean | null
+  isFeatured: boolean | null
+  avgReviews: number | null
   createdAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
-  name: number
-  dob: number
-  type: number
-  email: number
   phone: number
-  nameOfConsultancy: number
-  address: number
+  email: number
   password: number
+  name: number
+  profilePicture: number
+  headline: number
+  bio: number
+  dob: number
+  nameOfConsultancy: number
+  yearsOfExperience: number
+  designation: number
+  address: number
+  city: number
+  state: number
+  country: number
+  timezone: number
+  appointmentFee: number
+  website: number
+  linkedinUrl: number
+  portfolioUrl: number
+  resumeUrl: number
+  isVerified: number
+  isFeatured: number
+  avgReviews: number
   createdAt: number
   _all: number
 }
 
 
+export type UserAvgAggregateInputType = {
+  yearsOfExperience?: true
+  appointmentFee?: true
+  avgReviews?: true
+}
+
+export type UserSumAggregateInputType = {
+  yearsOfExperience?: true
+  appointmentFee?: true
+  avgReviews?: true
+}
+
 export type UserMinAggregateInputType = {
   id?: true
-  name?: true
-  dob?: true
-  type?: true
-  email?: true
   phone?: true
-  nameOfConsultancy?: true
-  address?: true
+  email?: true
   password?: true
+  name?: true
+  profilePicture?: true
+  headline?: true
+  bio?: true
+  dob?: true
+  nameOfConsultancy?: true
+  yearsOfExperience?: true
+  designation?: true
+  address?: true
+  city?: true
+  state?: true
+  country?: true
+  timezone?: true
+  appointmentFee?: true
+  website?: true
+  linkedinUrl?: true
+  portfolioUrl?: true
+  resumeUrl?: true
+  isVerified?: true
+  isFeatured?: true
+  avgReviews?: true
   createdAt?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
-  name?: true
-  dob?: true
-  type?: true
-  email?: true
   phone?: true
-  nameOfConsultancy?: true
-  address?: true
+  email?: true
   password?: true
+  name?: true
+  profilePicture?: true
+  headline?: true
+  bio?: true
+  dob?: true
+  nameOfConsultancy?: true
+  yearsOfExperience?: true
+  designation?: true
+  address?: true
+  city?: true
+  state?: true
+  country?: true
+  timezone?: true
+  appointmentFee?: true
+  website?: true
+  linkedinUrl?: true
+  portfolioUrl?: true
+  resumeUrl?: true
+  isVerified?: true
+  isFeatured?: true
+  avgReviews?: true
   createdAt?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
-  name?: true
-  dob?: true
-  type?: true
-  email?: true
   phone?: true
-  nameOfConsultancy?: true
-  address?: true
+  email?: true
   password?: true
+  name?: true
+  profilePicture?: true
+  headline?: true
+  bio?: true
+  dob?: true
+  nameOfConsultancy?: true
+  yearsOfExperience?: true
+  designation?: true
+  address?: true
+  city?: true
+  state?: true
+  country?: true
+  timezone?: true
+  appointmentFee?: true
+  website?: true
+  linkedinUrl?: true
+  portfolioUrl?: true
+  resumeUrl?: true
+  isVerified?: true
+  isFeatured?: true
+  avgReviews?: true
   createdAt?: true
   _all?: true
 }
@@ -143,6 +265,18 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: UserAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: UserSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: UserMinAggregateInputType
@@ -173,22 +307,42 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: UserCountAggregateInputType | true
+  _avg?: UserAvgAggregateInputType
+  _sum?: UserSumAggregateInputType
   _min?: UserMinAggregateInputType
   _max?: UserMaxAggregateInputType
 }
 
 export type UserGroupByOutputType = {
   id: string
-  name: string | null
-  dob: Date
-  type: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture: string | null
+  headline: string | null
+  bio: string
+  dob: Date
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website: string | null
+  linkedinUrl: string | null
+  portfolioUrl: string | null
+  resumeUrl: string | null
+  isVerified: boolean
+  isFeatured: boolean
+  avgReviews: number
   createdAt: Date
   _count: UserCountAggregateOutputType | null
+  _avg: UserAvgAggregateOutputType | null
+  _sum: UserSumAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
 }
@@ -213,84 +367,162 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
-  name?: Prisma.StringNullableFilter<"User"> | string | null
-  dob?: Prisma.DateTimeFilter<"User"> | Date | string
-  type?: Prisma.EnumUserTypeFilter<"User"> | $Enums.UserType
-  email?: Prisma.StringFilter<"User"> | string
   phone?: Prisma.StringFilter<"User"> | string
-  nameOfConsultancy?: Prisma.StringFilter<"User"> | string
-  address?: Prisma.StringFilter<"User"> | string
+  email?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
+  profilePicture?: Prisma.StringNullableFilter<"User"> | string | null
+  headline?: Prisma.StringNullableFilter<"User"> | string | null
+  bio?: Prisma.StringFilter<"User"> | string
+  dob?: Prisma.DateTimeFilter<"User"> | Date | string
+  nameOfConsultancy?: Prisma.StringFilter<"User"> | string
+  yearsOfExperience?: Prisma.IntFilter<"User"> | number
+  designation?: Prisma.StringFilter<"User"> | string
+  address?: Prisma.StringNullableFilter<"User"> | string | null
+  city?: Prisma.StringFilter<"User"> | string
+  state?: Prisma.StringFilter<"User"> | string
+  country?: Prisma.StringFilter<"User"> | string
+  timezone?: Prisma.StringFilter<"User"> | string
+  appointmentFee?: Prisma.IntFilter<"User"> | number
+  website?: Prisma.StringNullableFilter<"User"> | string | null
+  linkedinUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  portfolioUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  resumeUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  isVerified?: Prisma.BoolFilter<"User"> | boolean
+  isFeatured?: Prisma.BoolFilter<"User"> | boolean
+  avgReviews?: Prisma.FloatFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  review?: Prisma.ReviewListRelationFilter
+  consultantTags?: Prisma.ConsultantTagListRelationFilter
+  languages?: Prisma.LanguageListRelationFilter
+  certifications?: Prisma.CertificationListRelationFilter
   slots?: Prisma.UserSlotsListRelationFilter
   interactions?: Prisma.InteractionListRelationFilter
   commitments?: Prisma.CommitmentListRelationFilter
   appointments?: Prisma.AppointmentListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
   cases?: Prisma.CaseListRelationFilter
-  tasks?: Prisma.TaskListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
+  tasks?: Prisma.TaskListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrderInput | Prisma.SortOrder
-  dob?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
-  nameOfConsultancy?: Prisma.SortOrder
-  address?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrderInput | Prisma.SortOrder
+  headline?: Prisma.SortOrderInput | Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  nameOfConsultancy?: Prisma.SortOrder
+  yearsOfExperience?: Prisma.SortOrder
+  designation?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  appointmentFee?: Prisma.SortOrder
+  website?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  portfolioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  resumeUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  avgReviews?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  review?: Prisma.ReviewOrderByRelationAggregateInput
+  consultantTags?: Prisma.ConsultantTagOrderByRelationAggregateInput
+  languages?: Prisma.LanguageOrderByRelationAggregateInput
+  certifications?: Prisma.CertificationOrderByRelationAggregateInput
   slots?: Prisma.UserSlotsOrderByRelationAggregateInput
   interactions?: Prisma.InteractionOrderByRelationAggregateInput
   commitments?: Prisma.CommitmentOrderByRelationAggregateInput
   appointments?: Prisma.AppointmentOrderByRelationAggregateInput
   auditLogs?: Prisma.AuditLogOrderByRelationAggregateInput
   cases?: Prisma.CaseOrderByRelationAggregateInput
-  tasks?: Prisma.TaskOrderByRelationAggregateInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
+  tasks?: Prisma.TaskOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  email?: string
   phone?: string
+  email?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  name?: Prisma.StringNullableFilter<"User"> | string | null
-  dob?: Prisma.DateTimeFilter<"User"> | Date | string
-  type?: Prisma.EnumUserTypeFilter<"User"> | $Enums.UserType
-  nameOfConsultancy?: Prisma.StringFilter<"User"> | string
-  address?: Prisma.StringFilter<"User"> | string
   password?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
+  profilePicture?: Prisma.StringNullableFilter<"User"> | string | null
+  headline?: Prisma.StringNullableFilter<"User"> | string | null
+  bio?: Prisma.StringFilter<"User"> | string
+  dob?: Prisma.DateTimeFilter<"User"> | Date | string
+  nameOfConsultancy?: Prisma.StringFilter<"User"> | string
+  yearsOfExperience?: Prisma.IntFilter<"User"> | number
+  designation?: Prisma.StringFilter<"User"> | string
+  address?: Prisma.StringNullableFilter<"User"> | string | null
+  city?: Prisma.StringFilter<"User"> | string
+  state?: Prisma.StringFilter<"User"> | string
+  country?: Prisma.StringFilter<"User"> | string
+  timezone?: Prisma.StringFilter<"User"> | string
+  appointmentFee?: Prisma.IntFilter<"User"> | number
+  website?: Prisma.StringNullableFilter<"User"> | string | null
+  linkedinUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  portfolioUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  resumeUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  isVerified?: Prisma.BoolFilter<"User"> | boolean
+  isFeatured?: Prisma.BoolFilter<"User"> | boolean
+  avgReviews?: Prisma.FloatFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  review?: Prisma.ReviewListRelationFilter
+  consultantTags?: Prisma.ConsultantTagListRelationFilter
+  languages?: Prisma.LanguageListRelationFilter
+  certifications?: Prisma.CertificationListRelationFilter
   slots?: Prisma.UserSlotsListRelationFilter
   interactions?: Prisma.InteractionListRelationFilter
   commitments?: Prisma.CommitmentListRelationFilter
   appointments?: Prisma.AppointmentListRelationFilter
   auditLogs?: Prisma.AuditLogListRelationFilter
   cases?: Prisma.CaseListRelationFilter
-  tasks?: Prisma.TaskListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
-}, "id" | "email" | "phone">
+  tasks?: Prisma.TaskListRelationFilter
+}, "id" | "phone" | "email">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  name?: Prisma.SortOrderInput | Prisma.SortOrder
-  dob?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   phone?: Prisma.SortOrder
-  nameOfConsultancy?: Prisma.SortOrder
-  address?: Prisma.SortOrder
+  email?: Prisma.SortOrder
   password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrderInput | Prisma.SortOrder
+  headline?: Prisma.SortOrderInput | Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  nameOfConsultancy?: Prisma.SortOrder
+  yearsOfExperience?: Prisma.SortOrder
+  designation?: Prisma.SortOrder
+  address?: Prisma.SortOrderInput | Prisma.SortOrder
+  city?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  appointmentFee?: Prisma.SortOrder
+  website?: Prisma.SortOrderInput | Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  portfolioUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  resumeUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  avgReviews?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
+  _avg?: Prisma.UserAvgOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
+  _sum?: Prisma.UserSumOrderByAggregateInput
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -298,177 +530,292 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
-  name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  dob?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  type?: Prisma.EnumUserTypeWithAggregatesFilter<"User"> | $Enums.UserType
-  email?: Prisma.StringWithAggregatesFilter<"User"> | string
   phone?: Prisma.StringWithAggregatesFilter<"User"> | string
-  nameOfConsultancy?: Prisma.StringWithAggregatesFilter<"User"> | string
-  address?: Prisma.StringWithAggregatesFilter<"User"> | string
+  email?: Prisma.StringWithAggregatesFilter<"User"> | string
   password?: Prisma.StringWithAggregatesFilter<"User"> | string
+  name?: Prisma.StringWithAggregatesFilter<"User"> | string
+  profilePicture?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  headline?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  bio?: Prisma.StringWithAggregatesFilter<"User"> | string
+  dob?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  nameOfConsultancy?: Prisma.StringWithAggregatesFilter<"User"> | string
+  yearsOfExperience?: Prisma.IntWithAggregatesFilter<"User"> | number
+  designation?: Prisma.StringWithAggregatesFilter<"User"> | string
+  address?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  city?: Prisma.StringWithAggregatesFilter<"User"> | string
+  state?: Prisma.StringWithAggregatesFilter<"User"> | string
+  country?: Prisma.StringWithAggregatesFilter<"User"> | string
+  timezone?: Prisma.StringWithAggregatesFilter<"User"> | string
+  appointmentFee?: Prisma.IntWithAggregatesFilter<"User"> | number
+  website?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  linkedinUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  portfolioUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  resumeUrl?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
+  isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  isFeatured?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
+  avgReviews?: Prisma.FloatWithAggregatesFilter<"User"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type UserCountOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  dob?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  nameOfConsultancy?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  password?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+export type UserListRelationFilter = {
+  every?: Prisma.UserWhereInput
+  some?: Prisma.UserWhereInput
+  none?: Prisma.UserWhereInput
 }
 
-export type UserMaxOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  dob?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  nameOfConsultancy?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  password?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-}
-
-export type UserMinOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  dob?: Prisma.SortOrder
-  type?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  phone?: Prisma.SortOrder
-  nameOfConsultancy?: Prisma.SortOrder
-  address?: Prisma.SortOrder
-  password?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+export type UserOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -476,25 +823,224 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserCountOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrder
+  headline?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  nameOfConsultancy?: Prisma.SortOrder
+  yearsOfExperience?: Prisma.SortOrder
+  designation?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  appointmentFee?: Prisma.SortOrder
+  website?: Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrder
+  portfolioUrl?: Prisma.SortOrder
+  resumeUrl?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  avgReviews?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+}
+
+export type UserAvgOrderByAggregateInput = {
+  yearsOfExperience?: Prisma.SortOrder
+  appointmentFee?: Prisma.SortOrder
+  avgReviews?: Prisma.SortOrder
+}
+
+export type UserMaxOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrder
+  headline?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  nameOfConsultancy?: Prisma.SortOrder
+  yearsOfExperience?: Prisma.SortOrder
+  designation?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  appointmentFee?: Prisma.SortOrder
+  website?: Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrder
+  portfolioUrl?: Prisma.SortOrder
+  resumeUrl?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  avgReviews?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+}
+
+export type UserMinOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+  phone?: Prisma.SortOrder
+  email?: Prisma.SortOrder
+  password?: Prisma.SortOrder
+  name?: Prisma.SortOrder
+  profilePicture?: Prisma.SortOrder
+  headline?: Prisma.SortOrder
+  bio?: Prisma.SortOrder
+  dob?: Prisma.SortOrder
+  nameOfConsultancy?: Prisma.SortOrder
+  yearsOfExperience?: Prisma.SortOrder
+  designation?: Prisma.SortOrder
+  address?: Prisma.SortOrder
+  city?: Prisma.SortOrder
+  state?: Prisma.SortOrder
+  country?: Prisma.SortOrder
+  timezone?: Prisma.SortOrder
+  appointmentFee?: Prisma.SortOrder
+  website?: Prisma.SortOrder
+  linkedinUrl?: Prisma.SortOrder
+  portfolioUrl?: Prisma.SortOrder
+  resumeUrl?: Prisma.SortOrder
+  isVerified?: Prisma.SortOrder
+  isFeatured?: Prisma.SortOrder
+  avgReviews?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+}
+
+export type UserSumOrderByAggregateInput = {
+  yearsOfExperience?: Prisma.SortOrder
+  appointmentFee?: Prisma.SortOrder
+  avgReviews?: Prisma.SortOrder
+}
+
 export type UserNullableScalarRelationFilter = {
   is?: Prisma.UserWhereInput | null
   isNot?: Prisma.UserWhereInput | null
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
+export type UserCreateNestedManyWithoutConsultantTagsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConsultantTagsInput, Prisma.UserUncheckedCreateWithoutConsultantTagsInput> | Prisma.UserCreateWithoutConsultantTagsInput[] | Prisma.UserUncheckedCreateWithoutConsultantTagsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConsultantTagsInput | Prisma.UserCreateOrConnectWithoutConsultantTagsInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
+export type UserUncheckedCreateNestedManyWithoutConsultantTagsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConsultantTagsInput, Prisma.UserUncheckedCreateWithoutConsultantTagsInput> | Prisma.UserCreateWithoutConsultantTagsInput[] | Prisma.UserUncheckedCreateWithoutConsultantTagsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConsultantTagsInput | Prisma.UserCreateOrConnectWithoutConsultantTagsInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type UserUpdateManyWithoutConsultantTagsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConsultantTagsInput, Prisma.UserUncheckedCreateWithoutConsultantTagsInput> | Prisma.UserCreateWithoutConsultantTagsInput[] | Prisma.UserUncheckedCreateWithoutConsultantTagsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConsultantTagsInput | Prisma.UserCreateOrConnectWithoutConsultantTagsInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutConsultantTagsInput | Prisma.UserUpsertWithWhereUniqueWithoutConsultantTagsInput[]
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutConsultantTagsInput | Prisma.UserUpdateWithWhereUniqueWithoutConsultantTagsInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutConsultantTagsInput | Prisma.UserUpdateManyWithWhereWithoutConsultantTagsInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
-export type EnumUserTypeFieldUpdateOperationsInput = {
-  set?: $Enums.UserType
+export type UserUncheckedUpdateManyWithoutConsultantTagsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConsultantTagsInput, Prisma.UserUncheckedCreateWithoutConsultantTagsInput> | Prisma.UserCreateWithoutConsultantTagsInput[] | Prisma.UserUncheckedCreateWithoutConsultantTagsInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConsultantTagsInput | Prisma.UserCreateOrConnectWithoutConsultantTagsInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutConsultantTagsInput | Prisma.UserUpsertWithWhereUniqueWithoutConsultantTagsInput[]
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutConsultantTagsInput | Prisma.UserUpdateWithWhereUniqueWithoutConsultantTagsInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutConsultantTagsInput | Prisma.UserUpdateManyWithWhereWithoutConsultantTagsInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateNestedManyWithoutLanguagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLanguagesInput, Prisma.UserUncheckedCreateWithoutLanguagesInput> | Prisma.UserCreateWithoutLanguagesInput[] | Prisma.UserUncheckedCreateWithoutLanguagesInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLanguagesInput | Prisma.UserCreateOrConnectWithoutLanguagesInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUncheckedCreateNestedManyWithoutLanguagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLanguagesInput, Prisma.UserUncheckedCreateWithoutLanguagesInput> | Prisma.UserCreateWithoutLanguagesInput[] | Prisma.UserUncheckedCreateWithoutLanguagesInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLanguagesInput | Prisma.UserCreateOrConnectWithoutLanguagesInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+}
+
+export type UserUpdateManyWithoutLanguagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLanguagesInput, Prisma.UserUncheckedCreateWithoutLanguagesInput> | Prisma.UserCreateWithoutLanguagesInput[] | Prisma.UserUncheckedCreateWithoutLanguagesInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLanguagesInput | Prisma.UserCreateOrConnectWithoutLanguagesInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutLanguagesInput | Prisma.UserUpsertWithWhereUniqueWithoutLanguagesInput[]
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutLanguagesInput | Prisma.UserUpdateWithWhereUniqueWithoutLanguagesInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutLanguagesInput | Prisma.UserUpdateManyWithWhereWithoutLanguagesInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserUncheckedUpdateManyWithoutLanguagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLanguagesInput, Prisma.UserUncheckedCreateWithoutLanguagesInput> | Prisma.UserCreateWithoutLanguagesInput[] | Prisma.UserUncheckedCreateWithoutLanguagesInput[]
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLanguagesInput | Prisma.UserCreateOrConnectWithoutLanguagesInput[]
+  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutLanguagesInput | Prisma.UserUpsertWithWhereUniqueWithoutLanguagesInput[]
+  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+  update?: Prisma.UserUpdateWithWhereUniqueWithoutLanguagesInput | Prisma.UserUpdateWithWhereUniqueWithoutLanguagesInput[]
+  updateMany?: Prisma.UserUpdateManyWithWhereWithoutLanguagesInput | Prisma.UserUpdateManyWithWhereWithoutLanguagesInput[]
+  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+}
+
+export type UserCreateNestedOneWithoutCertificationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCertificationsInput, Prisma.UserUncheckedCreateWithoutCertificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCertificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCertificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCertificationsInput, Prisma.UserUncheckedCreateWithoutCertificationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCertificationsInput
+  upsert?: Prisma.UserUpsertWithoutCertificationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCertificationsInput, Prisma.UserUpdateWithoutCertificationsInput>, Prisma.UserUncheckedUpdateWithoutCertificationsInput>
+}
+
+export type UserCreateNestedOneWithoutReviewInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewInput, Prisma.UserUncheckedCreateWithoutReviewInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutReviewNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewInput, Prisma.UserUncheckedCreateWithoutReviewInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewInput
+  upsert?: Prisma.UserUpsertWithoutReviewInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewInput, Prisma.UserUpdateWithoutReviewInput>, Prisma.UserUncheckedUpdateWithoutReviewInput>
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
+export type FloatFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
 }
 
 export type UserCreateNestedOneWithoutSlotsInput = {
@@ -613,44 +1159,670 @@ export type UserUpdateOneRequiredWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPaymentsInput, Prisma.UserUpdateWithoutPaymentsInput>, Prisma.UserUncheckedUpdateWithoutPaymentsInput>
 }
 
-export type UserCreateWithoutSlotsInput = {
+export type UserCreateWithoutConsultantTagsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutSlotsInput = {
+export type UserUncheckedCreateWithoutConsultantTagsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutConsultantTagsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutConsultantTagsInput, Prisma.UserUncheckedCreateWithoutConsultantTagsInput>
+}
+
+export type UserUpsertWithWhereUniqueWithoutConsultantTagsInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutConsultantTagsInput, Prisma.UserUncheckedUpdateWithoutConsultantTagsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutConsultantTagsInput, Prisma.UserUncheckedCreateWithoutConsultantTagsInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutConsultantTagsInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutConsultantTagsInput, Prisma.UserUncheckedUpdateWithoutConsultantTagsInput>
+}
+
+export type UserUpdateManyWithWhereWithoutConsultantTagsInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutConsultantTagsInput>
+}
+
+export type UserScalarWhereInput = {
+  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  OR?: Prisma.UserScalarWhereInput[]
+  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+  id?: Prisma.StringFilter<"User"> | string
+  phone?: Prisma.StringFilter<"User"> | string
+  email?: Prisma.StringFilter<"User"> | string
+  password?: Prisma.StringFilter<"User"> | string
+  name?: Prisma.StringFilter<"User"> | string
+  profilePicture?: Prisma.StringNullableFilter<"User"> | string | null
+  headline?: Prisma.StringNullableFilter<"User"> | string | null
+  bio?: Prisma.StringFilter<"User"> | string
+  dob?: Prisma.DateTimeFilter<"User"> | Date | string
+  nameOfConsultancy?: Prisma.StringFilter<"User"> | string
+  yearsOfExperience?: Prisma.IntFilter<"User"> | number
+  designation?: Prisma.StringFilter<"User"> | string
+  address?: Prisma.StringNullableFilter<"User"> | string | null
+  city?: Prisma.StringFilter<"User"> | string
+  state?: Prisma.StringFilter<"User"> | string
+  country?: Prisma.StringFilter<"User"> | string
+  timezone?: Prisma.StringFilter<"User"> | string
+  appointmentFee?: Prisma.IntFilter<"User"> | number
+  website?: Prisma.StringNullableFilter<"User"> | string | null
+  linkedinUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  portfolioUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  resumeUrl?: Prisma.StringNullableFilter<"User"> | string | null
+  isVerified?: Prisma.BoolFilter<"User"> | boolean
+  isFeatured?: Prisma.BoolFilter<"User"> | boolean
+  avgReviews?: Prisma.FloatFilter<"User"> | number
+  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+}
+
+export type UserCreateWithoutLanguagesInput = {
+  id?: string
+  phone: string
+  email: string
+  password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
+  createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
+  interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
+  commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
+  appointments?: Prisma.AppointmentCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  cases?: Prisma.CaseCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutLanguagesInput = {
+  id?: string
+  phone: string
+  email: string
+  password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
+  createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
+  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
+  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
+  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutLanguagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLanguagesInput, Prisma.UserUncheckedCreateWithoutLanguagesInput>
+}
+
+export type UserUpsertWithWhereUniqueWithoutLanguagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLanguagesInput, Prisma.UserUncheckedUpdateWithoutLanguagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLanguagesInput, Prisma.UserUncheckedCreateWithoutLanguagesInput>
+}
+
+export type UserUpdateWithWhereUniqueWithoutLanguagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLanguagesInput, Prisma.UserUncheckedUpdateWithoutLanguagesInput>
+}
+
+export type UserUpdateManyWithWhereWithoutLanguagesInput = {
+  where: Prisma.UserScalarWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutLanguagesInput>
+}
+
+export type UserCreateWithoutCertificationsInput = {
+  id?: string
+  phone: string
+  email: string
+  password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
+  createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
+  interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
+  commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
+  appointments?: Prisma.AppointmentCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  cases?: Prisma.CaseCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutCertificationsInput = {
+  id?: string
+  phone: string
+  email: string
+  password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
+  createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
+  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
+  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
+  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutCertificationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCertificationsInput, Prisma.UserUncheckedCreateWithoutCertificationsInput>
+}
+
+export type UserUpsertWithoutCertificationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCertificationsInput, Prisma.UserUncheckedUpdateWithoutCertificationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCertificationsInput, Prisma.UserUncheckedCreateWithoutCertificationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCertificationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCertificationsInput, Prisma.UserUncheckedUpdateWithoutCertificationsInput>
+}
+
+export type UserUpdateWithoutCertificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
+  interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
+  commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
+  appointments?: Prisma.AppointmentUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  cases?: Prisma.CaseUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCertificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
+  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
+  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
+  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  cases?: Prisma.CaseUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutReviewInput = {
+  id?: string
+  phone: string
+  email: string
+  password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
+  createdAt?: Date | string
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
+  slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
+  interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
+  commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
+  appointments?: Prisma.AppointmentCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  cases?: Prisma.CaseCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutReviewInput = {
+  id?: string
+  phone: string
+  email: string
+  password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
+  createdAt?: Date | string
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
+  slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
+  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
+  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
+  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutReviewInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewInput, Prisma.UserUncheckedCreateWithoutReviewInput>
+}
+
+export type UserUpsertWithoutReviewInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReviewInput, Prisma.UserUncheckedUpdateWithoutReviewInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewInput, Prisma.UserUncheckedCreateWithoutReviewInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReviewInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReviewInput, Prisma.UserUncheckedUpdateWithoutReviewInput>
+}
+
+export type UserUpdateWithoutReviewInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
+  slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
+  interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
+  commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
+  appointments?: Prisma.AppointmentUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  cases?: Prisma.CaseUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReviewInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
+  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
+  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
+  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  cases?: Prisma.CaseUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSlotsInput = {
+  id?: string
+  phone: string
+  email: string
+  password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
+  createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
+  interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
+  commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
+  appointments?: Prisma.AppointmentCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
+  cases?: Prisma.CaseCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSlotsInput = {
+  id?: string
+  phone: string
+  email: string
+  password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
+  createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
+  interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
+  commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
+  appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
+  cases?: Prisma.CaseUncheckedCreateNestedManyWithoutUserInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSlotsInput = {
@@ -671,82 +1843,162 @@ export type UserUpdateToOneWithWhereWithoutSlotsInput = {
 
 export type UserUpdateWithoutSlotsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSlotsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAppointmentsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAppointmentsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAppointmentsInput = {
@@ -767,82 +2019,162 @@ export type UserUpdateToOneWithWhereWithoutAppointmentsInput = {
 
 export type UserUpdateWithoutAppointmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAppointmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutInteractionsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutInteractionsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutInteractionsInput = {
@@ -863,82 +2195,162 @@ export type UserUpdateToOneWithWhereWithoutInteractionsInput = {
 
 export type UserUpdateWithoutInteractionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutInteractionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCommitmentsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCommitmentsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCommitmentsInput = {
@@ -959,82 +2371,162 @@ export type UserUpdateToOneWithWhereWithoutCommitmentsInput = {
 
 export type UserUpdateWithoutCommitmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCommitmentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCasesInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCasesInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutUserInput
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCasesInput = {
@@ -1055,55 +2547,115 @@ export type UserUpdateToOneWithWhereWithoutCasesInput = {
 
 export type UserUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCasesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutUserNestedInput
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTasksInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
@@ -1115,15 +2667,35 @@ export type UserCreateWithoutTasksInput = {
 
 export type UserUncheckedCreateWithoutTasksInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
@@ -1151,15 +2723,35 @@ export type UserUpdateToOneWithWhereWithoutTasksInput = {
 
 export type UserUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
@@ -1171,15 +2763,35 @@ export type UserUpdateWithoutTasksInput = {
 
 export type UserUncheckedUpdateWithoutTasksInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
@@ -1191,42 +2803,82 @@ export type UserUncheckedUpdateWithoutTasksInput = {
 
 export type UserCreateWithoutAuditLogsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
   appointments?: Prisma.AppointmentUncheckedCreateNestedManyWithoutUserInput
   cases?: Prisma.CaseUncheckedCreateNestedManyWithoutUserInput
-  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutUserInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -1247,55 +2899,115 @@ export type UserUpdateToOneWithWhereWithoutAuditLogsInput = {
 
 export type UserUpdateWithoutAuditLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
   appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutUserNestedInput
   cases?: Prisma.CaseUncheckedUpdateManyWithoutUserNestedInput
-  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPaymentsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentCreateNestedManyWithoutUserInput
@@ -1307,15 +3019,35 @@ export type UserCreateWithoutPaymentsInput = {
 
 export type UserUncheckedCreateWithoutPaymentsInput = {
   id?: string
-  name?: string | null
-  dob: Date | string
-  type?: $Enums.UserType
-  email: string
   phone: string
-  nameOfConsultancy: string
-  address: string
+  email: string
   password: string
+  name: string
+  profilePicture?: string | null
+  headline?: string | null
+  bio: string
+  dob: Date | string
+  nameOfConsultancy: string
+  yearsOfExperience: number
+  designation: string
+  address?: string | null
+  city: string
+  state: string
+  country: string
+  timezone: string
+  appointmentFee: number
+  website?: string | null
+  linkedinUrl?: string | null
+  portfolioUrl?: string | null
+  resumeUrl?: string | null
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: number
   createdAt?: Date | string
+  review?: Prisma.ReviewUncheckedCreateNestedManyWithoutUserInput
+  consultantTags?: Prisma.ConsultantTagUncheckedCreateNestedManyWithoutUsersInput
+  languages?: Prisma.LanguageUncheckedCreateNestedManyWithoutUsersInput
+  certifications?: Prisma.CertificationUncheckedCreateNestedManyWithoutConsultantInput
   slots?: Prisma.UserSlotsUncheckedCreateNestedManyWithoutUserInput
   interactions?: Prisma.InteractionUncheckedCreateNestedManyWithoutUserInput
   commitments?: Prisma.CommitmentUncheckedCreateNestedManyWithoutUserInput
@@ -1343,15 +3075,35 @@ export type UserUpdateToOneWithWhereWithoutPaymentsInput = {
 
 export type UserUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
@@ -1363,15 +3115,35 @@ export type UserUpdateWithoutPaymentsInput = {
 
 export type UserUncheckedUpdateWithoutPaymentsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  type?: Prisma.EnumUserTypeFieldUpdateOperationsInput | $Enums.UserType
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   phone?: Prisma.StringFieldUpdateOperationsInput | string
-  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
-  address?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
   slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
   interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
   commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
@@ -1381,31 +3153,257 @@ export type UserUncheckedUpdateWithoutPaymentsInput = {
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
 }
 
+export type UserUpdateWithoutConsultantTagsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  languages?: Prisma.LanguageUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
+  slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
+  interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
+  commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
+  appointments?: Prisma.AppointmentUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  cases?: Prisma.CaseUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutConsultantTagsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  languages?: Prisma.LanguageUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
+  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
+  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
+  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  cases?: Prisma.CaseUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutConsultantTagsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type UserUpdateWithoutLanguagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUpdateManyWithoutConsultantNestedInput
+  slots?: Prisma.UserSlotsUpdateManyWithoutUserNestedInput
+  interactions?: Prisma.InteractionUpdateManyWithoutUserNestedInput
+  commitments?: Prisma.CommitmentUpdateManyWithoutUserNestedInput
+  appointments?: Prisma.AppointmentUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutUserNestedInput
+  cases?: Prisma.CaseUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLanguagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  review?: Prisma.ReviewUncheckedUpdateManyWithoutUserNestedInput
+  consultantTags?: Prisma.ConsultantTagUncheckedUpdateManyWithoutUsersNestedInput
+  certifications?: Prisma.CertificationUncheckedUpdateManyWithoutConsultantNestedInput
+  slots?: Prisma.UserSlotsUncheckedUpdateManyWithoutUserNestedInput
+  interactions?: Prisma.InteractionUncheckedUpdateManyWithoutUserNestedInput
+  commitments?: Prisma.CommitmentUncheckedUpdateManyWithoutUserNestedInput
+  appointments?: Prisma.AppointmentUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutUserNestedInput
+  cases?: Prisma.CaseUncheckedUpdateManyWithoutUserNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutUserNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateManyWithoutLanguagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  profilePicture?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  headline?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  dob?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  nameOfConsultancy?: Prisma.StringFieldUpdateOperationsInput | string
+  yearsOfExperience?: Prisma.IntFieldUpdateOperationsInput | number
+  designation?: Prisma.StringFieldUpdateOperationsInput | string
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.StringFieldUpdateOperationsInput | string
+  state?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  timezone?: Prisma.StringFieldUpdateOperationsInput | string
+  appointmentFee?: Prisma.IntFieldUpdateOperationsInput | number
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  linkedinUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  portfolioUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  resumeUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  avgReviews?: Prisma.FloatFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 
 /**
  * Count Type UserCountOutputType
  */
 
 export type UserCountOutputType = {
+  review: number
+  consultantTags: number
+  languages: number
+  certifications: number
   slots: number
   interactions: number
   commitments: number
   appointments: number
   auditLogs: number
   cases: number
-  tasks: number
   payments: number
+  tasks: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  review?: boolean | UserCountOutputTypeCountReviewArgs
+  consultantTags?: boolean | UserCountOutputTypeCountConsultantTagsArgs
+  languages?: boolean | UserCountOutputTypeCountLanguagesArgs
+  certifications?: boolean | UserCountOutputTypeCountCertificationsArgs
   slots?: boolean | UserCountOutputTypeCountSlotsArgs
   interactions?: boolean | UserCountOutputTypeCountInteractionsArgs
   commitments?: boolean | UserCountOutputTypeCountCommitmentsArgs
   appointments?: boolean | UserCountOutputTypeCountAppointmentsArgs
   auditLogs?: boolean | UserCountOutputTypeCountAuditLogsArgs
   cases?: boolean | UserCountOutputTypeCountCasesArgs
-  tasks?: boolean | UserCountOutputTypeCountTasksArgs
   payments?: boolean | UserCountOutputTypeCountPaymentsArgs
+  tasks?: boolean | UserCountOutputTypeCountTasksArgs
 }
 
 /**
@@ -1416,6 +3414,34 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
    * Select specific fields to fetch from the UserCountOutputType
    */
   select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReviewArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ReviewWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountConsultantTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ConsultantTagWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLanguagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LanguageWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCertificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CertificationWhereInput
 }
 
 /**
@@ -1463,89 +3489,161 @@ export type UserCountOutputTypeCountCasesArgs<ExtArgs extends runtime.Types.Exte
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TaskWhereInput
+export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
 }
 
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.PaymentWhereInput
+export type UserCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TaskWhereInput
 }
 
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
-  dob?: boolean
-  type?: boolean
-  email?: boolean
   phone?: boolean
-  nameOfConsultancy?: boolean
-  address?: boolean
+  email?: boolean
   password?: boolean
+  name?: boolean
+  profilePicture?: boolean
+  headline?: boolean
+  bio?: boolean
+  dob?: boolean
+  nameOfConsultancy?: boolean
+  yearsOfExperience?: boolean
+  designation?: boolean
+  address?: boolean
+  city?: boolean
+  state?: boolean
+  country?: boolean
+  timezone?: boolean
+  appointmentFee?: boolean
+  website?: boolean
+  linkedinUrl?: boolean
+  portfolioUrl?: boolean
+  resumeUrl?: boolean
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: boolean
   createdAt?: boolean
+  review?: boolean | Prisma.User$reviewArgs<ExtArgs>
+  consultantTags?: boolean | Prisma.User$consultantTagsArgs<ExtArgs>
+  languages?: boolean | Prisma.User$languagesArgs<ExtArgs>
+  certifications?: boolean | Prisma.User$certificationsArgs<ExtArgs>
   slots?: boolean | Prisma.User$slotsArgs<ExtArgs>
   interactions?: boolean | Prisma.User$interactionsArgs<ExtArgs>
   commitments?: boolean | Prisma.User$commitmentsArgs<ExtArgs>
   appointments?: boolean | Prisma.User$appointmentsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   cases?: boolean | Prisma.User$casesArgs<ExtArgs>
-  tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
-  dob?: boolean
-  type?: boolean
-  email?: boolean
   phone?: boolean
-  nameOfConsultancy?: boolean
-  address?: boolean
+  email?: boolean
   password?: boolean
+  name?: boolean
+  profilePicture?: boolean
+  headline?: boolean
+  bio?: boolean
+  dob?: boolean
+  nameOfConsultancy?: boolean
+  yearsOfExperience?: boolean
+  designation?: boolean
+  address?: boolean
+  city?: boolean
+  state?: boolean
+  country?: boolean
+  timezone?: boolean
+  appointmentFee?: boolean
+  website?: boolean
+  linkedinUrl?: boolean
+  portfolioUrl?: boolean
+  resumeUrl?: boolean
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  name?: boolean
-  dob?: boolean
-  type?: boolean
-  email?: boolean
   phone?: boolean
-  nameOfConsultancy?: boolean
-  address?: boolean
+  email?: boolean
   password?: boolean
+  name?: boolean
+  profilePicture?: boolean
+  headline?: boolean
+  bio?: boolean
+  dob?: boolean
+  nameOfConsultancy?: boolean
+  yearsOfExperience?: boolean
+  designation?: boolean
+  address?: boolean
+  city?: boolean
+  state?: boolean
+  country?: boolean
+  timezone?: boolean
+  appointmentFee?: boolean
+  website?: boolean
+  linkedinUrl?: boolean
+  portfolioUrl?: boolean
+  resumeUrl?: boolean
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: boolean
   createdAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
-  name?: boolean
-  dob?: boolean
-  type?: boolean
-  email?: boolean
   phone?: boolean
-  nameOfConsultancy?: boolean
-  address?: boolean
+  email?: boolean
   password?: boolean
+  name?: boolean
+  profilePicture?: boolean
+  headline?: boolean
+  bio?: boolean
+  dob?: boolean
+  nameOfConsultancy?: boolean
+  yearsOfExperience?: boolean
+  designation?: boolean
+  address?: boolean
+  city?: boolean
+  state?: boolean
+  country?: boolean
+  timezone?: boolean
+  appointmentFee?: boolean
+  website?: boolean
+  linkedinUrl?: boolean
+  portfolioUrl?: boolean
+  resumeUrl?: boolean
+  isVerified?: boolean
+  isFeatured?: boolean
+  avgReviews?: boolean
   createdAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "dob" | "type" | "email" | "phone" | "nameOfConsultancy" | "address" | "password" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "phone" | "email" | "password" | "name" | "profilePicture" | "headline" | "bio" | "dob" | "nameOfConsultancy" | "yearsOfExperience" | "designation" | "address" | "city" | "state" | "country" | "timezone" | "appointmentFee" | "website" | "linkedinUrl" | "portfolioUrl" | "resumeUrl" | "isVerified" | "isFeatured" | "avgReviews" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  review?: boolean | Prisma.User$reviewArgs<ExtArgs>
+  consultantTags?: boolean | Prisma.User$consultantTagsArgs<ExtArgs>
+  languages?: boolean | Prisma.User$languagesArgs<ExtArgs>
+  certifications?: boolean | Prisma.User$certificationsArgs<ExtArgs>
   slots?: boolean | Prisma.User$slotsArgs<ExtArgs>
   interactions?: boolean | Prisma.User$interactionsArgs<ExtArgs>
   commitments?: boolean | Prisma.User$commitmentsArgs<ExtArgs>
   appointments?: boolean | Prisma.User$appointmentsArgs<ExtArgs>
   auditLogs?: boolean | Prisma.User$auditLogsArgs<ExtArgs>
   cases?: boolean | Prisma.User$casesArgs<ExtArgs>
-  tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   payments?: boolean | Prisma.User$paymentsArgs<ExtArgs>
+  tasks?: boolean | Prisma.User$tasksArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1554,25 +3652,45 @@ export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
+    review: Prisma.$ReviewPayload<ExtArgs>[]
+    consultantTags: Prisma.$ConsultantTagPayload<ExtArgs>[]
+    languages: Prisma.$LanguagePayload<ExtArgs>[]
+    certifications: Prisma.$CertificationPayload<ExtArgs>[]
     slots: Prisma.$UserSlotsPayload<ExtArgs>[]
     interactions: Prisma.$InteractionPayload<ExtArgs>[]
     commitments: Prisma.$CommitmentPayload<ExtArgs>[]
     appointments: Prisma.$AppointmentPayload<ExtArgs>[]
     auditLogs: Prisma.$AuditLogPayload<ExtArgs>[]
     cases: Prisma.$CasePayload<ExtArgs>[]
-    tasks: Prisma.$TaskPayload<ExtArgs>[]
     payments: Prisma.$PaymentPayload<ExtArgs>[]
+    tasks: Prisma.$TaskPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    name: string | null
-    dob: Date
-    type: $Enums.UserType
-    email: string
     phone: string
-    nameOfConsultancy: string
-    address: string
+    email: string
     password: string
+    name: string
+    profilePicture: string | null
+    headline: string | null
+    bio: string
+    dob: Date
+    nameOfConsultancy: string
+    yearsOfExperience: number
+    designation: string
+    address: string | null
+    city: string
+    state: string
+    country: string
+    timezone: string
+    appointmentFee: number
+    website: string | null
+    linkedinUrl: string | null
+    portfolioUrl: string | null
+    resumeUrl: string | null
+    isVerified: boolean
+    isFeatured: boolean
+    avgReviews: number
     createdAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
@@ -1968,14 +4086,18 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  review<T extends Prisma.User$reviewArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  consultantTags<T extends Prisma.User$consultantTagsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$consultantTagsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConsultantTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  languages<T extends Prisma.User$languagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$languagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LanguagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  certifications<T extends Prisma.User$certificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$certificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CertificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   slots<T extends Prisma.User$slotsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$slotsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserSlotsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   interactions<T extends Prisma.User$interactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$interactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   commitments<T extends Prisma.User$commitmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$commitmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommitmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   appointments<T extends Prisma.User$appointmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$appointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AppointmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   auditLogs<T extends Prisma.User$auditLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$auditLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   cases<T extends Prisma.User$casesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$casesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  tasks<T extends Prisma.User$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.User$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  tasks<T extends Prisma.User$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2006,14 +4128,30 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
-  readonly name: Prisma.FieldRef<"User", 'String'>
-  readonly dob: Prisma.FieldRef<"User", 'DateTime'>
-  readonly type: Prisma.FieldRef<"User", 'UserType'>
-  readonly email: Prisma.FieldRef<"User", 'String'>
   readonly phone: Prisma.FieldRef<"User", 'String'>
-  readonly nameOfConsultancy: Prisma.FieldRef<"User", 'String'>
-  readonly address: Prisma.FieldRef<"User", 'String'>
+  readonly email: Prisma.FieldRef<"User", 'String'>
   readonly password: Prisma.FieldRef<"User", 'String'>
+  readonly name: Prisma.FieldRef<"User", 'String'>
+  readonly profilePicture: Prisma.FieldRef<"User", 'String'>
+  readonly headline: Prisma.FieldRef<"User", 'String'>
+  readonly bio: Prisma.FieldRef<"User", 'String'>
+  readonly dob: Prisma.FieldRef<"User", 'DateTime'>
+  readonly nameOfConsultancy: Prisma.FieldRef<"User", 'String'>
+  readonly yearsOfExperience: Prisma.FieldRef<"User", 'Int'>
+  readonly designation: Prisma.FieldRef<"User", 'String'>
+  readonly address: Prisma.FieldRef<"User", 'String'>
+  readonly city: Prisma.FieldRef<"User", 'String'>
+  readonly state: Prisma.FieldRef<"User", 'String'>
+  readonly country: Prisma.FieldRef<"User", 'String'>
+  readonly timezone: Prisma.FieldRef<"User", 'String'>
+  readonly appointmentFee: Prisma.FieldRef<"User", 'Int'>
+  readonly website: Prisma.FieldRef<"User", 'String'>
+  readonly linkedinUrl: Prisma.FieldRef<"User", 'String'>
+  readonly portfolioUrl: Prisma.FieldRef<"User", 'String'>
+  readonly resumeUrl: Prisma.FieldRef<"User", 'String'>
+  readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>
+  readonly isFeatured: Prisma.FieldRef<"User", 'Boolean'>
+  readonly avgReviews: Prisma.FieldRef<"User", 'Float'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
@@ -2408,6 +4546,102 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
+ * User.review
+ */
+export type User$reviewArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Review
+   */
+  select?: Prisma.ReviewSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Review
+   */
+  omit?: Prisma.ReviewOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ReviewInclude<ExtArgs> | null
+  where?: Prisma.ReviewWhereInput
+  orderBy?: Prisma.ReviewOrderByWithRelationInput | Prisma.ReviewOrderByWithRelationInput[]
+  cursor?: Prisma.ReviewWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ReviewScalarFieldEnum | Prisma.ReviewScalarFieldEnum[]
+}
+
+/**
+ * User.consultantTags
+ */
+export type User$consultantTagsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ConsultantTag
+   */
+  select?: Prisma.ConsultantTagSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ConsultantTag
+   */
+  omit?: Prisma.ConsultantTagOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConsultantTagInclude<ExtArgs> | null
+  where?: Prisma.ConsultantTagWhereInput
+  orderBy?: Prisma.ConsultantTagOrderByWithRelationInput | Prisma.ConsultantTagOrderByWithRelationInput[]
+  cursor?: Prisma.ConsultantTagWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ConsultantTagScalarFieldEnum | Prisma.ConsultantTagScalarFieldEnum[]
+}
+
+/**
+ * User.languages
+ */
+export type User$languagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Language
+   */
+  select?: Prisma.LanguageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Language
+   */
+  omit?: Prisma.LanguageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LanguageInclude<ExtArgs> | null
+  where?: Prisma.LanguageWhereInput
+  orderBy?: Prisma.LanguageOrderByWithRelationInput | Prisma.LanguageOrderByWithRelationInput[]
+  cursor?: Prisma.LanguageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LanguageScalarFieldEnum | Prisma.LanguageScalarFieldEnum[]
+}
+
+/**
+ * User.certifications
+ */
+export type User$certificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Certification
+   */
+  select?: Prisma.CertificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Certification
+   */
+  omit?: Prisma.CertificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CertificationInclude<ExtArgs> | null
+  where?: Prisma.CertificationWhereInput
+  orderBy?: Prisma.CertificationOrderByWithRelationInput | Prisma.CertificationOrderByWithRelationInput[]
+  cursor?: Prisma.CertificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CertificationScalarFieldEnum | Prisma.CertificationScalarFieldEnum[]
+}
+
+/**
  * User.slots
  */
 export type User$slotsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2552,30 +4786,6 @@ export type User$casesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
 }
 
 /**
- * User.tasks
- */
-export type User$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Task
-   */
-  select?: Prisma.TaskSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Task
-   */
-  omit?: Prisma.TaskOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TaskInclude<ExtArgs> | null
-  where?: Prisma.TaskWhereInput
-  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
-  cursor?: Prisma.TaskWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
-}
-
-/**
  * User.payments
  */
 export type User$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2597,6 +4807,30 @@ export type User$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * User.tasks
+ */
+export type User$tasksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Task
+   */
+  select?: Prisma.TaskSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Task
+   */
+  omit?: Prisma.TaskOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TaskInclude<ExtArgs> | null
+  where?: Prisma.TaskWhereInput
+  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
+  cursor?: Prisma.TaskWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
 }
 
 /**
