@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/card';
 import { ConsultantCardData } from '@/types';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 function getInitials(name: string) {
@@ -70,12 +71,11 @@ const StarRating = memo(function StarRating({
 type Props = {
   consultant: ConsultantCardData;
   onViewProfile?: (id: string) => void;
-  onBookAppointment?: (id: string) => void;
   className?: string;
 };
 
 // ── Component ──────────────────────────────────────────────────────────────
-function ConsultantsCard({ consultant, onViewProfile, onBookAppointment, className }: Props) {
+function ConsultantsCard({ consultant, onViewProfile, className }: Props) {
   const {
     id,
     name,
@@ -94,6 +94,7 @@ function ConsultantsCard({ consultant, onViewProfile, onBookAppointment, classNa
     featured,
     isVerified,
   } = consultant;
+  const router = useRouter();
 
   // Avoid recomputing these on every re-render of the list (e.g. when a
   // sibling card's hover state triggers a parent update).
@@ -224,7 +225,7 @@ function ConsultantsCard({ consultant, onViewProfile, onBookAppointment, classNa
 
         <button
           type="button"
-          onClick={() => onBookAppointment?.(id)}
+          onClick={() => router.push(`/tenant/client/appointment/${id}`)}
           className="rounded-lg border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-800 shadow-sm transition-all hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700 hover:shadow-md active:scale-[0.97]"
         >
           Book Appointment

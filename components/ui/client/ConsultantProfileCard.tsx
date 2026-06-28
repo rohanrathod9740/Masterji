@@ -120,14 +120,110 @@ function Tag({ label }: { label: string }) {
   );
 }
 
+// ── Skeleton (loading state) ─────────────────────────────────────────────────
+function SkeletonBlock({ className }: { className?: string }) {
+  return (
+    <div
+      className={cn('animate-pulse rounded-md bg-slate-200', className)}
+      aria-hidden="true"
+    />
+  );
+}
+
+function ConsultantProfileSkeleton({
+  standalone = false,
+  className,
+}: {
+  standalone?: boolean;
+  className?: string;
+}) {
+  return (
+    <div
+      role="status"
+      aria-busy="true"
+      aria-label="Loading consultant profile"
+      className={cn(
+        'relative flex flex-col bg-white',
+        standalone
+          ? 'rounded-2xl shadow-xl ring-1 ring-slate-200'
+          : 'h-full overflow-y-auto',
+        className
+      )}
+    >
+      {/* Hero skeleton */}
+      <div className="px-6 pt-6 pb-5">
+        <div className="flex items-start gap-4">
+          <SkeletonBlock className="size-20 shrink-0 rounded-2xl" />
+          <div className="min-w-0 flex-1 space-y-2">
+            <SkeletonBlock className="h-5 w-1/2" />
+            <SkeletonBlock className="h-4 w-1/3" />
+            <SkeletonBlock className="h-4 w-2/5" />
+            <SkeletonBlock className="h-3 w-3/4" />
+            <SkeletonBlock className="h-4 w-1/4 mt-2" />
+          </div>
+        </div>
+
+        {/* Quick stats strip skeleton */}
+        <div className="mt-5 grid grid-cols-3 divide-x divide-slate-100 rounded-xl bg-slate-50 ring-1 ring-slate-100">
+          {Array.from({ length: 3 }, (_, i) => (
+            <div key={i} className="flex flex-col items-center gap-1.5 py-3 px-2">
+              <SkeletonBlock className="h-4 w-10" />
+              <SkeletonBlock className="h-3 w-14" />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="h-px bg-slate-100 mx-6" />
+
+      {/* Body sections skeleton */}
+      <div className="flex flex-col gap-6 px-6 py-5">
+        <div className="space-y-2">
+          <SkeletonBlock className="h-3 w-20" />
+          <SkeletonBlock className="h-3 w-full" />
+          <SkeletonBlock className="h-3 w-full" />
+          <SkeletonBlock className="h-3 w-2/3" />
+        </div>
+
+        <div className="space-y-3">
+          <SkeletonBlock className="h-3 w-24" />
+          <div className="flex flex-wrap gap-1.5">
+            {Array.from({ length: 4 }, (_, i) => (
+              <SkeletonBlock key={i} className="h-5 w-20 rounded-full" />
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-2">
+          <SkeletonBlock className="h-3 w-16" />
+          <SkeletonBlock className="h-4 w-1/2" />
+        </div>
+      </div>
+
+      {/* Sticky footer skeleton */}
+      <div className="sticky bottom-0 mt-auto border-t border-slate-100 bg-white/95 backdrop-blur-sm px-6 py-4">
+        <div className="flex items-center justify-between gap-3">
+          <div className="space-y-1.5">
+            <SkeletonBlock className="h-4 w-16" />
+            <SkeletonBlock className="h-3 w-14" />
+          </div>
+          <SkeletonBlock className="h-10 w-44 rounded-xl" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── Main Component ────────────────────────────────────────────────────────────
 type Props = {
-  consultant: ConsultantProfileData;
+  consultant?: ConsultantProfileData | null;
   onClose?: () => void;
   onBookAppointment?: (id: string) => void;
   /** Render as a full-page card (no slide-over close button) */
   standalone?: boolean;
   className?: string;
+  /** Show skeleton loading state until backend data has arrived */
+  isLoading?: boolean;
 };
 
 function ConsultantProfileCard({
@@ -136,7 +232,13 @@ function ConsultantProfileCard({
   onBookAppointment,
   standalone = false,
   className,
+  isLoading = false,
 }: Props) {
+  // Show skeleton while loading, or if no consultant data is available yet.
+  if (isLoading || !consultant) {
+    return <ConsultantProfileSkeleton standalone={standalone} className={className} />;
+  }
+
   const {
     id,
     name,

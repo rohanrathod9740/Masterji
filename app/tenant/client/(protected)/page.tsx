@@ -7,6 +7,61 @@ import ConsultantProfileCard, { ConsultantProfileData } from '@/components/ui/cl
 import { ConsultantCardData } from '@/types'
 import { Search } from 'lucide-react'
 
+// ── Skeleton card — mirrors the real ConsultantsCard proportions ────────────
+function Shimmer({ className }: { className?: string }) {
+  return (
+    <div
+      className={`animate-pulse rounded bg-slate-200 ${className ?? ''}`}
+    />
+  )
+}
+
+function ConsultantCardSkeleton() {
+  return (
+    <div className="flex flex-col rounded-xl border border-slate-100 bg-white shadow-sm overflow-hidden">
+      {/* Header */}
+      <div className="flex items-start gap-2.5 px-3 pt-3 pb-2">
+        {/* Avatar */}
+        <Shimmer className="size-10 shrink-0 rounded-xl" />
+        <div className="flex-1 space-y-1.5">
+          <Shimmer className="h-3.5 w-28" />
+          <Shimmer className="h-3 w-20" />
+          <Shimmer className="h-3 w-24" />
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="flex flex-col gap-2 px-3 py-2.5 flex-1">
+        {/* Rating row */}
+        <div className="flex items-center gap-1.5">
+          {[...Array(5)].map((_, i) => (
+            <Shimmer key={i} className="size-3 rounded-sm" />
+          ))}
+          <Shimmer className="h-3 w-6 ml-1" />
+          <Shimmer className="h-3 w-14" />
+        </div>
+        {/* Bio lines */}
+        <Shimmer className="h-3 w-full" />
+        <Shimmer className="h-3 w-4/5" />
+        {/* Meta */}
+        <div className="flex gap-3">
+          <Shimmer className="h-3 w-14" />
+          <Shimmer className="h-3 w-20" />
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="flex items-center justify-between border-t border-slate-100 px-3 py-2">
+        <Shimmer className="h-3.5 w-16" />
+        <div className="flex gap-2">
+          <Shimmer className="h-7 w-20 rounded-lg" />
+          <Shimmer className="h-7 w-28 rounded-lg" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function ViewConsultants() {
   const [selectedSection, setSelectedSection] = useState('all')
   const [search, setSearch] = useState('')
@@ -111,7 +166,11 @@ export default function ViewConsultants() {
         </div>
 
         {loading && (
-          <p className="text-center text-slate-500 py-12">Loading consultants…</p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <ConsultantCardSkeleton key={i} />
+            ))}
+          </div>
         )}
 
         {!loading && error && (
@@ -129,7 +188,6 @@ export default function ViewConsultants() {
                 key={consultant.id}
                 consultant={consultant}
                 onViewProfile={handleViewProfile}
-                onBookAppointment={handleBookAppointment}
               />
             ))}
           </div>

@@ -67,16 +67,17 @@ function formatBytes(b: number) {
 
 // ── Field wrapper ──────────────────────────────────────────────────────────
 function Field({
-  label, icon: Icon, children, required, span2,
+  label, icon: Icon, children, required, span2, span1,
 }: {
   label: string;
   icon?: React.ElementType;
   children: React.ReactNode;
   required?: boolean;
   span2?: boolean;
+  span1?: boolean;
 }) {
   return (
-    <div className={`flex flex-col gap-1.5 ${span2 ? "sm:col-span-2" : ""}`}>
+    <div className={`flex flex-col gap-1.5 ${span2 ? "sm:col-span-2" : span1 ? "sm:col-span-1" : ""}`}>
       <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-slate-500">
         {Icon && <Icon className="size-3.5 text-indigo-400" aria-hidden />}
         {label}
@@ -527,6 +528,86 @@ export default function ClientOnboardingPage() {
                   )}
                 </Button>
               </CardFooter>
+            </Card>
+
+            {/* ── Card 2: Appointment ───────────────────────────────── */}
+            <Card>
+              <SectionCardHeader
+                step={2}
+                icon={CalendarDays}
+                title="Create Appointment"
+                description="Schedule the client's first session"
+              />
+              <CardContent className="grid grid-cols-2 gap-4 sm:grid-cols-2 pt-4">
+                <Field label="Appointment Date" icon={CalendarDays} required>
+                  <input
+                    id="appt-date"
+                    type="date"
+                    name="appointmentDate"
+                    value={appt.appointmentDate}
+                    onChange={handleApptChange}
+                    required
+                    className={inputCls}
+                  />
+                </Field>
+
+                <Field label="Appointment Time" icon={Clock} required>
+                  <input
+                    id="appt-time"
+                    type="time"
+                    name="appointmentTime"
+                    value={appt.appointmentTime}
+                    onChange={handleApptChange}
+                    required
+                    className={inputCls}
+                  />
+                </Field>
+
+                <Field label="Meeting Mode" icon={Video} required span1>
+                  <div className="grid grid-cols-3 gap-2">
+                    {MEETING_MODES.map((m) => (
+                      <label
+                        key={m.value}
+                        className={`flex cursor-pointer items-center justify-center rounded-xl border px-3 py-2.5 text-xs font-medium transition-all ${
+                          appt.meetingMode === m.value
+                            ? "border-indigo-400 bg-indigo-50 text-indigo-700 shadow-sm"
+                            : "border-slate-200 bg-white text-slate-600 hover:border-indigo-200 hover:bg-slate-50"
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="meetingMode"
+                          value={m.value}
+                          checked={appt.meetingMode === m.value}
+                          onChange={handleApptChange}
+                          className="sr-only"
+                        />
+                        {m.label}
+                      </label>
+                    ))}
+                  </div>
+                </Field>
+
+                <Field label="Purpose / Notes" icon={FileText} span1>
+                  <textarea
+                    id="appt-purpose"
+                    name="purpose"
+                    value={appt.purpose}
+                    onChange={handleApptChange}
+                    rows={3}
+                    placeholder="Brief description of the appointment goal…"
+                    className={`${inputCls} resize-none`}
+                  />
+                </Field>
+
+                <Field label="Supporting Documents" icon={FilePlus2} span2>
+                  <MultiFileDropZone
+                    files={docFiles}
+                    onAdd={addDocFiles}
+                    onRemove={removeDocFile}
+                  />
+                </Field>
+              </CardContent>
             </Card>
 
           </form>
