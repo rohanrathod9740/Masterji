@@ -1,15 +1,17 @@
-"use client"
+"use client";
 import React, { createContext, useContext, useState } from "react";
 
+// Shape of the consultant user returned by getCurrentUser() — passwordHash stripped
 type User = {
   id: string;
-  name?: string | null;
-  dob?: Date| null ;
-  type?:string | "it";
-  email?: string | null;
-  phone?: string | null;
-  nameOfConsultancy?:string | null;
-  address?:string|null;
+  email: string;
+  phone: string;
+  role: "CONSULTANT" | "CLIENT" | "ADMIN";
+  isVerified: boolean;
+  isActive: boolean;
+  lastLoginAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 type ContextType = {

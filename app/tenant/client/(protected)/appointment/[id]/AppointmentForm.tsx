@@ -1,66 +1,75 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { checkPasswordStrength, type PasswordStrengthResult } from "@/lib/passwordStrength";
 import { Button } from "@/components/ui/button";
 import {
-  User,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import {
   CalendarDays,
-  Phone,
-  Mail,
-  MapPin,
-  Briefcase,
-  Tag,
   Clock,
   Video,
   FileText,
   FilePlus2,
   AlertCircle,
   CheckCircle2,
-  Lock,
-  Sparkles,
   ArrowRight,
+  ChevronLeft,
   X,
+  Loader2,
+  Tag,
+  MapPin,
 } from "lucide-react";
 import Link from "next/link";
 
-// ── Enum values ────────────────────────────────────────────────────────────
-const CLIENT_TYPES = [
-  { value: "strategy_consulting",       label: "Strategy Consulting" },
-  { value: "operations_consulting",     label: "Operations Consulting" },
-  { value: "it_consulting",             label: "IT Consulting" },
-  { value: "marketing_consulting",      label: "Marketing Consulting" },
-  { value: "human_resources_consulting",label: "HR Consulting" },
-  { value: "other",                     label: "Other" },
-];
+// ── Types & Constants ────────────────────────────────────────────────────────
+interface ConsultantDetails {
+  id: string;
+  fullName: string;
+  nameOfConsultancy: string | null;
+  profilePhotoUrl: string | null;
+  headline: string | null;
+  designation: string | null;
+  consultationFee: number;
+  category: string;
+}
 
 const MEETING_MODES = [
-  { value: "office_meet", label: "🏢  Office Meeting" },
-  { value: "online_meet", label: "💻  Online Meeting" },
-  { value: "other",       label: "📍  Other" },
+  { value: "IN_PERSON",   label: "🏢 In-Person (Office)", description: "Visit the consultant's office" },
+  { value: "ZOOM",        label: "💻 Zoom Video Call",    description: "Online link shared before session" },
+  { value: "GOOGLE_MEET", label: "🌐 Google Meet",       description: "Standard web video meeting" },
+  { value: "AUDIO_ONLY",  label: "📞 Audio Only Call",    description: "Standard phone/audio session" },
 ];
 
-// ── Shared field styles ────────────────────────────────────────────────────
 const inputCls =
-  "w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-indigo-400 focus:ring-3 focus:ring-indigo-100 hover:border-slate-300";
+  "w-full rounded-xl border border-slate-200 bg-white/90 px-4 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 outline-none transition-all duration-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 hover:border-slate-300";
 
 const selectCls =
-  "w-full rounded-xl border border-slate-200 bg-white/80 px-4 py-2.5 text-sm text-slate-800 outline-none transition-all duration-200 focus:border-indigo-400 focus:ring-3 focus:ring-indigo-100 cursor-pointer";
+  "w-full rounded-xl border border-slate-200 bg-white/90 px-4 py-2.5 text-sm text-slate-800 outline-none transition-all duration-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 cursor-pointer";
 
-// ── File helpers ──────────────────────────────────────────────────────────
+// ── Dropzone Config ────────────────────────────────────────────────────────
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
-const ACCEPTED       = ".pdf,.doc,.docx,.png,.jpg,.jpeg";
+const ACCEPTED = ".pdf,.doc,.docx,.png,.jpg,.jpeg";
 
 function formatBytes(b: number) {
-  if (b < 1024)        return `${b} B`;
+  if (b < 1024) return `${b} B`;
   if (b < 1024 * 1024) return `${(b / 1024).toFixed(1)} KB`;
   return `${(b / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-// ── Field wrapper ──────────────────────────────────────────────────────────
-function Field({
-  label, icon: Icon, children, required, span2,
+// ── Form Field Wrapper ─────────────────────────────────────────────────────
+function FormField({
+  label,
+  icon: Icon,
+  children,
+  required,
+  span2,
 }: {
   label: string;
   icon?: React.ElementType;
@@ -70,69 +79,36 @@ function Field({
 }) {
   return (
     <div className={`flex flex-col gap-1.5 ${span2 ? "sm:col-span-2" : ""}`}>
-      <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-slate-500">
-        {Icon && <Icon className="size-3.5 text-indigo-400" aria-hidden />}
+      <label className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-slate-500">
+        {Icon && <Icon className="size-3.5 text-indigo-500" aria-hidden />}
         {label}
-        {required && <span className="text-red-400">*</span>}
+        {required && <span className="text-rose-500 font-bold">*</span>}
       </label>
       {children}
     </div>
   );
 }
 
-// ── Section card ──────────────────────────────────────────────────────────
-function SectionCard({
-  step, icon: Icon, title, description, children,
-}: {
-  step: number;
-  icon: React.ElementType;
-  title: string;
-  description: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-100">
-      {/* Card header */}
-      <div className="flex items-center gap-4 border-b border-slate-100 bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-4">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-white/15 text-white font-bold text-sm">
-          {step}
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="grid size-8 place-items-center rounded-lg bg-white/10 text-white">
-            <Icon className="size-4" />
-          </span>
-          <div>
-            <p className="font-semibold text-white leading-tight">{title}</p>
-            <p className="text-xs text-indigo-200">{description}</p>
-          </div>
-        </div>
-      </div>
-      {/* Card body */}
-      <div className="grid grid-cols-1 gap-4 p-6 sm:grid-cols-2">
-        {children}
-      </div>
-    </div>
-  );
-}
-
-// ── File Drop Zone ────────────────────────────────────────────────────────
+// ── Multi-file Dropzone ────────────────────────────────────────────────────
 function MultiFileDropZone({
-  files, onAdd, onRemove,
+  files,
+  onAdd,
+  onRemove,
 }: {
   files: File[];
   onAdd: (f: File[]) => void;
   onRemove: (i: number) => void;
 }) {
   const [sizeError, setSizeError] = useState<string | null>(null);
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setSizeError(null);
-    const picked    = Array.from(e.target.files ?? []);
+    const picked = Array.from(e.target.files ?? []);
     const oversized = picked.filter((f) => f.size > MAX_FILE_BYTES);
     if (oversized.length > 0) {
       setSizeError(
-        `${oversized.map((f) => f.name).join(", ")} exceed${oversized.length === 1 ? "s" : ""} the 10 MB limit and were skipped.`
+        `${oversized.map((f) => f.name).join(", ")} exceed${oversized.length === 1 ? "s" : ""} the 10 MB limit and was skipped.`
       );
     }
     const valid = picked.filter((f) => f.size <= MAX_FILE_BYTES);
@@ -144,13 +120,13 @@ function MultiFileDropZone({
     <div className="flex flex-col gap-2.5">
       <label
         htmlFor="appt-doc"
-        className="group flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 px-4 py-6 text-sm text-slate-500 transition-all hover:border-indigo-300 hover:bg-indigo-50/50"
+        className="group flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-200 bg-slate-50/50 px-4 py-6 text-sm text-slate-500 transition-all hover:border-indigo-300 hover:bg-indigo-50/30"
       >
-        <div className="grid size-10 place-items-center rounded-xl bg-white shadow-sm shadow-slate-200 transition-transform group-hover:scale-110">
+        <div className="grid size-10 place-items-center rounded-xl bg-white shadow-sm shadow-slate-200 transition-transform group-hover:scale-105">
           <FilePlus2 className="size-5 text-indigo-500" />
         </div>
         <div className="text-center">
-          <p className="font-medium text-slate-700">Click to add documents</p>
+          <p className="font-semibold text-slate-700">Click or drag files here to upload</p>
           <p className="mt-0.5 text-xs text-slate-400">PDF, DOCX, PNG, JPG — max 10 MB each</p>
         </div>
         <input
@@ -165,7 +141,7 @@ function MultiFileDropZone({
       </label>
 
       {sizeError && (
-        <p className="flex items-start gap-1.5 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600 border border-red-100">
+        <p className="flex items-start gap-1.5 rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-600 border border-rose-100">
           <AlertCircle className="mt-0.5 size-3.5 shrink-0" />
           {sizeError}
         </p>
@@ -176,7 +152,7 @@ function MultiFileDropZone({
           {files.map((f, i) => (
             <li
               key={`${f.name}-${i}`}
-              className="flex items-center gap-2.5 rounded-xl border border-slate-100 bg-slate-50 px-3 py-2.5 text-xs"
+              className="flex items-center gap-2.5 rounded-xl border border-slate-100 bg-slate-50/50 px-3 py-2 text-xs"
             >
               <div className="grid size-7 shrink-0 place-items-center rounded-lg bg-indigo-50">
                 <FileText className="size-3.5 text-indigo-500" />
@@ -187,7 +163,7 @@ function MultiFileDropZone({
                 type="button"
                 aria-label={`Remove ${f.name}`}
                 onClick={() => onRemove(i)}
-                className="grid size-5 shrink-0 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-red-100 hover:text-red-500"
+                className="grid size-5 shrink-0 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-rose-100 hover:text-rose-500"
               >
                 <X className="size-3.5" />
               </button>
@@ -199,44 +175,68 @@ function MultiFileDropZone({
   );
 }
 
-// ── Props ──────────────────────────────────────────────────────────────────
+// ── Component Props ────────────────────────────────────────────────────────
 export interface AppointmentFormProps {
+  consultantId: string;
   prefill?: {
-    name?: string;
-    email?: string;
-    phone?: string;
-    dob?: string;        // "YYYY-MM-DD"
-    address?: string;
-    companyName?: string;
-    type?: string;
-    appointmentDate?: string;
+    scheduledStart?: string;
   };
 }
 
-// ── Main form ──────────────────────────────────────────────────────────────
-export default function AppointmentForm({ prefill }: AppointmentFormProps) {
-  const [client, setClient] = useState({
-    name:        prefill?.name        ?? "",
-    email:       prefill?.email       ?? "",
-    phone:       prefill?.phone       ?? "",
-    dob:         prefill?.dob         ?? "",
-    address:     prefill?.address     ?? "",
-    companyName: prefill?.companyName ?? "",
-    type:        prefill?.type        ?? "",
-    appointmentDate: prefill?.appointmentDate    ?? ""
-  });
-
-  const [appt, setAppt] = useState({
-    appointmentDate: "", appointmentTime: "",
-    meetingMode: "office_meet", purpose: "",
-  });
-
-  const [submitting,       setSubmitting]       = useState(false);
-  const [apiError,         setApiError]         = useState<string | null>(null);
-  const [successId,        setSuccessId]        = useState<string | null>(null);
-  const [docFiles,         setDocFiles]         = useState<File[]>([]);
+// ── Main Booking Form ───────────────────────────────────────────────────────
+export default function AppointmentForm({ consultantId }: AppointmentFormProps) {
   const router = useRouter();
 
+  // ── States ───────────────────────────────────────────────────────────────
+  const [consultant, setConsultant] = useState<ConsultantDetails | null>(null);
+  const [loadingConsultant, setLoadingConsultant] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  // Appointment states
+  const [appt, setAppt] = useState({
+    appointmentDate: "",
+    appointmentTime: "",
+    meetingMode: "IN_PERSON",
+  });
+  const [docFiles, setDocFiles] = useState<File[]>([]);
+
+  // Category specific details (Dynamic FR4)
+  const [medicalDetails, setMedicalDetails] = useState({ symptoms: "", medicalHistory: "" });
+  const [legalDetails, setLegalDetails] = useState({ caseSummary: "" });
+  const [itDetails, setItDetails] = useState({ techStack: "" });
+  const [astrologyDetails, setAstrologyDetails] = useState({ birthTime: "", birthPlace: "", focusArea: "General" });
+  const [generalDetails, setGeneralDetails] = useState({ notes: "" });
+
+  // Fetch consultant profile details
+  useEffect(() => {
+    async function loadConsultant() {
+      try {
+        const res = await fetch(`/api/client/consultants/${consultantId}`);
+        const json = await res.json();
+        if (json.success && json.data) {
+          setConsultant(json.data);
+        } else {
+          setApiError("Consultant not found.");
+        }
+      } catch (err) {
+        console.error("Failed to load consultant details", err);
+        setApiError("Failed to fetch consultant information.");
+      } finally {
+        setLoadingConsultant(false);
+      }
+    }
+    loadConsultant();
+  }, [consultantId]);
+
+  // ── Change Handlers ──────────────────────────────────────────────────────
+  function handleApptChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+    const { name, value } = e.target;
+    setAppt((prev) => ({ ...prev, [name]: value }));
+  }
+
+  // ── File Handlers ────────────────────────────────────────────────────────
   function addDocFiles(newFiles: File[]) {
     setDocFiles((prev) => {
       const seen = new Set(prev.map((f) => `${f.name}-${f.size}`));
@@ -248,356 +248,365 @@ export default function AppointmentForm({ prefill }: AppointmentFormProps) {
     setDocFiles((prev) => prev.filter((_, i) => i !== index));
   }
 
-  function handleClientChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) {
-    const { name, value } = e.target;
-    setClient((prev) => ({ ...prev, [name]: value }));
-  }
-
-  function handleApptChange(
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) {
-    setAppt((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-
+  // ── Form Submission ──────────────────────────────────────────────────────
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setApiError(null);
-    setSuccessId(null);
+    setSuccess(false);
+
+    if (!appt.appointmentDate || !appt.appointmentTime) {
+      alert("Please choose a date and time for the appointment.");
+      return;
+    }
+
+    if (!consultant) return;
+
     setSubmitting(true);
 
     try {
       const fd = new FormData();
-      Object.entries(client).forEach(([k, v]) => fd.append(k, v));
-      Object.entries(appt).forEach(([k, v]) => fd.append(k, v));
-      docFiles.forEach((f) => fd.append("doc", f));
 
-      const res  = await fetch("/api/client/appointment", { method: "POST", body: fd });
+      fd.append("consultantId", consultantId);
+
+      // Construct scheduled start/end dates
+      const scheduledStart = new Date(`${appt.appointmentDate}T${appt.appointmentTime}`);
+      const scheduledEnd = new Date(scheduledStart.getTime() + 60 * 60 * 1000); // 60 min duration
+
+      fd.append("scheduledStart", scheduledStart.toISOString());
+      fd.append("scheduledEnd", scheduledEnd.toISOString());
+      fd.append("mode", appt.meetingMode);
+
+      // Formulate Category specific purpose (FR4)
+      let purpose = "";
+      const category = consultant.category;
+      if (category === "MEDICAL" || category === "HOMEOPATHY" || category === "PHYSIOTHERAPY") {
+        purpose = `[Symptoms]: ${medicalDetails.symptoms.trim()}\n[Medical History]: ${medicalDetails.medicalHistory.trim() || "None"}`;
+      } else if (category === "LEGAL") {
+        purpose = `[Case Summary]: ${legalDetails.caseSummary.trim()}`;
+      } else if (category === "IT") {
+        purpose = `[Tech Stack / Goals]: ${itDetails.techStack.trim()}`;
+      } else if (category === "ASTROLOGY") {
+        purpose = `[Birth Time]: ${astrologyDetails.birthTime}\n[Birth Place]: ${astrologyDetails.birthPlace.trim()}\n[Focus Area]: ${astrologyDetails.focusArea}`;
+      } else {
+        purpose = `[Consultation Notes]: ${generalDetails.notes.trim()}`;
+      }
+      fd.append("purpose", purpose);
+
+      // Supporting Documents
+      docFiles.forEach((file) => {
+        fd.append("doc", file);
+      });
+
+      const res = await fetch("/api/client/appointment", {
+        method: "POST",
+        body: fd,
+      });
+
       const json = await res.json();
 
       if (!res.ok || !json.success) {
-        setApiError(json.message ?? "Something went wrong. Please try again.");
+        setApiError(json.message ?? "Failed to request appointment. Please check availability.");
         return;
       }
-      setSuccessId(json.data.client.id);
-      setTimeout(() => router.push("/tenant/client"), 2000);
-    } catch {
-      setApiError("Network error. Please check your connection and try again.");
+
+      setSuccess(true);
+      setTimeout(() => {
+        router.push("/tenant/client");
+      }, 2500);
+    } catch (err) {
+      console.error(err);
+      setApiError("Network error. Please check your connection.");
     } finally {
       setSubmitting(false);
     }
   }
 
-  
+  if (loadingConsultant) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 text-slate-500 gap-3">
+        <Loader2 className="size-8 animate-spin text-indigo-600" />
+        <p className="text-sm font-medium">Loading consultant details...</p>
+      </div>
+    );
+  }
 
-  const isPrefilled = !!prefill;
+  if (!consultant) {
+    return (
+      <div className="mx-auto max-w-lg text-center py-16 px-4">
+        <AlertCircle className="size-12 text-rose-500 mx-auto mb-3" />
+        <h3 className="text-lg font-bold text-slate-800">Consultant Not Found</h3>
+        <p className="text-sm text-slate-500 mt-1">{apiError ?? "The requested consultant could not be retrieved."}</p>
+        <Link href="/tenant/client" className="inline-block mt-5 text-sm font-bold text-indigo-600 hover:underline">
+          &larr; Back to Consultants
+        </Link>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <div className="mx-auto max-w-6xl px-4 py-10 lg:px-8">
-
-        <div className="absolute inset-x-0 top-5 flex justify-center">
-          <Link href="/" aria-label="home">
-            <span className="select-none inline-block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-3xl font-bold tracking-tight text-transparent">
-              Ayushman.
-            </span>
-          </Link>
+    <div className="space-y-6">
+      {/* Consultant Header confirmation summary */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-5">
+        <div>
+          <h2 className="text-2xl font-extrabold text-slate-900">Book Session</h2>
+          <p className="text-sm text-slate-500">Schedule your consultation slot and submit history documents.</p>
         </div>
+        <Link
+          href="/tenant/client"
+          className="inline-flex items-center gap-1 text-sm font-bold text-slate-600 hover:text-indigo-600 transition"
+        >
+          <ChevronLeft className="size-4" />
+          Back to list
+        </Link>
+      </div>
 
-        {/* ── Top bar ─────────────────────────────────────────────────── */}
-        <div className="mb-8 flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-600">
-              <Sparkles className="size-3.5" />
-              New Client Onboarding
-            </div>
-            <h1 className="text-2xl font-bold text-slate-800">
-              Register &amp; Book Appointment
-            </h1>
-            <p className="mt-1 text-sm text-slate-500">
-              Complete the form below to onboard a new client and schedule their first session.
-            </p>
-          </div>
-          <a
-            href="/client/login"
-            className="mt-3 inline-flex items-center gap-1.5 rounded-xl border border-indigo-200 bg-white px-4 py-2 text-sm font-medium text-indigo-600 shadow-sm transition-all hover:bg-indigo-50 hover:shadow-md sm:mt-0"
-          >
-            Existing client? Sign in
-            <ArrowRight className="size-3.5" />
-          </a>
-        </div>
-
-        {/* ── Autofill notice ───────────────────────────────────────────── */}
-        {isPrefilled && (
-          <div className="mb-6 flex items-start gap-3 rounded-2xl border border-indigo-200 bg-indigo-50 px-5 py-4 text-sm text-indigo-700 shadow-sm">
-            <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-indigo-500" />
-            <span>
-              Your profile details have been pre-filled. Review them before booking your appointment.
-            </span>
-          </div>
-        )}
-
-        {/* ── Banners ──────────────────────────────────────────────────── */}
-        {apiError && (
-          <div role="alert" className="mb-6 flex items-start gap-3 rounded-2xl border border-red-200 bg-red-50 px-5 py-4 text-sm text-red-700 shadow-sm">
-            <AlertCircle className="mt-0.5 size-4 shrink-0 text-red-500" />
-            <span>{apiError}</span>
-          </div>
-        )}
-        {successId && (
-          <div role="status" className="mb-6 flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-700 shadow-sm">
-            <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-500" />
-            <span>Client created successfully! Redirecting to dashboard…</span>
-          </div>
-        )}
-
-        {/* ── Two-column layout ─────────────────────────────────────────── */}
-        <div className="flex gap-8 lg:items-start">
-
-          {/* Sticky sidebar */}
-          <aside className="hidden w-56 shrink-0 lg:block">
-            <div className="sticky top-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-              <p className="mb-4 text-xs font-bold uppercase tracking-widest text-slate-400">Steps</p>
-              <ol className="flex flex-col gap-3">
-                {[
-                  { n: 1, label: "Client Profile",   icon: User },
-                  { n: 2, label: "Appointment",       icon: CalendarDays },
-                ].map(({ n, label, icon: Icon }) => (
-                  <li key={n} className="flex items-center gap-3">
-                    <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-indigo-600 text-xs font-bold text-white shadow-sm">
-                      {n}
-                    </span>
-                    <span className="flex items-center gap-1.5 text-sm font-medium text-slate-700">
-                      <Icon className="size-3.5 text-indigo-400" />
-                      {label}
-                    </span>
-                  </li>
-                ))}
-              </ol>
-
-              <div className="mt-6 rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 p-4 text-white">
-                <p className="text-xs font-semibold">Need help?</p>
-                <p className="mt-1 text-xs text-indigo-200 leading-relaxed">
-                  All fields marked <span className="text-red-300">*</span> are required. Attach relevant documents for a faster session.
-                </p>
+      {/* Profile summary card */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border border-indigo-100 bg-indigo-50/20 rounded-2xl p-5 gap-4">
+        <div className="flex items-center gap-4">
+          <div className="relative size-14 shrink-0 overflow-hidden rounded-xl bg-slate-100 border border-slate-200">
+            {consultant.profilePhotoUrl ? (
+              <img src={consultant.profilePhotoUrl} alt={consultant.fullName} className="object-cover size-full" />
+            ) : (
+              <div className="grid size-full place-items-center bg-indigo-50 text-lg font-bold text-indigo-700">
+                {consultant.fullName.split(" ").map((n) => n[0]).slice(0, 2).join("")}
               </div>
+            )}
+          </div>
+          <div>
+            <span className="text-[10px] font-bold text-indigo-500 uppercase tracking-widest block">Selected Professional</span>
+            <h3 className="text-base font-extrabold text-slate-900 leading-tight">{consultant.fullName}</h3>
+            <p className="text-xs text-slate-500 mt-0.5">{consultant.designation || "Expert Consultant"}</p>
+          </div>
+        </div>
+        <div className="sm:text-right">
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Consultation Fee</span>
+          <h3 className="text-base font-extrabold text-slate-900">₹{consultant.consultationFee.toLocaleString("en-IN")}</h3>
+          <p className="text-[10px] text-slate-400 mt-0.5">Pay-on-booking / post-session</p>
+        </div>
+      </div>
+
+      {/* Banners */}
+      {apiError && (
+        <div role="alert" className="flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700 shadow-sm">
+          <AlertCircle className="mt-0.5 size-4 shrink-0 text-rose-500" />
+          <span>{apiError}</span>
+        </div>
+      )}
+      {success && (
+        <div role="status" className="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm text-emerald-700 shadow-sm">
+          <CheckCircle2 className="mt-0.5 size-4 shrink-0 text-emerald-500" />
+          <div>
+            <p className="font-semibold text-emerald-800">Session requested successfully!</p>
+            <p className="mt-0.5 text-xs text-emerald-600 font-medium">Redirecting you to dashboard... Your consultant will review the request.</p>
+          </div>
+        </div>
+      )}
+
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <Card className="border-slate-200 shadow-sm overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-indigo-50/50 to-violet-50/30 border-b border-slate-100 py-4">
+            <CardTitle className="text-lg font-bold text-slate-800">Booking Form</CardTitle>
+            <CardDescription>Select appointment time and detail your requirements</CardDescription>
+          </CardHeader>
+          <CardContent className="grid grid-cols-1 gap-5 p-6 sm:grid-cols-2">
+            
+            <FormField label="Preferred Date" icon={CalendarDays} required>
+              <input
+                type="date"
+                name="appointmentDate"
+                value={appt.appointmentDate}
+                onChange={handleApptChange}
+                required
+                className={inputCls}
+              />
+            </FormField>
+
+            <FormField label="Preferred Time" icon={Clock} required>
+              <input
+                type="time"
+                name="appointmentTime"
+                value={appt.appointmentTime}
+                onChange={handleApptChange}
+                required
+                className={inputCls}
+              />
+            </FormField>
+
+            <FormField label="Meeting Mode" icon={Video} required span2>
+              <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                {MEETING_MODES.map((m) => (
+                  <label
+                    key={m.value}
+                    className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3.5 transition-all duration-200 ${
+                      appt.meetingMode === m.value
+                        ? "border-indigo-500 bg-indigo-50/30 shadow-sm ring-1 ring-indigo-500"
+                        : "border-slate-200 bg-white text-slate-600 hover:border-indigo-200 hover:bg-slate-50/40"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name="meetingMode"
+                      value={m.value}
+                      checked={appt.meetingMode === m.value}
+                      onChange={handleApptChange}
+                      className="mt-1 border-slate-300 text-indigo-600 focus:ring-indigo-500 size-4 shrink-0"
+                    />
+                    <div className="-mt-0.5">
+                      <span className="text-xs font-bold text-slate-800 block">{m.label}</span>
+                      <span className="text-[10px] text-slate-400 block mt-0.5 leading-tight">{m.description}</span>
+                    </div>
+                  </label>
+                ))}
+              </div>
+            </FormField>
+
+            {/* Category specific details (Dynamic FR4) */}
+            <div className="col-span-1 sm:col-span-2 border-t border-slate-100 pt-4 mt-2">
+              <h3 className="text-sm font-bold text-slate-800 mb-2">Category-Specific Information</h3>
+              <p className="text-xs text-slate-400 leading-relaxed mb-4">Provide the following information based on the consultant category to help brief the expert before your session.</p>
             </div>
-          </aside>
 
-          {/* Form */}
-          <form onSubmit={handleSubmit} className="flex-1 space-y-6" noValidate>
+            {(consultant.category === "MEDICAL" || consultant.category === "HOMEOPATHY" || consultant.category === "PHYSIOTHERAPY") && (
+              <>
+                <FormField label="Symptoms &amp; Current Complaints" icon={FileText} required span2>
+                  <textarea
+                    value={medicalDetails.symptoms}
+                    onChange={(e) => setMedicalDetails((prev) => ({ ...prev, symptoms: e.target.value }))}
+                    rows={3}
+                    placeholder="Describe your current physical complaints, duration, severity, and any pain points..."
+                    required
+                    className={`${inputCls} resize-none`}
+                  />
+                </FormField>
+                <FormField label="Medical History &amp; Medications" icon={FileText} span2>
+                  <textarea
+                    value={medicalDetails.medicalHistory}
+                    onChange={(e) => setMedicalDetails((prev) => ({ ...prev, medicalHistory: e.target.value }))}
+                    rows={2}
+                    placeholder="Briefly state any chronic conditions, active medications, or allergies (optional)..."
+                    className={`${inputCls} resize-none`}
+                  />
+                </FormField>
+              </>
+            )}
 
-            {/* ── Card 1: Client Details ─────────────────────────────── */}
-            <SectionCard
-              step={1}
-              icon={User}
-              title="Client Details"
-              description="Personal & contact information"
-            >
-              <Field label="Full Name" icon={User} required>
-                <input
-                  id="client-name"
-                  type="text"
-                  name="name"
-                  value={client.name}
-                  onChange={handleClientChange}
-                  placeholder="Jane Doe"
+            {consultant.category === "LEGAL" && (
+              <FormField label="Case Summary &amp; Legal Details" icon={FileText} required span2>
+                <textarea
+                  value={legalDetails.caseSummary}
+                  onChange={(e) => setLegalDetails((prev) => ({ ...prev, caseSummary: e.target.value }))}
+                  rows={4}
+                  placeholder="Outline the details of the dispute or agreement, including names of involved parties, core dates, and specific legal questions you have..."
                   required
-                  className={inputCls}
+                  className={`${inputCls} resize-none`}
                 />
-              </Field>
+              </FormField>
+            )}
 
-              <Field label="Date of Birth" icon={CalendarDays} required>
-                <input
-                  id="client-dob"
-                  type="date"
-                  name="dob"
-                  value={client.dob}
-                  onChange={handleClientChange}
+            {consultant.category === "IT" && (
+              <FormField label="Project Scope &amp; Tech Stack" icon={FileText} required span2>
+                <textarea
+                  value={itDetails.techStack}
+                  onChange={(e) => setItDetails((prev) => ({ ...prev, techStack: e.target.value }))}
+                  rows={4}
+                  placeholder="Detail your system goals, programming language, cloud platform (e.g. AWS), performance issues, or architectural assistance needed..."
                   required
-                  className={inputCls}
+                  className={`${inputCls} resize-none`}
                 />
-              </Field>
+              </FormField>
+            )}
 
-              <Field label="Email Address" icon={Mail} required>
-                <input
-                  id="client-email"
-                  type="email"
-                  name="email"
-                  value={client.email}
-                  onChange={handleClientChange}
-                  placeholder="jane@example.com"
+            {consultant.category === "ASTROLOGY" && (
+              <>
+                <FormField label="Time of Birth" icon={Clock} required>
+                  <input
+                    type="time"
+                    value={astrologyDetails.birthTime}
+                    onChange={(e) => setAstrologyDetails((prev) => ({ ...prev, birthTime: e.target.value }))}
+                    required
+                    className={inputCls}
+                  />
+                </FormField>
+                <FormField label="Place of Birth" icon={MapPin} required>
+                  <input
+                    type="text"
+                    value={astrologyDetails.birthPlace}
+                    onChange={(e) => setAstrologyDetails((prev) => ({ ...prev, birthPlace: e.target.value }))}
+                    placeholder="City, State, Country (e.g. Mumbai, Maharashtra, India)"
+                    required
+                    className={inputCls}
+                  />
+                </FormField>
+                <FormField label="Consultation Topic Focus" icon={Tag} required span2>
+                  <select
+                    value={astrologyDetails.focusArea}
+                    onChange={(e) => setAstrologyDetails((prev) => ({ ...prev, focusArea: e.target.value }))}
+                    required
+                    className={selectCls}
+                  >
+                    <option value="General">General Horoscope &amp; Future Insights</option>
+                    <option value="Career & Business">Career, Business &amp; Finances</option>
+                    <option value="Marriage & Kundli">Marriage, Love &amp; Kundli Matching</option>
+                    <option value="Health & Remedies">Health, Transit Remedies &amp; Pujas</option>
+                  </select>
+                </FormField>
+              </>
+            )}
+
+            {consultant.category === "OTHER" && (
+              <FormField label="Brief Overview &amp; Session Goals" icon={FileText} required span2>
+                <textarea
+                  value={generalDetails.notes}
+                  onChange={(e) => setGeneralDetails((prev) => ({ ...prev, notes: e.target.value }))}
+                  rows={4}
+                  placeholder="Outline your questions, relevant background details, and what outcomes you hope to achieve in this session..."
                   required
-                  className={inputCls}
+                  className={`${inputCls} resize-none`}
                 />
-              </Field>
+              </FormField>
+            )}
 
-              <Field label="Phone Number" icon={Phone} required>
-                <input
-                  id="client-phone"
-                  type="tel"
-                  name="phone"
-                  value={client.phone}
-                  onChange={handleClientChange}
-                  placeholder="+91 98765 43210"
-                  required
-                  className={inputCls}
-                />
-              </Field>
-
-              <Field label="Company / Organisation" icon={Briefcase}>
-                <input
-                  id="client-company"
-                  type="text"
-                  name="companyName"
-                  value={client.companyName}
-                  onChange={handleClientChange}
-                  placeholder="Acme Corp (optional)"
-                  className={inputCls}
-                />
-              </Field>
-
-              <Field label="Client Type" icon={Tag}>
-                <select
-                  id="client-type"
-                  name="type"
-                  value={client.type}
-                  onChange={handleClientChange}
-                  className={selectCls}
-                >
-                  <option value="">Select type…</option>
-                  {CLIENT_TYPES.map((t) => (
-                    <option key={t.value} value={t.value}>{t.label}</option>
-                  ))}
-                </select>
-              </Field>
-
-              <Field label="Address" icon={MapPin} required span2>
-                <input
-                  id="client-address"
-                  type="text"
-                  name="address"
-                  value={client.address}
-                  onChange={handleClientChange}
-                  placeholder="123 Main St, City"
-                  required
-                  className={inputCls}
-                />
-              </Field>
-            </SectionCard>
-
-            {/* ── Card 2: Appointment ───────────────────────────────── */}
-            <SectionCard
-              step={2}
-              icon={CalendarDays}
-              title="Create Appointment"
-              description="Schedule the client's first session"
-            >
-              <Field label="Appointment Date" icon={CalendarDays} required>
-                <input
-                  id="appt-date"
-                  type="date"
-                  name="appointmentDate"
-                  value={appt.appointmentDate}
-                  onChange={handleApptChange}
-                  required
-                  className={inputCls}
-                />
-              </Field>
-
-              <Field label="Appointment Time" icon={Clock} required>
-                <input
-                  id="appt-time"
-                  type="time"
-                  name="appointmentTime"
-                  value={appt.appointmentTime}
-                  onChange={handleApptChange}
-                  required
-                  className={inputCls}
-                />
-              </Field>
-
-              <Field label="Meeting Mode" icon={Video} required span2>
-                <div className="grid grid-cols-3 gap-2">
-                  {MEETING_MODES.map((m) => (
-                    <label
-                      key={m.value}
-                      className={`flex cursor-pointer items-center justify-center rounded-xl border px-3 py-2.5 text-xs font-medium transition-all ${
-                        appt.meetingMode === m.value
-                          ? "border-indigo-400 bg-indigo-50 text-indigo-700 shadow-sm"
-                          : "border-slate-200 bg-white text-slate-600 hover:border-indigo-200 hover:bg-slate-50"
-                      }`}
-                    >
-                      <input
-                        type="radio"
-                        name="meetingMode"
-                        value={m.value}
-                        checked={appt.meetingMode === m.value}
-                        onChange={handleApptChange}
-                        className="sr-only"
-                      />
-                      {m.label}
-                    </label>
-                  ))}
-                </div>
-              </Field>
-
-              <Field label="Supporting Documents" icon={FilePlus2} span2>
+            {/* Document Upload Zone */}
+            <div className="col-span-1 sm:col-span-2 border-t border-slate-100 pt-4 mt-2">
+              <FormField label="Attach Supporting Documents" icon={FilePlus2} span2>
                 <MultiFileDropZone
                   files={docFiles}
                   onAdd={addDocFiles}
                   onRemove={removeDocFile}
                 />
-              </Field>
-
-              <Field label="Purpose / Notes" icon={FileText} span2>
-                <textarea
-                  id="appt-purpose"
-                  name="purpose"
-                  value={appt.purpose}
-                  onChange={handleApptChange}
-                  rows={3}
-                  placeholder="Brief description of the appointment goal…"
-                  className={`${inputCls} resize-none`}
-                />
-              </Field>
-            </SectionCard>
-
-            {/* ── Submit footer ─────────────────────────────────────── */}
-            <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white px-6 py-4 shadow-sm">
-              <button
-                type="button"
-                onClick={() => router.back()}
-                className="text-sm font-medium text-slate-500 transition-colors hover:text-slate-800"
-              >
-                ← Cancel
-              </button>
-
-              <Button
-                type="submit"
-                disabled={submitting || !!successId}
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-200 transition-all hover:opacity-90 hover:shadow-lg disabled:opacity-60"
-              >
-                {submitting ? (
-                  <>
-                    <svg className="size-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden>
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a8 8 0 11-8 8z" />
-                    </svg>
-                    Saving…
-                  </>
-                ) : (
-                  <>
-                    Book Appointment
-                    <ArrowRight className="size-4" />
-                  </>
-                )}
-              </Button>
+              </FormField>
             </div>
-          </form>
-        </div>
-      </div>
+
+          </CardContent>
+          <CardFooter className="justify-between border-t border-slate-100 px-6 py-4 bg-slate-50/50">
+            <Button
+              type="button"
+              onClick={() => router.back()}
+              className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={submitting || success}
+              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-150 transition-all hover:opacity-90 hover:shadow-lg disabled:opacity-60"
+            >
+              {submitting ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  Requesting Slot...
+                </>
+              ) : (
+                <>
+                  Book Consultation
+                  <ArrowRight className="size-4" />
+                </>
+              )}
+            </Button>
+          </CardFooter>
+        </Card>
+      </form>
     </div>
   );
 }

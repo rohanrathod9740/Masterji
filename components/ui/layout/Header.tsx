@@ -57,7 +57,7 @@ function Header() {
         className="flex items-center space-x-2"
     >
         <span className="select-none bg-primary text-white bg-clip-text text-transparent font-bold text-xl tracking-tight inline-block transition-transform duration-300">
-            {user?.nameOfConsultancy || 'Ayushman'}
+            Ayushman
         </span>
     </Link>
 
@@ -137,7 +137,7 @@ function Header() {
                                 <button className='w-full flex flex-row items-center gap-3 p-4 rounded-lg hover:bg-gray-100 transition-colors'>
                                     <PersonIcon width={40} height={40} className='flex-shrink-0' />
                                     <div className="text-left flex-1">
-                                        <div className="font-semibold text-gray-900">{user?.name || 'User'}</div>
+                                        <div className="font-semibold text-gray-900">{user?.email || 'User'}</div>
                                         <div className="text-xs text-gray-600">{user?.email || 'View profile'}</div>
                                     </div>
                                 </button>

@@ -1,408 +1,954 @@
+// ============================================================
+// ContextOS — Consultant Context & Client Relationship Platform
+// Prisma Schema  |  v1 Production Draft
+// ============================================================
+
 generator client {
-  provider = "prisma-client"
-  output   = "./migrations/"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-enum ClientType {
-  strategy_consulting
-  operations_consulting
-  it_consulting
-  marketing_consulting
-  human_resources_consulting
-  other
+// ─────────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────────
+
+/// Broad domain a consultant belongs to.
+/// Drives verification tier, profile fields, and UI labels.
+enum ConsultantCategory {
+  MEDICAL
+  LEGAL
+  IT
+  PHYSIOTHERAPY
+  HOMEOPATHY
+  ASTROLOGY
+  OTHER
 }
 
-enum UserType {
-  it
-  healthcare
-  realestate
-  legal
-  other
+/// Verification tier logic:
+///   MEDICAL / LEGAL / PHYSIOTHERAPY → license mandatory (STRICT)
+///   IT / HOMEOPATHY                 → certification preferred (STANDARD)
+///   ASTROLOGY / OTHER               → identity check only (BASIC)
+
+enum VerificationTier {
+  BASIC
+  STANDARD
+  STRICT
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+  SUSPENDED
 }
 
 enum ClientStatus {
-  active
-  inactive
-  archived
-}
-
-enum InteractionType {
-  consulation
-  meeting
-  call
-  treatment_session
-  review_meeting
-  project_discussion
-  support_call
-}
-
-enum TaskPriority {
-  low
-  medium
-  high
-  critical
-}
-
-enum TaskStatus {
-  pending
-  in_progress
-  done
-  overdue
-}
-
-enum MeetingMode {
-  office_meet
-  online_meet
-  other
+  ACTIVE
+  INACTIVE
+  ARCHIVED
+  BLOCKED
 }
 
 enum AppointmentStatus {
-  pending_for_approval
-  scheduled
-  rescheduled
-  missed
+  REQUESTED
+  APPROVED
+  RESCHEDULE_PROPOSED
+  RESCHEDULED
+  REJECTED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
 }
 
-enum AuditAction {
-  created
-  updated
-  deleted
+/// Who proposed the reschedule
+enum RescheduleProposedBy {
+  CONSULTANT
+  CLIENT
 }
 
-enum AuditRecordType {
-  client
-  interaction
-  task
-  appointment
+enum MeetingMode {
+  IN_PERSON
+  ZOOM
+  GOOGLE_MEET
+  OTHER_VIDEO
+  AUDIO_ONLY
+}
+
+enum PaymentTiming {
+  PAY_ON_BOOKING
+  PAY_AFTER_SESSION
 }
 
 enum CaseStatus {
-  active
-  resolved
-  monitoring
+  ACTIVE
+  CLOSED
+  ARCHIVED
+}
+
+enum InteractionType {
+  RECORDED_AUDIO
+  NOTE
+  FOLLOW_UP_CALL
+  MESSAGE
+  VIDEO_SESSION
+}
+
+enum TranscriptStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  LOW_CONFIDENCE
+}
+
+enum Visibility {
+  CONSULTANT_ONLY
+  SHARED_WITH_CLIENT
+}
+
+enum CommitmentMadeBy {
+  CONSULTANT
+  CLIENT
 }
 
 enum CommitmentStatus {
-  pending
-  done
-  missed
+  PENDING
+  IN_PROGRESS
+  FULFILLED
+  MISSED
+  CANCELLED
 }
 
-model ConsultantTag{
-  id     String @id @default(uuid())
-  name   String @unique
-  users User[] 
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
 }
 
-model Language {
-  id    String @id @default(uuid())
-  name  String @unique
-  users User[]
+enum TaskAssignedTo {
+  CLIENT
+  CONSULTANT
 }
 
-model Certification {
-  id          String   @id @default(uuid())
-  title       String
-  issuer      String
-  issuedAt    DateTime?
-  expiresAt   DateTime?
-  credentialUrl String?
-
-  consultantId String
-  consultant   User @relation(fields: [consultantId], references: [id])
+enum TaskStatus {
+  OPEN
+  IN_PROGRESS
+  DONE
+  OVERDUE
+  CANCELLED
 }
 
-
-model Review{
-  id      String      @id @default(uuid())
-  rating  Int         
-  comment String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-
-  userId String
-  clientId String
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+enum DocumentCategory {
+  PRESCRIPTION
+  REPORT
+  CONTRACT
+  ID_PROOF
+  RECORDING
+  OTHER
 }
 
+enum ScanStatus {
+  PENDING
+  CLEAN
+  INFECTED
+}
+
+enum AISummaryType {
+  SESSION_RECAP
+  FULL_CASE_SUMMARY
+  ON_DEMAND_QUERY
+}
+
+enum AIFeedback {
+  HELPFUL
+  NOT_HELPFUL
+}
+
+enum NotificationType {
+  APPOINTMENT_REQUESTED
+  APPOINTMENT_APPROVED
+  APPOINTMENT_REJECTED
+  RESCHEDULE_PROPOSED
+  RESCHEDULE_ACCEPTED
+  RESCHEDULE_DECLINED
+  APPOINTMENT_CANCELLED
+  APPOINTMENT_COMPLETED
+  COMMITMENT_DUE_SOON
+  COMMITMENT_MISSED
+  TASK_DUE_SOON
+  TASK_OVERDUE
+  PAYMENT_RECEIVED
+  PAYMENT_FAILED
+  REFUND_ISSUED
+  DOCUMENT_UPLOADED
+  AI_SUMMARY_READY
+  DISPUTE_OPENED
+  DISPUTE_RESOLVED
+  ACCOUNT_VERIFIED
+  ACCOUNT_SUSPENDED
+}
+
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+  SMS
+  PUSH
+}
+
+enum NotificationStatus {
+  PENDING
+  SENT
+  FAILED
+  READ
+}
+
+enum PaymentStatus {
+  CREATED
+  AUTHORIZED
+  CAPTURED
+  PAID
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+  CANCELLED
+}
+
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED_FOR_CLIENT
+  RESOLVED_FOR_CONSULTANT
+  CLOSED
+}
+
+enum DisputeType {
+  PAYMENT
+  NO_SHOW
+  COMMITMENT_DISPUTE
+  QUALITY
+  OTHER
+}
+
+enum AuditAction {
+  CREATED
+  UPDATED
+  DELETED
+  ACCESSED
+  EXPORTED
+  STATUS_CHANGED
+}
+
+enum AuditEntityType {
+  USER
+  CLIENT
+  CASE
+  INTERACTION
+  APPOINTMENT
+  COMMITMENT
+  TASK
+  DOCUMENT
+  PAYMENT
+  DISPUTE
+  AI_SUMMARY
+}
+
+enum UserRole {
+  CLIENT
+  CONSULTANT
+  ADMIN
+}
+
+enum SlotStatus {
+  OPEN
+  BOOKED
+  BLOCKED
+}
+
+// ─────────────────────────────────────────────
+// AUTH / IDENTITY
+// ─────────────────────────────────────────────
+
+/// Unified auth identity shared by Consultants, Clients, and Admins.
 model User {
-  id                String      @id @default(uuid())
-  phone             String      @unique
-  email             String      @unique
-  password          String
-  review            Review[]
+  id           String    @id @default(uuid())
+  email        String    @unique
+  phone        String    @unique
+  passwordHash String
+  role         UserRole
+  isVerified   Boolean   @default(false)
+  isActive     Boolean   @default(true)
+  lastLoginAt  DateTime?
 
+  /// Populated when role = CONSULTANT
+  consultantProfile ConsultantProfile?
+  /// Populated when role = CLIENT
+  clientProfile     ClientProfile?
+  /// Populated when role = ADMIN
+  adminProfile      AdminProfile?
 
-  name              String
-  profilePicture    String?
-  headline          String?
-  bio               String     @db.Text
-  dob               DateTime
+  /// Notifications sent to this user
+  notifications Notification[]
 
-  nameOfConsultancy String
-  yearsOfExperience Int
-  designation       String
-  consultantTags    ConsultantTag[]
-  languages         Language[]
-  certifications    Certification[]
+  /// Chat messages sent by this user (AI assistant)
+  chatMessages ChatMessage[]
 
-
-  address           String?
-  city              String
-  state             String
-  country           String
-  timezone          String
-
-  appointmentFee    Int
-  website           String?
-  linkedinUrl       String?
-  portfolioUrl      String?
-  resumeUrl         String?
-
-
-    // Verification
-  isVerified        Boolean @default(false)
-  isFeatured        Boolean @default(false)
-
-
-  slots             UserSlots[]
-  interactions      Interaction[]
-  commitments       Commitment[]
-  appointments      Appointment[]
-  auditLogs         AuditLog[]
-  cases             Case[]
-  payments          Payment[]
-  tasks             Task[]
-  avgReviews        Float       @default(0.0)
-  createdAt         DateTime    @default(now())
-}
-
-model Client {
-  id            String        @id @default(uuid())
-  name          String
-  email         String
-  phone         String
-  companyName   String?
-  password      String?
-  type          ClientType?
-  status        ClientStatus? @default(active)
-  tags          String[]      @default([])
-  address       String
-  dob           DateTime
-  internalNotes String[]      @default([])
-  passwordHash  String
-  slots         UserSlots[]   @relation("ClientSlots")
-  review        Review[]
+  /// All audit log entries where this user is the actor
+  auditLogs AuditLog[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  interactions Interaction[]
-  tasks        Task[]
-  appointments Appointment[]
-  attachments  Attachment[]
-  commitments  Commitment[]
+  @@index([email])
+  @@index([phone])
+  @@index([role])
+}
+
+// ─────────────────────────────────────────────
+// PROFILES
+// ─────────────────────────────────────────────
+
+model ConsultantProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  fullName        String
+  dob             DateTime
+  profilePhotoUrl String?
+  headline        String?
+  bio             String   @db.Text
+
+  category           ConsultantCategory
+  subSpecialization  String?
+  verificationTier   VerificationTier   @default(BASIC)
+  verificationStatus VerificationStatus @default(PENDING)
+  verificationNote   String? // Admin rejection/approval message
+
+  licenseNumber    String?
+  licenseDocUrl    String? // S3 URL of uploaded license doc
+  licenseExpiresAt DateTime?
+
+  nameOfConsultancy String?
+  designation       String?
+  yearsOfExperience Int     @default(0)
+
+  consultationFee Decimal       @default(150) @db.Decimal(10, 2)
+  currency        String        @default("INR")
+  paymentTiming   PaymentTiming @default(PAY_ON_BOOKING)
+
+  isAcceptingNewClients Boolean @default(true)
+  isFeatured            Boolean @default(false)
+
+  timezone String  @default("Asia/Kolkata")
+  city     String?
+  state    String?
+  country  String  @default("India")
+  address  String?
+
+  website      String?
+  linkedinUrl  String?
+  portfolioUrl String?
+  resumeUrl    String?
+
+  ratingAvg   Float @default(0.0)
+  ratingCount Int   @default(0)
+
+  languages      ConsultantLanguage[]
+  tags           ConsultantTag[]
+  certifications Certification[]
+  slots          AvailabilitySlot[]
+  cases          Case[]
+  appointments   Appointment[]
+  interactions   Interaction[]
+  commitments    Commitment[]
+  tasks          Task[]
+  reviews        Review[]
+  payments       Payment[]
+  aiSummaries    AISummary[]
+
+  /// Payout account — stored encrypted in practice; reference only
+  payoutAccountRef String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category, verificationStatus])
+  @@index([isAcceptingNewClients, verificationStatus])
+}
+
+model ClientProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  fullName        String
+  dob             DateTime?
+  gender          String?
+  profilePhotoUrl String?
+  address         String?
+  city            String?
+  state           String?
+  country         String?
+  timezone        String    @default("Asia/Kolkata")
+
+  emergencyContact  String?
+  preferredLanguage String?
+
+  /// KYC for medical/legal use-cases
+  kycStatus String? // PENDING | VERIFIED | NOT_REQUIRED
+  kycDocUrl String?
+
+  /// For minor clients
+  isMinor       Boolean @default(false)
+  guardianName  String?
+  guardianPhone String?
+  guardianEmail String?
+
+  status ClientStatus @default(ACTIVE)
+
+  /// Internal notes added by platform/admin (not visible to client)
+  internalNotes String[] @default([])
+
   cases        Case[]
+  appointments Appointment[]
+  interactions Interaction[]
+  commitments  Commitment[]
+  tasks        Task[]
+  reviews      Review[]
   payments     Payment[]
+  documents    Document[]
 
-  @@index([id, status])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
 }
 
-model UserSlots {
-  id       String  @id @default(uuid())
-  userId   String
-  clientId String?
-  user     User    @relation(fields: [userId], references: [id])
-  client   Client? @relation("ClientSlots", fields: [clientId], references: [id])
+model AdminProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  dayOfWeek Int
+  fullName String
+  email    String
 
-  startTime DateTime
-  endTime   DateTime
+  /// Scoped permissions if needed in future
+  permissions String[] @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model Appointment {
-  id              String            @id @default(uuid())
-  clientId        String
-  client          Client            @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  appointmentDate DateTime          @default(now())
-  appointmentTime String         
-  appointmentDocs Attachment[]      @relation("AppointmentDocs")
-  meetingMode     MeetingMode       @default(office_meet)
-  status          AppointmentStatus @default(pending_for_approval)
-  purpose         String
+// ─────────────────────────────────────────────
+// CONSULTANT META
+// ─────────────────────────────────────────────
 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  user            User?    @relation(fields: [userId], references: [id])
-  userId          String?
+model ConsultantLanguage {
+  id   String @id @default(uuid())
+  name String @unique
 
-  @@index([clientId, appointmentDate])
+  consultants ConsultantProfile[]
 }
 
-model Attachment {
-  id     String  @id @default(uuid())
-  userId String? // Uploader (internal)
+model ConsultantTag {
+  id   String @id @default(uuid())
+  name String @unique
 
-  clientId      String? // Client owner
-  interactionId String? // Related interaction
-  taskId        String?
-  appointmentId String? // Supporting doc for an appointment
+  consultants ConsultantProfile[]
+}
 
-  client      Client?      @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  interaction Interaction? @relation(fields: [interactionId], references: [id], onDelete: Cascade)
-  task        Task?        @relation(fields: [taskId], references: [id], onDelete: Cascade)
-  appointment Appointment? @relation("AppointmentDocs", fields: [appointmentId], references: [id], onDelete: Cascade)
+model Certification {
+  id           String            @id @default(uuid())
+  consultantId String
+  consultant   ConsultantProfile @relation(fields: [consultantId], references: [id], onDelete: Cascade)
 
-  fileName String
-  fileType String // pdf | png | jpg | jpeg | docx
-  fileUrl  String
-  fileSize Int? // bytes
+  title         String
+  issuer        String
+  issuedAt      DateTime?
+  expiresAt     DateTime?
+  credentialUrl String?
+  docUrl        String? // S3 URL for uploaded certificate
+
+  /// Whether this cert satisfies the platform's verification requirement
+  isMandatory Boolean @default(false)
+  isVerified  Boolean @default(false)
 
   createdAt DateTime @default(now())
 
-  @@index([clientId])
-  @@index([interactionId])
-  @@index([taskId])
+  @@index([consultantId])
+}
+
+// ─────────────────────────────────────────────
+// AVAILABILITY & SLOTS
+// ─────────────────────────────────────────────
+
+model AvailabilitySlot {
+  id           String            @id @default(uuid())
+  consultantId String
+  consultant   ConsultantProfile @relation(fields: [consultantId], references: [id], onDelete: Cascade)
+
+  /// 0 = Sunday … 6 = Saturday; null for specific-date overrides
+  dayOfWeek Int?
+
+  /// Specific date (for one-off slots or blocks)
+  specificDate DateTime?
+
+  startTime          DateTime /// Combined date+time stored in UTC
+  endTime            DateTime
+  slotDurationMins   Int      @default(60)
+  bufferBeforeMins   Int      @default(0)
+  bufferAfterMins    Int      @default(0)
+  isRecurring        Boolean  @default(true)
+  maxBookingsPerSlot Int      @default(1)
+
+  status SlotStatus @default(OPEN)
+
+  appointments Appointment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([consultantId, status])
+  @@index([consultantId, dayOfWeek])
+  @@index([consultantId, specificDate])
+}
+
+// ─────────────────────────────────────────────
+// CASE (Client–Consultant relationship container)
+// ─────────────────────────────────────────────
+
+/// One Case per distinct matter between a Client and a Consultant.
+/// A client may have multiple Cases with the same consultant (e.g. two legal matters).
+model Case {
+  id           String            @id @default(uuid())
+  consultantId String
+  consultant   ConsultantProfile @relation(fields: [consultantId], references: [id], onDelete: Restrict)
+
+  clientId String
+  client   ClientProfile @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  /// Snapshot of consultant category at case creation
+  category ConsultantCategory
+
+  title       String?
+  description String?    @db.Text
+  status      CaseStatus @default(ACTIVE)
+
+  openedAt      DateTime  @default(now())
+  closedAt      DateTime?
+  closureReason String?
+
+  tags String[] @default([])
+
+  appointments Appointment[]
+  interactions Interaction[]
+  commitments  Commitment[]
+  tasks        Task[]
+  documents    Document[]
+  aiSummaries  AISummary[]
+  chatMessages ChatMessage[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([consultantId, clientId, title]) // Allows multiple cases per pair
+  @@index([consultantId, status])
+  @@index([clientId, status])
+}
+
+// ─────────────────────────────────────────────
+// APPOINTMENT
+// ─────────────────────────────────────────────
+
+model Appointment {
+  id     String @id @default(uuid())
+  caseId String
+  case   Case   @relation(fields: [caseId], references: [id], onDelete: Restrict)
+
+  consultantId String
+  consultant   ConsultantProfile @relation(fields: [consultantId], references: [id], onDelete: Restrict)
+
+  clientId String
+  client   ClientProfile @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  slotId String?
+  slot   AvailabilitySlot? @relation(fields: [slotId], references: [id], onDelete: SetNull)
+
+  /// All times stored in UTC; display layer converts to user timezone
+  scheduledStart DateTime
+  scheduledEnd   DateTime
+
+  status AppointmentStatus @default(REQUESTED)
+
+  rejectionReason    String?
+  cancellationReason String?
+  cancelledBy        RescheduleProposedBy?
+
+  /// Reschedule proposal
+  rescheduleProposedBy       RescheduleProposedBy?
+  rescheduleProposedStart    DateTime?
+  rescheduleProposedEnd      DateTime?
+  rescheduleReason           String?
+  rescheduleResponseDeadline DateTime? // Auto-expire if no response
+
+  /// Request auto-expire deadline (FR: FR-EDGE-4)
+  requestExpiresAt DateTime?
+
+  mode            MeetingMode @default(IN_PERSON)
+  meetingLink     String? // Zoom/Google Meet URL
+  calendarEventId String? // Google Calendar event ID
+
+  purpose String
+
+  feeAmount     Decimal       @db.Decimal(10, 2)
+  currency      String        @default("INR")
+  paymentStatus PaymentStatus @default(CREATED)
+  paymentTiming PaymentTiming @default(PAY_ON_BOOKING)
+
+  noShowGracePeriodEndsAt DateTime?
+  noShowDisputeAllowed    Boolean   @default(true)
+
+  consentGiven Boolean @default(false) // Consent to record
+
+  interactions Interaction[]
+  payments     Payment[]
+  review       Review?
+  dispute      Dispute?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([caseId])
+  @@index([consultantId, scheduledStart])
+  @@index([clientId, scheduledStart])
+  @@index([status])
+}
+
+// ─────────────────────────────────────────────
+// INTERACTION (session / encounter log)
+// ─────────────────────────────────────────────
+
+model Interaction {
+  id     String @id @default(uuid())
+  caseId String
+  case   Case   @relation(fields: [caseId], references: [id], onDelete: Restrict)
+
+  consultantId String
+  consultant   ConsultantProfile @relation(fields: [consultantId], references: [id], onDelete: Restrict)
+
+  clientId String
+  client   ClientProfile @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  /// Optional — ad-hoc interactions (phone call log) may not map to an appointment
+  appointmentId String?
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+
+  type         InteractionType
+  occurredAt   DateTime        @default(now())
+  durationSecs Int?
+
+  /// Audio recording
+  rawAudioUrl      String?
+  transcriptText   String?          @db.Text
+  transcriptStatus TranscriptStatus @default(PENDING)
+  transcriptLang   String?
+
+  /// Rich-text notes (independent of or alongside recording)
+  notesText String? @db.Text
+
+  visibility Visibility @default(CONSULTANT_ONLY)
+
+  consentGiven Boolean @default(false)
+
+  commitments Commitment[]
+  documents   Document[]
+
+  /// Soft-delete support (FR-EDGE-16)
+  deletedAt DateTime?
+  deletedBy String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  tasks     Task[]
+
+  @@index([caseId, occurredAt(sort: Desc)])
+  @@index([consultantId])
   @@index([appointmentId])
 }
 
-model Interaction {
-  id       String @id @default(uuid())
-  userId   String
+// ─────────────────────────────────────────────
+// COMMITMENT
+// ─────────────────────────────────────────────
+
+model Commitment {
+  id     String @id @default(uuid())
+  caseId String
+  case   Case   @relation(fields: [caseId], references: [id], onDelete: Restrict)
+
+  consultantId String
+  consultant   ConsultantProfile @relation(fields: [consultantId], references: [id], onDelete: Restrict)
+
   clientId String
+  client   ClientProfile @relation(fields: [clientId], references: [id], onDelete: Restrict)
 
+  interactionId String?
+  interaction   Interaction? @relation(fields: [interactionId], references: [id], onDelete: SetNull)
+
+  madeBy      CommitmentMadeBy
+  title       String
+  description String?          @db.Text
+  dueDate     DateTime
+  priority    Priority         @default(MEDIUM)
+  status      CommitmentStatus @default(PENDING)
+
+  fulfilledAt DateTime?
+
+  /// Tracks notification sends so we don't double-notify
+  reminderSentAt DateTime[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([caseId])
+  @@index([consultantId, dueDate])
+  @@index([consultantId, status])
+}
+
+// ─────────────────────────────────────────────
+// TASK
+// ─────────────────────────────────────────────
+
+model Task {
+  id     String @id @default(uuid())
+  caseId String
+  case   Case   @relation(fields: [caseId], references: [id], onDelete: Restrict)
+
+  consultantId String
+  consultant   ConsultantProfile @relation(fields: [consultantId], references: [id], onDelete: Restrict)
+
+  clientId String
+  client   ClientProfile @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  interactionId String?
+  interaction   Interaction? @relation(fields: [interactionId], references: [id], onDelete: SetNull)
+
+  assignedTo  TaskAssignedTo
+  title       String
+  description String?        @db.Text
+  dueDate     DateTime
+  priority    Priority       @default(MEDIUM)
+  status      TaskStatus     @default(OPEN)
+
+  completedAt    DateTime?
+  reminderSentAt DateTime[]
+
+  documents Document[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([caseId])
+  @@index([consultantId, dueDate])
+  @@index([consultantId, status])
+  @@index([clientId, status])
+}
+
+// ─────────────────────────────────────────────
+// DOCUMENT
+// ─────────────────────────────────────────────
+
+model Document {
+  id String @id @default(uuid())
+
+  caseId String
+  case   Case   @relation(fields: [caseId], references: [id], onDelete: Restrict)
+
+  clientId String
+  client   ClientProfile @relation(fields: [clientId], references: [id], onDelete: Restrict)
+
+  interactionId String?
+  interaction   Interaction? @relation(fields: [interactionId], references: [id], onDelete: SetNull)
+
+  taskId String?
+  task   Task?   @relation(fields: [taskId], references: [id], onDelete: SetNull)
+
+  /// CONSULTANT or CLIENT — maps to ConsultantProfile.id or ClientProfile.id
+  uploadedByRole String
+  uploadedById   String
+
+  fileUrl       String
+  fileName      String
+  fileType      String // pdf | png | jpg | docx | mp3 | mp4 | etc.
+  fileSizeBytes Int
+
+  category    DocumentCategory @default(OTHER)
+  accessLevel Visibility       @default(CONSULTANT_ONLY)
+  scanStatus  ScanStatus       @default(PENDING)
+
+  /// Versioning (FR-EDGE-24)
+  version           Int        @default(1)
+  previousVersionId String?
+  previousVersion   Document?  @relation("DocumentVersions", fields: [previousVersionId], references: [id], onDelete: SetNull)
+  newerVersions     Document[] @relation("DocumentVersions")
+
+  /// Soft-delete
+  deletedAt DateTime?
+  deletedBy String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([caseId])
+  @@index([clientId])
+  @@index([interactionId])
+  @@index([taskId])
+  @@index([scanStatus])
+}
+
+// ─────────────────────────────────────────────
+// AI ASSISTANT
+// ─────────────────────────────────────────────
+
+model AISummary {
+  id     String @id @default(uuid())
+  caseId String
+  case   Case   @relation(fields: [caseId], references: [id], onDelete: Restrict)
+
+  consultantId String
+  consultant   ConsultantProfile @relation(fields: [consultantId], references: [id], onDelete: Restrict)
+
+  generatedAt DateTime      @default(now())
+  summaryType AISummaryType
+
+  /// IDs of Interactions/Documents used as RAG sources
+  inputInteractionIds String[] @default([])
+  inputDocumentIds    String[] @default([])
+
+  outputText String @db.Text
+
+  /// Citations → links back to source records (JSON array of {type, id, excerpt})
+  sourceCitations Json @default("[]")
+
+  modelUsed String?
+
+  consultantFeedback AIFeedback?
+  wasEdited          Boolean     @default(false)
+
+  /// Flagged-as-bad summaries must not be reused as RAG sources (FR-EDGE-27)
+  isExcludedFromRAG Boolean @default(false)
+
+  /// Whether the consultant has shared this summary with the client (FR28)
+  sharedWithClient Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([caseId, generatedAt(sort: Desc)])
+  @@index([consultantId])
+}
+
+model ChatMessage {
+  id     String @id @default(uuid())
+  caseId String
+  case   Case   @relation(fields: [caseId], references: [id], onDelete: Restrict)
+
+  userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
-  interactionType InteractionType?
-  notes           String?
-  audioUrl        String?
-  transcript      String?
-  interactionDate DateTime         @default(now())
-  commitments     Commitment[]
-  attachments     Attachment[]
+  role    String // USER | ASSISTANT
+  content String @db.Text
 
-  @@index([clientId, interactionDate(sort: Desc)])
+  /// RAG source IDs cited in this assistant message
+  retrievedSourceIds String[] @default([])
+
+  createdAt DateTime @default(now())
+
+  @@index([caseId, createdAt(sort: Desc)])
   @@index([userId])
 }
 
-model Commitment {
-  id            String  @id @default(uuid())
-  userId        String
-  clientId      String
-  interactionId String?
+// ─────────────────────────────────────────────
+// REVIEW
+// ─────────────────────────────────────────────
 
-  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  client      Client       @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  interaction Interaction? @relation(fields: [interactionId], references: [id], onDelete: SetNull)
+model Review {
+  id String @id @default(uuid())
 
-  title   String
-  dueDate DateTime
-  status  CommitmentStatus @default(pending)
+  appointmentId String      @unique
+  appointment   Appointment @relation(fields: [appointmentId], references: [id], onDelete: Restrict)
 
-  createdAt DateTime @default(now())
+  consultantId String
+  consultant   ConsultantProfile @relation(fields: [consultantId], references: [id], onDelete: Restrict)
 
-  @@index([userId, dueDate])
-  @@index([userId, status])
-}
-
-model Case {
-  id       String @id @default(uuid())
-  userId   String
   clientId String
+  client   ClientProfile @relation(fields: [clientId], references: [id], onDelete: Restrict)
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
-
-  problem          String?
-  diagnosis        String?
-  suggestedActions String?
-
-  followUpDate DateTime?
-  status       CaseStatus @default(active)
+  rating    Int // 1–5
+  comment   String? @db.Text
+  isVisible Boolean @default(true) // Moderation flag
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  tasks Task[]
-
-  @@index([userId, status])
-  @@index([userId, followUpDate])
+  @@index([consultantId, rating])
 }
 
-model Task {
-  id       String  @id @default(uuid())
-  userId   String
-  clientId String?
-  caseId   String?
-
-  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  client Client? @relation(fields: [clientId], references: [id], onDelete: SetNull)
-  case   Case?   @relation(fields: [caseId], references: [id], onDelete: SetNull)
-
-  title    String
-  remindAt DateTime
-  status   TaskStatus @default(pending)
-
-  createdAt DateTime @default(now())
-
-  attachments Attachment[]
-
-  @@index([userId, remindAt])
-  @@index([userId, status])
-}
-
-model AuditLog {
-  id     String  @id @default(uuid())
-  userId String? // Null if system-triggered (e.g. overdue automation)
-  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
-
-  recordType AuditRecordType
-  recordId   String
-  action     AuditAction
-  before     Json? // State snapshot before change
-  after      Json? // State snapshot after change
-
-  timestamp DateTime @default(now())
-
-  @@index([recordType, recordId])
-  @@index([userId, timestamp])
-}
+// ─────────────────────────────────────────────
+// PAYMENTS
+// ─────────────────────────────────────────────
 
 model Payment {
   id String @id @default(uuid())
 
-  userId   String
+  appointmentId String
+  appointment   Appointment @relation(fields: [appointmentId], references: [id], onDelete: Restrict)
+
+  consultantId String
+  consultant   ConsultantProfile @relation(fields: [consultantId], references: [id], onDelete: Restrict)
+
   clientId String
-  user     User   @relation(fields: [userId], references: [id])
-  client   Client @relation(fields: [clientId], references: [id])
+  client   ClientProfile @relation(fields: [clientId], references: [id], onDelete: Restrict)
 
-  // Your internal order reference
-  orderId String?
+  /// Internal order reference
+  orderId String? @unique
 
-  // Razorpay identifiers
+  /// Razorpay identifiers
   razorpayOrderId   String? @unique
   razorpayPaymentId String? @unique
   razorpaySignature String?
 
   amount   Decimal @db.Decimal(10, 2)
   currency String  @default("INR")
+  method   String? // card | upi | netbanking | wallet
+
+  platformFee            Decimal @default(0) @db.Decimal(10, 2)
+  consultantPayoutAmount Decimal @default(0) @db.Decimal(10, 2)
+  payoutStatus           String  @default("PENDING") // PENDING | PROCESSED | FAILED
 
   status PaymentStatus @default(CREATED)
 
-  method      String?
-  description String?
+  refundAmount Decimal?  @db.Decimal(10, 2)
+  refundReason String?
+  refundedAt   DateTime?
 
-  paidAt    DateTime?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  description String?
+  paidAt      DateTime?
 
   webhooks RazorpayWebhook[]
+  invoices Invoice[]
+  disputes Dispute[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([appointmentId])
+  @@index([consultantId])
+  @@index([clientId])
+  @@index([status])
 }
 
 model RazorpayWebhook {
@@ -416,17 +962,139 @@ model RazorpayWebhook {
 
   payload Json
 
-  processed Boolean @default(false)
+  processed   Boolean   @default(false)
+  processedAt DateTime?
+  error       String?
 
   createdAt DateTime @default(now())
+
+  @@index([eventId])
+  @@index([processed])
 }
 
-enum PaymentStatus {
-  CREATED
-  AUTHORIZED
-  CAPTURED
-  PAID
-  FAILED
-  REFUNDED
-  CANCELLED
+model Invoice {
+  id String @id @default(uuid())
+
+  paymentId String
+  payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Restrict)
+
+  invoiceNumber String  @unique
+  invoiceUrl    String? // S3 URL of generated PDF
+
+  issuedAt DateTime  @default(now())
+  dueAt    DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([paymentId])
+}
+
+// ─────────────────────────────────────────────
+// DISPUTES
+// ─────────────────────────────────────────────
+
+model Dispute {
+  id String @id @default(uuid())
+
+  appointmentId String?      @unique
+  appointment   Appointment? @relation(fields: [appointmentId], references: [id], onDelete: SetNull)
+
+  paymentId String?
+  payment   Payment? @relation(fields: [paymentId], references: [id], onDelete: SetNull)
+
+  raisedByUserId String
+  raisedByRole   String // CLIENT | CONSULTANT
+
+  type        DisputeType
+  description String        @db.Text
+  status      DisputeStatus @default(OPEN)
+
+  adminNotes        String?   @db.Text
+  resolvedByAdminId String?
+  resolution        String?   @db.Text
+  resolvedAt        DateTime?
+
+  evidenceUrls String[] @default([]) // S3 URLs of uploaded evidence
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([raisedByUserId])
+}
+
+// ─────────────────────────────────────────────
+// NOTIFICATIONS
+// ─────────────────────────────────────────────
+
+model Notification {
+  id String @id @default(uuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  type    NotificationType
+  channel NotificationChannel
+  status  NotificationStatus  @default(PENDING)
+
+  title   String
+  body    String
+  payload Json? // Additional context (entityId, entityType, deep-link, etc.)
+
+  scheduledFor DateTime?
+  sentAt       DateTime?
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, status])
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([scheduledFor])
+}
+
+model NotificationPreference {
+  id     String @id @default(uuid())
+  userId String @unique
+
+  /// JSON map: { "APPOINTMENT_REQUESTED": ["IN_APP","EMAIL"], ... }
+  preferences Json @default("{}")
+
+  /// Lead-time in hours for due-soon alerts
+  commitmentReminderHours Int @default(24)
+  taskReminderHours       Int @default(24)
+
+  updatedAt DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────────
+// AUDIT LOG
+// ─────────────────────────────────────────────
+
+/// Every access to sensitive records (especially admin access) must be logged here.
+model AuditLog {
+  id String @id @default(uuid())
+
+  /// Null if system-triggered (e.g. overdue automation cron)
+  actorUserId String?
+  actor       User?   @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  action     AuditAction
+  entityType AuditEntityType
+  entityId   String
+
+  /// Snapshots for before/after on mutations
+  before Json?
+  after  Json?
+
+  ipAddress String?
+  userAgent String?
+
+  /// Required justification for admin access to sensitive records (FR-EDGE-41)
+  accessJustification String?
+
+  metadata  Json?
+  timestamp DateTime @default(now())
+
+  @@index([entityType, entityId])
+  @@index([actorUserId, timestamp(sort: Desc)])
+  @@index([timestamp(sort: Desc)])
 }

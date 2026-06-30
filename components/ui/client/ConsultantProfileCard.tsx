@@ -44,7 +44,7 @@ export type ConsultantProfileData = ConsultantCardData & {
     rating: number;
     comment: string;
     createdAt: string;
-    client: { name: string };
+    client: { fullName: string };  // mapped from ClientProfile.fullName on the server
   }[];
 };
 
@@ -241,9 +241,9 @@ function ConsultantProfileCard({
 
   const {
     id,
-    name,
+    fullName,
     nameOfConsultancy,
-    profilePicture,
+    profilePhotoUrl,
     headline,
     bio,
     designation,
@@ -252,10 +252,10 @@ function ConsultantProfileCard({
     state,
     country,
     timezone,
-    avgReviews,
-    reviewCount,
+    ratingAvg,
+    ratingCount,
     specialties = [],
-    appointmentFee,
+    consultationFee,
     featured,
     isVerified,
     website,
@@ -266,13 +266,13 @@ function ConsultantProfileCard({
     reviews = [],
   } = consultant;
 
-  const initials = useMemo(() => getInitials(name), [name]);
-  const gradient = useMemo(() => avatarGradient(name), [name]);
+  const initials = useMemo(() => getInitials(fullName), [fullName]);
+  const gradient = useMemo(() => avatarGradient(fullName), [fullName]);
   const formattedFee = useMemo(
-    () => appointmentFee.toLocaleString('en-IN'),
-    [appointmentFee]
+    () => consultationFee.toLocaleString('en-IN'),
+    [consultationFee]
   );
-  const roundedRating = Math.round(avgReviews);
+  const roundedRating = Math.round(ratingAvg);
 
   return (
     <article
@@ -283,7 +283,7 @@ function ConsultantProfileCard({
           : 'h-full overflow-y-auto',
         className
       )}
-      aria-label={`Profile of ${name}`}
+      aria-label={`Profile of ${fullName}`}
     >
       {/* Featured accent strip */}
       {featured && (
@@ -311,11 +311,11 @@ function ConsultantProfileCard({
       <header className={cn('px-6 pb-5', featured ? 'pt-7' : 'pt-6')}>
         <div className="flex items-start gap-4">
           {/* Avatar */}
-          {profilePicture ? (
+          {profilePhotoUrl ? (
             <div className="relative size-20 shrink-0 overflow-hidden rounded-2xl ring-2 ring-slate-100 shadow-md">
               <Image
-                src={profilePicture}
-                alt={name}
+                src={profilePhotoUrl}
+                alt={fullName}
                 fill
                 className="object-cover"
                 sizes="80px"
@@ -337,7 +337,7 @@ function ConsultantProfileCard({
           {/* Identity */}
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2 mb-0.5">
-              <h2 className="text-lg font-bold text-slate-900 truncate">{name}</h2>
+              <h2 className="text-lg font-bold text-slate-900 truncate">{fullName}</h2>
               {isVerified && (
                 <BadgeCheck
                   className="size-5 shrink-0 text-indigo-500"
@@ -362,10 +362,10 @@ function ConsultantProfileCard({
             <div className="mt-2 flex items-center gap-2 flex-wrap">
               <StarRating rating={roundedRating} size="md" />
               <span className="text-sm font-semibold text-slate-800">
-                {avgReviews.toFixed(1)}
+                {ratingAvg.toFixed(1)}
               </span>
               <span className="text-xs text-slate-400">
-                ({reviewCount} review{reviewCount !== 1 ? 's' : ''})
+                ({ratingCount} review{ratingCount !== 1 ? 's' : ''})
               </span>
             </div>
           </div>
@@ -385,7 +385,7 @@ function ConsultantProfileCard({
             <span className="mt-0.5 text-[11px] text-slate-500">Per Session</span>
           </div>
           <div className="flex flex-col items-center py-3 px-2">
-            <span className="text-base font-bold text-slate-900">{avgReviews.toFixed(1)}</span>
+            <span className="text-base font-bold text-slate-900">{ratingAvg.toFixed(1)}</span>
             <span className="mt-0.5 text-[11px] text-slate-500">Avg. Rating</span>
           </div>
         </div>
@@ -527,7 +527,7 @@ function ConsultantProfileCard({
                   className="inline-flex items-center gap-1.5 rounded-lg bg-slate-50 px-3 py-1.5 text-xs font-medium text-slate-700 ring-1 ring-slate-200 hover:bg-slate-100 transition-colors"
                 >
                   <Globe className="size-3.5 text-slate-500" aria-hidden="true" />
-                 Portfolio 
+                  Website
                 </a>
               )}
               {linkedinUrl && (
@@ -571,7 +571,7 @@ function ConsultantProfileCard({
                 >
                   <div className="flex items-center justify-between gap-2 mb-1.5">
                     <span className="text-xs font-semibold text-slate-800">
-                      {review.client.name}
+                      {review.client.fullName}
                     </span>
                     <StarRating rating={review.rating} size="sm" />
                   </div>

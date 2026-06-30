@@ -1,9 +1,9 @@
 "use client";
 import React, { createContext, useContext, useState } from "react";
-import { Client } from "@/prisma/migrations/client";
+import { User } from "@prisma/client";
 
 // We omit passwordHash so it never reaches the client bundle
-export type SafeClient = Omit<Client, "passwordHash">;
+export type SafeClient = Omit<User, "passwordHash">;
 
 type ClientContextType = {
   client: SafeClient | null;

@@ -5,8 +5,8 @@ import Image from "next/image";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { checkPasswordStrength, type PasswordStrengthResult } from "@/lib/passwordStrength";
-import { professtionTags } from "@/types";
-import { fileUploadSchema } from "@/schemas/attachmentSchema";
+import { professionTags } from "@/types";
+import { fileUploadSchema } from "@/schemas/documentSchema";
 import { X, Paperclip } from "lucide-react";
 import Link from "next/link";
 
@@ -28,7 +28,7 @@ const professions = [
   },
 ];
 
-const toggleableTags = professtionTags.filter((t) => t.id !== "all");
+const toggleableTags = professionTags.filter((t) => t.id !== "all");
 
 export default function SignupPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -61,12 +61,13 @@ export default function SignupPage() {
   };
 
   const [formData, setFormData] = useState({
-    name: "",
+    fullName: "",
     email: "",
     phone: "",
     password: "",
     dob: "",
     bio: "",
+    category: "",
     nameOfConsultancy: "",
     designation: "",
     yearsOfExperience: "",
@@ -132,7 +133,7 @@ export default function SignupPage() {
       // Build multipart payload so the resume File is included
       const fd = new FormData();
       Object.entries(formData).forEach(([k, v]) => fd.append(k, v));
-      fd.append("appointmentFee", String(Number(formData.appointmentFee)));
+      fd.append("consultationFee", String(Number(formData.appointmentFee)));
       fd.append("yearsOfExperience", String(Number(formData.yearsOfExperience)));
       fd.append("consultantTags", JSON.stringify(allTags));
       // Append all verification docs under the same key "docs"
@@ -144,7 +145,8 @@ export default function SignupPage() {
       if (response.ok) {
         alert("Registration successful!");
         setFormData({
-          name: "", email: "", phone: "", password: "", dob: "", bio: "",
+          fullName: "", email: "", phone: "", password: "", dob: "", bio: "",
+          category: "",
           nameOfConsultancy: "", designation: "", yearsOfExperience: "",
           appointmentFee: "", address: "", city: "", state: "", country: "", timezone: "",
           website: "", linkedinUrl: "", portfolioUrl: "",
@@ -154,7 +156,14 @@ export default function SignupPage() {
         setCustomTags([]);
       } else {
         const error = await response.json();
-        alert(error.message || "Registration failed. Please try again.");
+        if (error.errors) {
+          const fieldErrors = Object.entries(error.errors.fieldErrors || {})
+            .map(([field, msgs]) => `${field}: ${(msgs as string[]).join(", ")}`)
+            .join("\n");
+          alert(`Registration failed:\n${fieldErrors || JSON.stringify(error.errors)}`);
+        } else {
+          alert(error.message || "Registration failed. Please try again.");
+        }
       }
     } catch (error) {
       console.error("Error:", error);
@@ -224,8 +233,8 @@ export default function SignupPage() {
                   {/* Full Name */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                    <input type="text" name="name" placeholder="Enter your full name"
-                      value={formData.name} onChange={handleChange} required
+                    <input type="text" name="fullName" placeholder="Enter your full name"
+                      value={formData.fullName} onChange={handleChange} required
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
                   </div>
 
@@ -250,6 +259,22 @@ export default function SignupPage() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
                     <input type="date" name="dob" value={formData.dob} onChange={handleChange} required
                       className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                  </div>
+
+                  {/* Professional Category */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Professional Category</label>
+                    <select name="category" value={formData.category} onChange={handleChange} required
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white">
+                      <option value="" disabled>Select a category</option>
+                      <option value="MEDICAL">Medical</option>
+                      <option value="LEGAL">Legal</option>
+                      <option value="IT">IT / Software</option>
+                      <option value="PHYSIOTHERAPY">Physiotherapy</option>
+                      <option value="HOMEOPATHY">Homeopathy</option>
+                      <option value="ASTROLOGY">Astrology</option>
+                      <option value="OTHER">Other</option>
+                    </select>
                   </div>
 
                   {/* Consultancy Name */}

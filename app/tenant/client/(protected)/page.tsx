@@ -1,11 +1,12 @@
 'use client'
-
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import SectionNav from '@/components/ui/client/SectionNav'
 import ConsultantsCard from '@/components/ui/client/ConsultantsCard'
 import ConsultantProfileCard, { ConsultantProfileData } from '@/components/ui/client/ConsultantProfileCard'
-import { ConsultantCardData } from '@/types'
+import ConsultantFilterCard, { FilterState, DEFAULT_FILTERS } from '@/components/ui/client/ConsultantFilterCard'
+import { ConsultantCardData, SECTION_TO_CATEGORY } from '@/types'
 import { Search } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 // ── Skeleton card — mirrors the real ConsultantsCard proportions ────────────
 function Shimmer({ className }: { className?: string }) {
@@ -63,39 +64,63 @@ function ConsultantCardSkeleton() {
 }
 
 export default function ViewConsultants() {
+  const router = useRouter()
   const [selectedSection, setSelectedSection] = useState('all')
-  const [search, setSearch] = useState('')
   const [consultants, setConsultants] = useState<ConsultantCardData[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [activeProfile, setActiveProfile] = useState<ConsultantProfileData | null>(null)
   const [profileLoading, setProfileLoading] = useState(false)
+  const [profileError, setProfileError] = useState<String | null>(null)
+  const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS)
 
-  // Fetch ALL consultants once — no tag sent to the server
+
+  // Fetch consultants dynamically based on selected section + category filter
   useEffect(() => {
+    const controller = new AbortController()
+
     const fetchConsultants = async () => {
       setLoading(true)
       setError(null)
       try {
-        const res = await fetch('/api/client/consultants')
+        const queryParams = new URLSearchParams()
+
+        // Section-nav category takes precedence; filter card category applies when section is 'all'
+        if (selectedSection !== 'all') {
+          const mapped = SECTION_TO_CATEGORY[selectedSection]
+          if (mapped) queryParams.append('category', mapped)
+        } else if (filters.category) {
+          queryParams.append('category', filters.category)
+        }
+
+        const qs = queryParams.toString()
+        const res = await fetch(`/api/client/consultants${qs ? `?${qs}` : ''}`, {
+          signal: controller.signal,
+        })
         if (!res.ok) throw new Error('Failed to load consultants')
         const json = await res.json()
         setConsultants(json.data ?? [])
       } catch (err) {
+        if ((err as Error).name === 'AbortError') return
         setError(err instanceof Error ? err.message : 'Something went wrong')
       } finally {
-        setLoading(false)
+        if (!controller.signal.aborted) setLoading(false)
       }
     }
 
-    fetchConsultants()
-  }, []) // ← runs once on mount only
+    const timer = setTimeout(fetchConsultants, 300)
+    return () => {
+      clearTimeout(timer)
+      controller.abort()
+    }
+  }, [selectedSection, filters.category])
 
   const handleViewProfile = useCallback(async (id: string) => {
     // Show the panel immediately with list data while detail loads
     const listData = consultants.find((c) => c.id === id)
     if (listData) setActiveProfile(listData as ConsultantProfileData)
     setProfileLoading(true)
+    setProfileError(null)
     try {
       const res = await fetch(`/api/client/consultants/${id}`)
       if (!res.ok) throw new Error('Failed to load profile')
@@ -103,6 +128,7 @@ export default function ViewConsultants() {
       setActiveProfile(json.data)
     } catch (err) {
       console.error(err)
+      setProfileError("Could not load full profile — showing limited info.")
       // Keep the list-card data visible on error
     } finally {
       setProfileLoading(false)
@@ -110,119 +136,141 @@ export default function ViewConsultants() {
   }, [consultants])
 
   const handleBookAppointment = useCallback((id: string) => {
-    // TODO: navigate to booking flow
-    console.log('Book appointment for consultant:', id)
-  }, [])
+    router.push(`/tenant/client/appointment/${id}`)
+  }, [router])
 
   const closeProfile = useCallback(() => setActiveProfile(null), [])
 
-  // Filter client-side whenever selectedSection or search changes
+  // Client-side filters applied on top of the server-fetched list
   const filtered = useMemo(() => {
     let result = consultants
 
-    // Tag / section filter
-    if (selectedSection !== 'all') {
-      result = result.filter((c) =>
-        c.specialties?.some(
-          (tag) => tag.toLowerCase().replace(/\s+/g, '_') === selectedSection
-        )
-      )
-    }
-
-    // Text search — name, designation, nameOfConsultancy, city
-    if (search.trim()) {
-      const q = search.trim().toLowerCase()
+    // Sub-specialization / tag text match
+    if (filters.subSpecialization.trim()) {
+      const q = filters.subSpecialization.trim().toLowerCase()
       result = result.filter(
         (c) =>
-          c.name.toLowerCase().includes(q) ||
-          c.designation.toLowerCase().includes(q) ||
-          c.nameOfConsultancy.toLowerCase().includes(q) ||
-          c.city.toLowerCase().includes(q)
+          c.specialties.some((s) => s.toLowerCase().includes(q)) ||
+          (c.designation ?? '').toLowerCase().includes(q)
       )
     }
 
+    // Language — stored in specialties/tags in this schema; best-effort match
+    if (filters.language) {
+      const lang = filters.language.toLowerCase()
+      result = result.filter((c) =>
+        c.specialties.some((s) => s.toLowerCase().includes(lang))
+      )
+    }
+
+    // Fee range
+    if (filters.minFee !== '') {
+      const min = Number(filters.minFee)
+      result = result.filter((c) => c.consultationFee >= min)
+    }
+    if (filters.maxFee !== '') {
+      const max = Number(filters.maxFee)
+      result = result.filter((c) => c.consultationFee <= max)
+    }
+
+    // Minimum rating
+    if (filters.rating !== '') {
+      const minRating = Number(filters.rating)
+      result = result.filter((c) => c.ratingAvg >= minRating)
+    }
+
+    // Availability — NOTE: isAcceptingNewClients is not in ConsultantCardData;
+    // this filter gracefully no-ops until the field is added to the card shape.
+    // (availability filter is already sent server-side when we extend the API)
+
     return result
-  }, [consultants, selectedSection, search])
+  }, [consultants, filters])
 
   return (
-    <div>
-      <SectionNav
-        selectedSection={selectedSection}
-        onSelect={setSelectedSection}
-      />
+<div className="p-4">
 
-      <div className="p-4 space-y-4">
-        {/* Search bar */}
-        <div className="relative max-w-3xl">
-          <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
-          <input
-            id="consultant-search"
-            type="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by name, role, location…"
-            className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-4 text-sm text-slate-800 placeholder:text-slate-400 shadow-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
-          />
-        </div>
+        {/* Sidebar + content — full width, sidebar sticky on the left */}
+        <div className="flex gap-6 items-start">
 
-        {loading && (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <ConsultantCardSkeleton key={i} />
-            ))}
-          </div>
-        )}
-
-        {!loading && error && (
-          <p className="text-center text-red-500 py-12">{error}</p>
-        )}
-
-        {!loading && !error && filtered.length === 0 && (
-          <p className="text-center text-slate-400 py-12">No consultants found.</p>
-        )}
-
-        {!loading && !error && filtered.length > 0 && (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((consultant) => (
-              <ConsultantsCard
-                key={consultant.id}
-                consultant={consultant}
-                onViewProfile={handleViewProfile}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* ── Profile slide-over ── */}
-      {activeProfile && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
-            aria-hidden="true"
-            onClick={closeProfile}
-          />
-          {/* Panel */}
-          <aside
-            role="dialog"
-            aria-modal="true"
-            aria-label={`${activeProfile.name}'s profile`}
-            className="fixed inset-y-0 right-0 z-50 w-full max-w-md shadow-2xl overflow-y-auto"
-          >
-            {profileLoading && (
-              <div className="absolute inset-x-0 top-0 h-1 bg-indigo-200 overflow-hidden">
-                <div className="h-full w-1/2 bg-indigo-500 animate-[slide_1s_ease-in-out_infinite]" />
-              </div>
-            )}
-            <ConsultantProfileCard
-              consultant={activeProfile}
-              onClose={closeProfile}
-              onBookAppointment={handleBookAppointment}
+          <aside className="hidden lg:block w-80 shrink-0 sticky top-24">
+            <ConsultantFilterCard
+              filters={filters}
+              onChange={setFilters}
             />
           </aside>
-        </>
-      )}
-    </div>
+
+
+
+          <div className="flex-1">
+
+          <div className="relative mb-6 max-w-3xl">
+            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+            <input
+              id="consultant-search"
+              type="search"
+              placeholder="Search by name, role, location…"
+              className="w-full rounded-xl border border-slate-200 bg-white py-2 pl-9 pr-4 text-sm text-slate-800 placeholder:text-slate-400 shadow-sm outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition"
+            />
+          </div>
+
+            {loading && (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <ConsultantCardSkeleton key={i} />
+                ))}
+              </div>
+            )}
+
+            {!loading && error && (
+              <p className="text-center text-red-500 py-12">{error}</p>
+            )}
+
+            {!loading && !error && filtered.length === 0 && (
+              <p className="text-center text-slate-400 py-12">No consultants found.</p>
+            )}
+
+            {!loading && !error && filtered.length > 0 && (
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {filtered.map((consultant) => (
+                  <ConsultantsCard
+                    key={consultant.id}
+                    consultant={consultant}
+                    onBookAppointment={handleBookAppointment}
+                    onViewProfile={handleViewProfile}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* ── Profile slide-over ── */}
+        {activeProfile && (
+          <>
+            <div
+              className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
+              aria-hidden="true"
+              onClick={closeProfile}
+            />
+            <aside
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${activeProfile.fullName}'s profile`}
+              className="fixed inset-y-0 right-0 z-50 w-full max-w-md shadow-2xl overflow-y-auto"
+            >
+              {profileLoading && (
+                <div className="absolute inset-x-0 top-0 h-1 bg-indigo-200 overflow-hidden">
+                  <div className="h-full w-1/2 bg-indigo-500 animate-[slide_1s_ease-in-out_infinite]" />
+                </div>
+              )}
+              <ConsultantProfileCard
+                consultant={activeProfile}
+                onClose={closeProfile}
+                onBookAppointment={handleBookAppointment}
+              />
+            </aside>
+          </>
+        )}
+      </div>
   )
 }

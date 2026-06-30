@@ -3,22 +3,18 @@ import { redirect } from "next/navigation";
 import { getCurrentClient } from "@/lib/auth";
 import ClientProvider from "@/lib/ClientProvider";
 import ClientHeader from "@/components/ui/layout/ClientHeader";
-import {prisma} from "@/lib/db"
-import {cn} from "@/lib/utils"
-import AuthLayoutWrapper from "@/lib/AuthLayoutWrapper";
+import { Google_Sans } from "next/font/google";
+import { cn } from "@/lib/utils";
 import "@/app/globals.css";
 
 type Props = {
   children: ReactNode;
 };
-import { Google_Sans} from "next/font/google";
 
-const googleSans= Google_Sans({
+const googleSans = Google_Sans({
   variable: "--font-google-sans",
   subsets: ["latin"],
 });
-
-
 
 export default async function ClientDashboardLayout({ children }: Props) {
   const client = await getCurrentClient();
@@ -29,17 +25,17 @@ export default async function ClientDashboardLayout({ children }: Props) {
   }
 
   return (
-    <html className={cn(googleSans.variable, googleSans.className, googleSans)}>
+    <html lang="en" className={cn("h-full antialiased", googleSans.variable)}>
       <body>
-    <ClientProvider initialClient={client}>
-      <ClientHeader />
-      <main className="min-h-screen w-full bg-gray-50 pt-20">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          {children}
-        </div>
-      </main>
-    </ClientProvider>
-    </body>
+        <ClientProvider initialClient={client}>
+          <ClientHeader />
+          <main className="min-h-screen w-full bg-gray-50 pt-20">
+            <div className="px-2 py-9">
+              {children}
+            </div>
+          </main>
+        </ClientProvider>
+      </body>
     </html>
   );
 }

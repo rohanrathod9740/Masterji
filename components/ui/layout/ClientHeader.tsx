@@ -125,18 +125,13 @@ function ClientHeader() {
                                                 <div className="space-y-4 pt-1">
                                                     <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
                                                         <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-lg">
-                                                            {client.name.charAt(0).toUpperCase()}
+                                                            {client.email.charAt(0).toUpperCase()}
                                                         </div>
                                                         <div>
-                                                            <div className="font-semibold text-gray-900">{client.name}</div>
+                                                            <div className="font-semibold text-gray-900">{client.email}</div>
                                                             <div className="text-xs text-gray-500">{client.email}</div>
                                                         </div>
                                                     </div>
-                                                    {client.companyName && (
-                                                        <div className="text-sm text-gray-600 px-1">
-                                                            <span className="font-medium">Company:</span> {client.companyName}
-                                                        </div>
-                                                    )}
                                                     <button
                                                         onClick={handleLogout}
                                                         id="client-logout-btn"
@@ -189,7 +184,7 @@ function ClientHeader() {
                                 <button className='w-full flex flex-row items-center gap-3 p-4 rounded-lg hover:bg-gray-100 transition-colors'>
                                     <PersonIcon width={40} height={40} className='flex-shrink-0' />
                                     <div className="text-left flex-1">
-                                        <div className="font-semibold text-gray-900">{client?.name || 'Client'}</div>
+                                        <div className="font-semibold text-gray-900">{client?.email || 'Client'}</div>
                                         <div className="text-xs text-gray-600">{client?.email || 'View profile'}</div>
                                     </div>
                                 </button>
@@ -201,10 +196,10 @@ function ClientHeader() {
                                     <div className="space-y-4 pt-1">
                                         <div className="flex items-center gap-3 p-3 rounded-lg bg-gray-50">
                                             <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold text-lg">
-                                                {client.name.charAt(0).toUpperCase()}
+                                                {client.email.charAt(0).toUpperCase()}
                                             </div>
                                             <div>
-                                                <div className="font-semibold text-gray-900">{client.name}</div>
+                                                <div className="font-semibold text-gray-900">{client.email}</div>
                                                 <div className="text-xs text-gray-500">{client.email}</div>
                                             </div>
                                         </div>

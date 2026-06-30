@@ -15,11 +15,12 @@ type Client = {
 
 type Appointment = {
   id: string;
-  appointmentDate: string;
-  appointmentTime: string;
-  meetingMode: string;
-  status: string;
-  purpose?: string | null;
+  scheduledStart: string;  // ISO string
+  scheduledEnd:   string;  // ISO string
+  mode:           string;
+  status:         string;
+  purpose?:       string | null;
+  consultant?: { fullName: string; designation: string | null } | null;
 };
 
 type Props = {
@@ -30,35 +31,48 @@ type Props = {
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
 const STATUS_LABEL: Record<string, { label: string; cls: string }> = {
-  pending_for_approval: { label: "Pending",     cls: "bg-amber-100 text-amber-700"    },
-  scheduled:            { label: "Scheduled",   cls: "bg-emerald-100 text-emerald-700" },
-  rescheduled:          { label: "Rescheduled", cls: "bg-blue-100 text-blue-700"      },
-  missed:               { label: "Missed",      cls: "bg-red-100 text-red-700"        },
+  REQUESTED:            { label: "Pending",     cls: "bg-amber-100 text-amber-700"    },
+  APPROVED:             { label: "Approved",    cls: "bg-emerald-100 text-emerald-700" },
+  RESCHEDULED:          { label: "Rescheduled", cls: "bg-blue-100 text-blue-700"      },
+  RESCHEDULE_PROPOSED:  { label: "Reschedule",  cls: "bg-sky-100 text-sky-700"        },
+  NO_SHOW:              { label: "No-show",     cls: "bg-red-100 text-red-700"        },
+  CANCELLED:            { label: "Cancelled",   cls: "bg-gray-100 text-gray-600"     },
+  COMPLETED:            { label: "Completed",   cls: "bg-green-100 text-green-700"   },
+  REJECTED:             { label: "Rejected",    cls: "bg-red-100 text-red-700"       },
 };
 
 const MODE_LABEL: Record<string, string> = {
-  office_meet: "In-person",
-  online_meet: "Online",
-  other:       "Other",
+  IN_PERSON:   "In-person",
+  ZOOM:        "Zoom",
+  GOOGLE_MEET: "Google Meet",
+  OTHER_VIDEO: "Video",
+  AUDIO_ONLY:  "Audio",
 };
 
 // ── Sub-components ──────────────────────────────────────────────────────────
 
 function ApptRow({ appt }: { appt: Appointment }) {
   const s = STATUS_LABEL[appt.status] ?? { label: appt.status, cls: "bg-gray-100 text-gray-600" };
+  const start = new Date(appt.scheduledStart);
   return (
     <div className="flex items-center gap-3 px-4 py-3.5 rounded-xl border border-gray-100 bg-white hover:bg-gray-50 transition-colors group">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
           <span className="font-medium text-sm text-gray-900">
-            {format(new Date(appt.appointmentDate), "dd MMM yyyy")}
+            {format(start, "dd MMM yyyy")}
           </span>
-          <span className="text-xs text-blue-600 font-medium">{appt.appointmentTime}</span>
+          <span className="text-xs text-blue-600 font-medium">{format(start, "h:mm a")}</span>
         </div>
         <div className="text-xs text-gray-500 mt-0.5">
           {appt.purpose ?? "—"}
           <span className="mx-1.5 text-gray-300">·</span>
-          {MODE_LABEL[appt.meetingMode] ?? appt.meetingMode}
+          {MODE_LABEL[appt.mode] ?? appt.mode}
+          {appt.consultant && (
+            <>
+              <span className="mx-1.5 text-gray-300">·</span>
+              {appt.consultant.fullName}
+            </>
+          )}
         </div>
       </div>
       <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full shrink-0 ${s.cls}`}>
@@ -134,7 +148,7 @@ export default function ClientDashboardPage({ client, appointments }: Props) {
 
   const filteredAppts = appointments.filter((a) => {
     if (!filterActive) return true;
-    const d = new Date(a.appointmentDate);
+    const d = new Date(a.scheduledStart);
     if (apptFilter.today    && isToday(d))                  return true;
     if (apptFilter.upcoming && isFuture(d) && !isToday(d)) return true;
     return false;

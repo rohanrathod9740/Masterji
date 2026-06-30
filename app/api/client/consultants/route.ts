@@ -1,21 +1,17 @@
 import { getCurrentClient } from "@/lib/auth";
 import { prisma } from "@/lib/db";
-import { Prisma } from "@/prisma/migrations/client";
+import { Prisma } from "@prisma/client";
 import { listConsultantsSchema } from "@/schemas/consultantUsersSchema";
 import { NextRequest, NextResponse } from "next/server";
 import type { ConsultantCardData } from "@/types";
 
 // ── GET /api/client/consultants ───────────────────────────────────────────
-// Returns a paginated list of consultant users, optionally filtered by tag.
+// Returns a paginated list of consultant profiles, optionally filtered by tag/search.
 // Requires an authenticated client session.
-
 export async function GET(req: NextRequest) {
   try {
-    // ── 1. Auth ────────────────────────────────────────────────────────────
+    // ── 1. Auth (Optional for discovery/onboarding) ────────────────────────
     const client = await getCurrentClient();
-    if (!client) {
-      return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
-    }
 
     // ── 2. Parse + validate query params ──────────────────────────────────
     const raw = Object.fromEntries(req.nextUrl.searchParams.entries());
@@ -28,77 +24,91 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const { tag, search, skip = 0, take = 20 } = parsed.data;
+
+    const { tag, search, category, skip = 0, take = 20 } = parsed.data;
+
 
     // ── 3. Build where clause ──────────────────────────────────────────────
-    const where: Prisma.UserWhereInput = {};
+    const where: Prisma.ConsultantProfileWhereInput = {
+      // Only show verified consultants accepting new clients
+      // verificationStatus: "VERIFIED",
+      user: { isActive: true },
+    };
 
-    // Tag filter — match any user whose consultantTags include this tag name
-    if (tag) {
-      where.consultantTags = {
-        some: { name: tag },
-      };
+    // Category filter
+    if (category) {
+      where.category = category;
+    }
+
+    // Tag filter — match any profile whose tags include this tag name
+    if (tag && tag !== "all") {
+        where.tags = { some: { name: { equals: tag, mode: "insensitive" } } };
     }
 
     // Search filter — case-insensitive match on name or consultancy name
     if (search) {
       where.OR = [
-        { name:              { contains: search, mode: "insensitive" } },
+        { fullName:        { contains: search, mode: "insensitive" } },
         { nameOfConsultancy: { contains: search, mode: "insensitive" } },
+        { designation:     { contains: search, mode: "insensitive" } },
       ];
     }
 
     // ── 4. Query ───────────────────────────────────────────────────────────
-    const [users, total] = await prisma.$transaction([
-      prisma.user.findMany({
+    const [profiles, total] = await prisma.$transaction([
+      prisma.consultantProfile.findMany({
         where,
         skip,
         take,
-        orderBy: { avgReviews: "desc" },
+        orderBy: { ratingAvg: "desc" },
         select: {
           id:                true,
-          name:              true,
+          fullName:          true,
           nameOfConsultancy: true,
-          profilePicture:    true,
+          profilePhotoUrl:   true,
           headline:          true,
           bio:               true,
           designation:       true,
           yearsOfExperience: true,
           city:              true,
           country:           true,
-          avgReviews:        true,
-          appointmentFee:    true,
+          ratingAvg:         true,
+          ratingCount:       true,
+          consultationFee:   true,
           isFeatured:        true,
-          isVerified:        true,
-          consultantTags: {
+          category:          true,
+          userId:            true,
+          tags: {
             select: { name: true },
           },
-          _count: {
-            select: { review: true },
+          user: {
+            select: { isVerified: true },
           },
         },
       }),
-      prisma.user.count({ where }),
+      prisma.consultantProfile.count({ where }),
     ]);
 
     // ── 5. Shape into ConsultantCardData ───────────────────────────────────
-    const consultants: ConsultantCardData[] = users.map((u) => ({
-      id:                u.id,
-      name:              u.name ?? "Unknown",
-      nameOfConsultancy: u.nameOfConsultancy,
-      profilePicture:    u.profilePicture,
-      headline:          u.headline,
-      bio:               u.bio,
-      designation:       u.designation,
-      yearsOfExperience: u.yearsOfExperience,
-      city:              u.city,
-      country:           u.country,
-      avgReviews:        u.avgReviews,
-      reviewCount:       u._count.review,
-      appointmentFee:    u.appointmentFee,
-      specialties:       u.consultantTags.map((t) => t.name),
-      featured:          u.isFeatured,
-      isVerified:        u.isVerified,
+    const consultants: ConsultantCardData[] = profiles.map((p) => ({
+      id:                p.id,        
+      userId:            p.userId,                  
+      fullName:          p.fullName,
+      nameOfConsultancy: p.nameOfConsultancy,
+      profilePhotoUrl:   p.profilePhotoUrl,
+      headline:          p.headline,
+      bio:               p.bio,
+      designation:       p.designation,
+      yearsOfExperience: p.yearsOfExperience,
+      city:              p.city,
+      country:           p.country,
+      ratingAvg:         p.ratingAvg,
+      ratingCount:       p.ratingCount,
+      consultationFee:   Number(p.consultationFee),
+      specialties:       p.tags.map((t) => t.name),
+      featured:          p.isFeatured,
+      isVerified:        p.user?.isVerified ?? false,
+      category:          p.category,
     }));
 
     return NextResponse.json(

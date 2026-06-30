@@ -1,98 +1,78 @@
 import { z } from "zod";
 
-const interactionTypes = [
-  "consulation",
-  "meeting",
-  "call",
-  "treatment_session",
-  "review_meeting",
-  "project_discussion",
-  "support_call",
-] as const;
+// ── Enums (mirror prisma/schema.prisma) ───────────────────────────────────
 
-export const interactionSchema = z.object({
-  interactionType: z.enum(interactionTypes).optional(),
+export const interactionTypeEnum = z.enum([
+  "RECORDED_AUDIO",
+  "NOTE",
+  "FOLLOW_UP_CALL",
+  "MESSAGE",
+  "VIDEO_SESSION",
+]);
 
-  notes: z
-    .string()
-    .max(2000, "Notes must be at most 2000 characters")
-    .trim()
-    .optional(),
+export const transcriptStatusEnum = z.enum([
+  "PENDING",
+  "PROCESSING",
+  "COMPLETED",
+  "FAILED",
+  "LOW_CONFIDENCE",
+]);
 
-  audioUrl: z
-    .string()
-    .url("Invalid URL")
-    .optional(),
+export const visibilityEnum = z.enum([
+  "CONSULTANT_ONLY",
+  "SHARED_WITH_CLIENT",
+]);
 
-  transcript: z
-    .string()
-    .max(5000, "Transcript must be at most 5000 characters")
-    .trim()
-    .optional(),
-
-  interactionDate: z
-    .string()
-    .datetime()
-    .optional(),
-});
+// ── Create schema ─────────────────────────────────────────────────────────
 
 export const createInteractionSchema = z.object({
-  userId: z
-    .string()
-    .trim(),
+  caseId: z.string().uuid("Invalid case ID"),
+  consultantId: z.string().uuid("Invalid consultant ID"),
+  clientId: z.string().uuid("Invalid client ID"),
+  appointmentId: z.string().uuid("Invalid appointment ID").optional(),
 
-  clientId: z
-    .string()
-    .trim(),
+  type: interactionTypeEnum,
 
-  interactionType: z.enum(interactionTypes).optional(),
+  occurredAt: z.string().datetime().optional(),
+  durationSecs: z.number().int().min(0).optional(),
 
-  notes: z
-    .string()
-    .max(2000, "Notes must be at most 2000 characters")
-    .trim()
-    .optional(),
+  rawAudioUrl: z.string().url("Invalid audio URL").optional(),
+  transcriptText: z.string().max(50000).trim().optional(),
+  transcriptLang: z.string().trim().optional(),
 
-  audioUrl: z
-    .string()
-    .url("Invalid URL")
-    .optional(),
+  notesText: z.string().max(10000).trim().optional(),
 
-  transcript: z
-    .string()
-    .max(5000, "Transcript must be at most 5000 characters")
-    .trim()
-    .optional(),
-
-  interactionDate: z
-    .string()
-    .datetime()
-    .optional(),
+  visibility: visibilityEnum.default("CONSULTANT_ONLY"),
+  consentGiven: z.boolean().default(false),
 });
+
+// ── Update schema ─────────────────────────────────────────────────────────
+
+export const updateInteractionSchema = z.object({
+  notesText: z.string().max(10000).trim().optional().nullable(),
+  transcriptText: z.string().max(50000).trim().optional().nullable(),
+  transcriptStatus: transcriptStatusEnum.optional(),
+  transcriptLang: z.string().trim().optional().nullable(),
+  visibility: visibilityEnum.optional(),
+  durationSecs: z.number().int().min(0).optional(),
+});
+
+// ── List / filter schema ──────────────────────────────────────────────────
 
 export const listInteractionSchema = z.object({
-  userId: z
-    .string()
-    .trim(),
-  clientId: z
-    .string()
-    .trim()
-    .optional(),
-  type: z.enum(interactionTypes).optional(),
-  skip: z
-    .number()
-    .int()
-    .min(0, "Skip must be at least 0")
-    .default(0)
-    .optional(),
-  take: z
-    .number()
-    .int()
-    .min(1, "Take must be at least 1")
-    .max(100, "Take must be at most 100")
-    .default(10)
-    .optional(),
+  consultantId: z.string().uuid().optional(),
+  caseId: z.string().uuid().optional(),
+  clientId: z.string().uuid().optional(),
+  type: interactionTypeEnum.optional(),
+  skip: z.number().int().min(0).default(0).optional(),
+  take: z.number().int().min(1).max(100).default(10).optional(),
 });
 
+// ── Inferred types ────────────────────────────────────────────────────────
+
+export type InteractionType = z.infer<typeof interactionTypeEnum>;
+export type TranscriptStatus = z.infer<typeof transcriptStatusEnum>;
+export type Visibility = z.infer<typeof visibilityEnum>;
 export type CreateInteractionInput = z.infer<typeof createInteractionSchema>;
+export type UpdateInteractionInput = z.infer<typeof updateInteractionSchema>;
 export type ListInteractionInput = z.infer<typeof listInteractionSchema>;

@@ -13,22 +13,21 @@ export async function POST(request: NextRequest) {
     // Parse multipart form data
     const formData = await request.formData();
 
-    // ── Extract all verification/resume docs (multiple files allowed) ──────
-    // The client sends each file under the key "docs"
+    // ── Extract verification/resume docs (multiple files allowed) ──────────
     const docFiles: File[] = formData
       .getAll("docs")
       .filter((v): v is File => v instanceof File && v.size > 0);
 
-    // ── Build scalar body for Zod validation (exclude file entries) ────────
+    // ── Build scalar body for Zod validation ──────────────────────────────
     const rawBody: Record<string, unknown> = {};
     for (const [key, value] of formData.entries()) {
-      if (key === "docs") continue; // handled separately
+      if (key === "docs") continue;
       rawBody[key] = value;
     }
 
     // Coerce numeric fields from FormData strings
-    rawBody.appointmentFee    = Number(rawBody.appointmentFee);
     rawBody.yearsOfExperience = Number(rawBody.yearsOfExperience);
+    rawBody.consultationFee = Number(rawBody.consultationFee);
 
     // Parse consultantTags JSON string → string[]
     rawBody.consultantTags = JSON.parse(
@@ -38,6 +37,7 @@ export async function POST(request: NextRequest) {
     // ── Validate ───────────────────────────────────────────────────────────
     const result = createUserSchema.safeParse(rawBody);
     if (!result.success) {
+      console.error("Validation failed:", result.error.flatten());
       return NextResponse.json(
         { success: false, errors: result.error.flatten() },
         { status: 400 }
@@ -45,16 +45,21 @@ export async function POST(request: NextRequest) {
     }
 
     const {
-      name,
+      fullName,
       email,
       phone,
       password,
       dob,
       bio,
+      headline,
+      category,
+      subSpecialization,
       nameOfConsultancy,
       designation,
       yearsOfExperience,
-      appointmentFee,
+      consultationFee,
+      currency,
+      paymentTiming,
       address,
       city,
       state,
@@ -81,41 +86,50 @@ export async function POST(request: NextRequest) {
     // ── Hash password ──────────────────────────────────────────────────────
     const hashedPassword = await hashPassword(password);
 
-    // ── Create user first so we have an ID for the storage path ──────────
+    // ── Create User + ConsultantProfile atomically ─────────────────────────
     const user = await prisma.user.create({
       data: {
-        name,
         email,
         phone,
-        password: hashedPassword,
-        dob: new Date(dob),
-        bio,
-        nameOfConsultancy,
-        designation,
-        yearsOfExperience,
-        appointmentFee,
-        address:      address      ?? null,
-        city,
-        state,
-        country,
-        timezone,
-        website:      website      || null,
-        linkedinUrl:  linkedinUrl  || null,
-        portfolioUrl: portfolioUrl || null,
-        resumeUrl:    null, // populated below after upload
-        consultantTags: {
-          connectOrCreate: consultantTags.map((tagName: string) => {
-            const normalised = tagName.trim().toLowerCase();
-            return {
-              where:  { name: normalised },
-              create: { name: normalised },
-            };
-          }),
+        passwordHash: hashedPassword,
+        role: "CONSULTANT",
+        consultantProfile: {
+          create: {
+            fullName,
+            dob: new Date(dob),
+            bio,
+            headline: headline ?? null,
+            category,
+            subSpecialization: subSpecialization ?? null,
+            nameOfConsultancy: nameOfConsultancy ?? null,
+            designation: designation ?? null,
+            yearsOfExperience: yearsOfExperience ?? 0,
+            consultationFee: consultationFee ?? 150,
+            currency: currency ?? "INR",
+            paymentTiming: paymentTiming ?? "PAY_ON_BOOKING",
+            address: address ?? null,
+            city: city ?? null,
+            state: state ?? null,
+            country: country ?? "India",
+            timezone: timezone ?? "Asia/Kolkata",
+            website: website || null,
+            linkedinUrl: linkedinUrl || null,
+            portfolioUrl: portfolioUrl || null,
+            tags: {
+              connectOrCreate: consultantTags.map((tagName: string) => {
+                const normalised = tagName.trim().toLowerCase();
+                return {
+                  where: { name: normalised },
+                  create: { name: normalised },
+                };
+              }),
+            },
+          },
         },
       },
     });
 
-    // ── Upload verification docs to SUPABASE_CONSULTANT_RESUME bucket ─────
+    // ── Upload verification docs ────────────────────────────────────────────
     let uploadedDocs: UploadResult[] = [];
     const uploadedPaths: string[] = [];
 
@@ -124,13 +138,12 @@ export async function POST(request: NextRequest) {
         uploadedDocs = await uploadConsultantDocs(docFiles, user.id);
         uploadedPaths.push(...uploadedDocs.map((d) => d.path));
 
-        // Store the primary doc URL (first file) in the resumeUrl field
-        await prisma.user.update({
-          where: { id: user.id },
-          data:  { resumeUrl: uploadedDocs[0].publicUrl },
+        // Store the primary doc URL as resumeUrl on ConsultantProfile
+        await prisma.consultantProfile.update({
+          where: { userId: user.id },
+          data: { resumeUrl: uploadedDocs[0].publicUrl },
         });
       } catch (uploadError) {
-        // Roll back: delete any files that did get uploaded, then delete the user
         await deleteConsultantDocs(uploadedPaths).catch(() => {});
         await prisma.user.delete({ where: { id: user.id } }).catch(() => {});
 
@@ -147,14 +160,13 @@ export async function POST(request: NextRequest) {
 
     const response = NextResponse.json(
       {
-        success:  true,
-        message:  "User created successfully",
-        // Return all uploaded doc URLs so the client can display them
+        success: true,
+        message: "User created successfully",
         uploadedDocs: uploadedDocs.map((d) => ({
-          fileName:  d.fileName,
+          fileName: d.fileName,
           publicUrl: d.publicUrl,
-          fileSize:  d.fileSize,
-          fileType:  d.fileType,
+          fileSize: d.fileSize,
+          fileType: d.fileType,
         })),
       },
       { status: 201 }
@@ -162,10 +174,10 @@ export async function POST(request: NextRequest) {
 
     response.cookies.set("token", token, {
       httpOnly: true,
-      secure:   process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge:   60 * 60 * 24, // 1 day
-      path:     "/",
+      maxAge: 60 * 60 * 24,
+      path: "/",
     });
 
     return response;

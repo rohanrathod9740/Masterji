@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
+import type { ConsultantCategory, MeetingMode, InteractionType } from "@/types";
 import { differenceInDays, formatDistanceToNow, format } from "date-fns";
 import SectionNav from "./SectionNav";
 import {
@@ -47,7 +48,7 @@ type AppointmentItem = {
   appointmentDate: string;
   status: string;
   purpose?: string | null;
-  meetingMode?: string | null;
+  meetingMode?: MeetingMode | null;
   duration?: number | null;
   client: { id: string; name: string };
 };
@@ -63,7 +64,7 @@ type CommitmentItem = {
 type InteractionItem = {
   id: string;
   interactionDate: string;
-  interactionType?: string | null;
+  interactionType?: InteractionType | null;
   notes?: string | null;
   transcript?: string | null;
   client: { id: string; name: string };
@@ -79,9 +80,9 @@ type ClientItem = {
 
 type CaseItem = {
   id: string;
-  problem?: string | null;
-  followUpDate?: string | null;
-  client: { id: string; name: string };
+  title?: string | null;
+  description?: string | null;
+  client: { id: string; fullName: string };
 };
 
 type DashboardData = {
@@ -101,15 +102,14 @@ type DashboardData = {
     recentInteractions: InteractionItem[];
     pendingNotesCount: number;
   };
-  clients: {
-    activeClientCount: number;
-    newClientsThisMonth: number;
-    atRiskClients: ClientItem[];
-    openCaseFollowUps: CaseItem[];
-    allActiveClients: { type?: string | null }[];
+  cases: {
+    activeCaseCount: number;
+    newCasesThisMonth: number;
+    atRiskCases: CaseItem[];
+    upcomingCommitmentsCount: number;
   };
   metrics: {
-    typeCounts: Record<string, number>;
+    categoryCounts: Partial<Record<ConsultantCategory, number>>;
     minutesToNext: number | null;
   };
 };
@@ -127,13 +127,11 @@ function getInitials(name: string) {
 
 
 const interactionTypeLabels: Record<string, string> = {
-  consultation: "Consultation",
-  meeting: "Meeting",
-  call: "Call",
-  treatment_session: "Treatment",
-  review_meeting: "Review",
-  project_discussion: "Discussion",
-  support_call: "Support",
+  RECORDED_AUDIO: "Recording",
+  NOTE:           "Note",
+  FOLLOW_UP_CALL: "Follow-up call",
+  MESSAGE:        "Message",
+  VIDEO_SESSION:  "Video session",
 };
 
 
@@ -194,17 +192,8 @@ export default function DashboardUser() {
   if (error) return <div>{error}</div>;
   if (!fetchedData) return null;
 
-  const typeCounts = fetchedData.clients.allActiveClients.reduce<Record<string, number>>(
-    (acc, c) => {
-      const key = c.type ?? "other";
-      acc[key] = (acc[key] ?? 0) + 1;
-      return acc;
-    },
-    {}
-  );
-
-  const atRiskClients = fetchedData.clients.atRiskClients;
-  const openCaseFollowUps = fetchedData.clients.openCaseFollowUps;
+  const categoryCounts = fetchedData.metrics.categoryCounts || {};
+  const atRiskCases = fetchedData.cases.atRiskCases || [];
 
   return (
     <div className="flex min-h-screen">
@@ -248,7 +237,7 @@ export default function DashboardUser() {
               <div className="stat-card">
                 <div className="text-xs text-gray-500 mb-1">Follow-ups</div>
                 <div className="text-xl font-bold text-teal-600">
-                  {fetchedData.clients.openCaseFollowUps.length}
+                  {fetchedData.cases.upcomingCommitmentsCount}
                 </div>
               </div>
             </div>
@@ -283,11 +272,15 @@ export default function DashboardUser() {
                         </div>
                         <div className="text-xs text-gray-500">
                           {appt.purpose ?? "No purpose set"} ·{" "}
-                          {appt.meetingMode === "office_meet"
-                            ? "In office"
-                            : appt.meetingMode === "online_meet"
-                              ? "Online"
-                              : "Other"}
+                          {appt.meetingMode === "IN_PERSON"
+                            ? "In person"
+                            : appt.meetingMode === "ZOOM"
+                              ? "Zoom"
+                              : appt.meetingMode === "GOOGLE_MEET"
+                                ? "Google Meet"
+                                : appt.meetingMode === "AUDIO_ONLY"
+                                  ? "Audio only"
+                                  : "Online"}
                         </div>
                       </div>
                       <div className="text-xs text-gray-500 flex-shrink-0 text-right">
@@ -428,7 +421,7 @@ export default function DashboardUser() {
               <div className="stat-card col-span-2 sm:col-span-1">
                 <div className="text-xs text-gray-500 mb-1">No touch (14d)</div>
                 <div className="text-xl font-bold text-red-500">
-                  {fetchedData.clients.atRiskClients.length}
+                  {fetchedData.cases.atRiskCases.length}
                 </div>
               </div>
             </div>
@@ -482,112 +475,78 @@ export default function DashboardUser() {
           <section id="clients">
             <SectionHeader
               icon={<PersonIcon className="w-4 h-4" />}
-              label="Clients"
-              href="/clients"
+              label="Cases"
+              href="/cases"
             />
 
             {/* Portfolio metrics */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
               <div className="stat-card">
-                <div className="text-xs text-gray-500 mb-1">Active</div>
+                <div className="text-xs text-gray-500 mb-1">Active Cases</div>
                 <div className="text-xl font-bold text-slate-900">
-                  {fetchedData.clients.activeClientCount}
+                  {fetchedData.cases.activeCaseCount}
                 </div>
               </div>
               <div className="stat-card">
-                <div className="text-xs text-gray-500 mb-1">New (30d)</div>
+                <div className="text-xs text-gray-500 mb-1">New Cases (30d)</div>
                 <div className="text-xl font-bold text-green-600">
-                  {fetchedData.clients.newClientsThisMonth}
+                  {fetchedData.cases.newCasesThisMonth}
                 </div>
               </div>
               <div className="stat-card">
-                <div className="text-xs text-gray-500 mb-1">At risk</div>
+                <div className="text-xs text-gray-500 mb-1">At risk Cases</div>
                 <div className="text-xl font-bold text-red-500">
-                  {fetchedData.clients.atRiskClients.length}
+                  {fetchedData.cases.atRiskCases.length}
                 </div>
               </div>
               <div className="stat-card">
-                <div className="text-xs text-gray-500 mb-1">Case follow-ups</div>
+                <div className="text-xs text-gray-500 mb-1">Upcoming Follow-ups</div>
                 <div className="text-xl font-bold text-teal-600">
-                  {fetchedData.clients.openCaseFollowUps.length}
+                  {fetchedData.cases.upcomingCommitmentsCount}
                 </div>
               </div>
             </div>
 
             {/* Portfolio type breakdown */}
-            {Object.keys(typeCounts).length > 0 && (
+            {Object.keys(categoryCounts).length > 0 && (
               <div className="flex flex-wrap gap-2 mb-4">
-                {Object.entries(typeCounts).map(([type, count]) => (
+                {Object.entries(categoryCounts).map(([category, count]) => (
                   <span
-                    key={type}
-                    className={`text-xs font-medium px-2.5 py-1 rounded-full ${typeColors[type] ?? "text-gray-600 bg-gray-100"}`}
+                    key={category}
+                    className="text-xs font-medium px-2.5 py-1 rounded-full text-blue-700 bg-blue-100"
                   >
-                    {type.replace(/_/g, " ")} · {count}
+                    {category.replace(/_/g, " ")} · {count}
                   </span>
                 ))}
               </div>
             )}
 
-            {/* At-risk clients */}
-            {atRiskClients.length > 0 && (
+            {/* At-risk cases */}
+            {atRiskCases.length > 0 && (
               <div className="mb-4">
                 <div className="text-xs font-semibold text-red-600 uppercase tracking-wide flex items-center gap-1 mb-2">
                   <ExclamationTriangleIcon className="w-3.5 h-3.5" />
-                  Needs attention
+                  Cases Needing Attention (No interaction in 14d)
                 </div>
                 <div className="space-y-2">
-                  {atRiskClients.map((client, i) => (
+                  {atRiskCases.map((c, i) => (
                     <Link
-                      key={client.id}
-                      href={`/clients/${client.id}`}
+                      key={c.id}
+                      href={`/cases/${c.id}`}
                       className="flex items-center gap-3 p-3 rounded-lg border border-red-100 bg-red-50 text-sm hover:bg-red-100 transition-colors"
                     >
                       <div
                         className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium flex-shrink-0 ${getAvatarColor(i)}`}
                       >
-                        {getInitials(client.name)}
+                        {getInitials(c.client.fullName)}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium text-gray-900 truncate">{client.name}</div>
-                        {client.companyName && (
-                          <div className="text-xs text-gray-500 truncate">{client.companyName}</div>
-                        )}
+                        <div className="font-medium text-gray-900 truncate">{c.title || "Untitled Case"}</div>
+                        <div className="text-xs text-gray-500 truncate">Client: {c.client.fullName}</div>
                       </div>
-                      {client.type && (
-                        <span
-                          className={`text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${typeColors[client.type] ?? "text-gray-600 bg-gray-100"}`}
-                        >
-                          {client.type.replace(/_/g, " ")}
-                        </span>
-                      )}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Case follow-ups */}
-            {openCaseFollowUps.length > 0 && (
-              <div>
-                <div className="text-xs font-semibold text-teal-700 uppercase tracking-wide mb-2">
-                  Case follow-ups due
-                </div>
-                <div className="space-y-2">
-                  {openCaseFollowUps.map((c) => (
-                    <Link
-                      key={c.id}
-                      href={`/cases/${c.id}`}
-                      className="flex items-center gap-3 p-3 rounded-lg border border-teal-100 bg-teal-50 text-sm hover:bg-teal-100 transition-colors"
-                    >
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium text-gray-900 truncate">{c.client.name}</div>
-                        <div className="text-xs text-gray-500 truncate">
-                          {c.problem ?? "No problem statement"}
-                        </div>
-                      </div>
-                      <div className="text-xs text-teal-700 font-medium flex-shrink-0">
-                        {c.followUpDate ? format(c.followUpDate, "MMM d") : "—"}
-                      </div>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-red-100 text-red-700">
+                        Inactive
+                      </span>
                     </Link>
                   ))}
                 </div>

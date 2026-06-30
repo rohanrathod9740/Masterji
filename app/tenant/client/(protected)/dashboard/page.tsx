@@ -4,42 +4,52 @@ import ClientDashboard from "./ClientDashboard";
 import { prisma } from "@/lib/db";
 
 export default async function Page() {
-  const person = await getCurrentClient();
+  const user = await getCurrentClient();
 
-  if (!person) {
+  if (!user) {
     redirect("/client/login");
   }
 
-  const [client, rawAppointments] = await Promise.all([
-    prisma.client.findUnique({
-      where: { id: person.id },
-      select: { id: true, name: true, email: true },
-    }),
-    prisma.appointment.findMany({
-      where: { clientId: person.id },
-      orderBy: { appointmentDate: "asc" },
-      select: {
-        id: true,
-        appointmentDate: true,
-        appointmentTime: true,
-        meetingMode: true,
-        status: true,
-        purpose: true,
+  // Resolve the ClientProfile
+  const clientProfile = await prisma.clientProfile.findUnique({
+    where: { userId: user.id },
+    select: { id: true, fullName: true },
+  });
+
+  if (!clientProfile) {
+    redirect("/client/login");
+  }
+
+  // Fetch appointments for this client profile
+  const rawAppointments = await prisma.appointment.findMany({
+    where: { clientId: clientProfile.id },
+    orderBy: { scheduledStart: "asc" },
+    select: {
+      id:             true,
+      scheduledStart: true,
+      scheduledEnd:   true,
+      mode:           true,
+      status:         true,
+      purpose:        true,
+      consultant: {
+        select: { fullName: true, designation: true },
       },
-    }),
-  ]);
+    },
+  });
 
-  if (!client) {
-    redirect("/client/login");
-  }
-
-  // ✅ Convert Date → string here so it matches the Appointment type
+  // Normalise dates to ISO strings for safe client serialisation
   const appointments = rawAppointments.map((a) => ({
     ...a,
-    appointmentDate: a.appointmentDate.toISOString().split("T")[0], // "YYYY-MM-DD"
-    meetingMode: a.meetingMode as string,
+    scheduledStart: a.scheduledStart.toISOString(),
+    scheduledEnd:   a.scheduledEnd.toISOString(),
+    mode:   a.mode   as string,
     status: a.status as string,
   }));
 
-  return <ClientDashboard client={client} appointments={appointments} />;
+  return (
+    <ClientDashboard
+      client={{ id: clientProfile.id, name: clientProfile.fullName, email: user.email }}
+      appointments={appointments}
+    />
+  );
 }

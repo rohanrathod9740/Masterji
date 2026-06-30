@@ -7,82 +7,57 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    // validate request body
     const result = loginClientSchema.safeParse(body);
-
     if (!result.success) {
       return NextResponse.json(
-        {
-          success: false,
-          errors: result.error.flatten(),
-        },
+        { success: false, errors: result.error.flatten() },
         { status: 400 }
       );
     }
 
-    // validated data
-    const {
-      email,
-      phone,
-      password,
-    } = result.data;
+    const { email, phone, password } = result.data;
 
-    // find user
     const orConditions = [];
+    if (email) orConditions.push({ email });
+    if (phone) orConditions.push({ phone });
 
-    if (email) {
-      orConditions.push({ email: email });
-    }
-
-    if (phone) {
-      orConditions.push({ phone: phone });
-    }
-
-    const client = await prisma.client.findFirst({
-      where: {
-        OR: orConditions,
-      },
+    // Find client user only (role = CLIENT)
+    const user = await prisma.user.findFirst({
+      where: { OR: orConditions, role: "CLIENT" },
     });
 
-    if (!client) {
+    if (!user) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid credentials",
-        },
+        { success: false, message: "Invalid credentials" },
         { status: 401 }
       );
     }
 
-    // verify password
     const isPasswordValid = await verifyPassword(
       password || "",
-      client.passwordHash
+      user.passwordHash
     );
 
     if (!isPasswordValid) {
       return NextResponse.json(
-        {
-          success: false,
-          message: "Invalid credentials",
-        },
+        { success: false, message: "Invalid credentials" },
         { status: 401 }
       );
     }
 
-    // generate jwt
-    const token = generateToken(client.id);
+    // Update lastLoginAt
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { lastLoginAt: new Date() },
+    });
 
-    // create response
+    const token = generateToken(user.id);
+
     const response = NextResponse.json(
-      {
-        success: true,
-        message: "Login successful",
-      },
+      { success: true, message: "Login successful" },
       { status: 200 }
     );
 
-    // set cookie
     response.cookies.set("clientAuthToken", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
@@ -92,15 +67,10 @@ export async function POST(request: NextRequest) {
     });
 
     return response;
-
   } catch (error) {
     console.error("Login error:", error);
-
     return NextResponse.json(
-      {
-        success: false,
-        message: "Internal server error",
-      },
+      { success: false, message: "Internal server error" },
       { status: 500 }
     );
   }

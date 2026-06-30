@@ -2,9 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { professtionTags } from "@/types";
+import { professionTags } from "@/types";
 
-const sectionItems = professtionTags;
+const sectionItems = professionTags;
 
 type SectionNavProps = {
   selectedSection: string;

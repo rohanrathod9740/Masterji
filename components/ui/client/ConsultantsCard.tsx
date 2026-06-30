@@ -71,26 +71,27 @@ const StarRating = memo(function StarRating({
 type Props = {
   consultant: ConsultantCardData;
   onViewProfile?: (id: string) => void;
+  onBookAppointment?: (id: string) => void;
   className?: string;
 };
 
 // ── Component ──────────────────────────────────────────────────────────────
-function ConsultantsCard({ consultant, onViewProfile, className }: Props) {
+function ConsultantsCard({ consultant, onViewProfile,onBookAppointment, className }: Props) {
   const {
     id,
-    name,
+    fullName,
     nameOfConsultancy,
-    profilePicture,
+    profilePhotoUrl,
     headline,
     bio,
     designation,
     yearsOfExperience,
     city,
     country,
-    avgReviews,
-    reviewCount,
+    ratingAvg,
+    ratingCount,
     specialties = [],
-    appointmentFee,
+    consultationFee,
     featured,
     isVerified,
   } = consultant;
@@ -98,13 +99,13 @@ function ConsultantsCard({ consultant, onViewProfile, className }: Props) {
 
   // Avoid recomputing these on every re-render of the list (e.g. when a
   // sibling card's hover state triggers a parent update).
-  const initials = useMemo(() => getInitials(name), [name]);
-  const colorClass = useMemo(() => avatarColor(name), [name]);
+  const initials = useMemo(() => getInitials(fullName), [fullName]);
+  const colorClass = useMemo(() => avatarColor(fullName), [fullName]);
   const visibleSpecialties = useMemo(() => specialties.slice(0, 4), [specialties]);
   const extraSpecialtyCount = specialties.length - visibleSpecialties.length;
   const formattedFee = useMemo(
-    () => appointmentFee.toLocaleString('en-IN'),
-    [appointmentFee]
+    () => consultationFee.toLocaleString('en-IN'),
+    [consultationFee]
   );
 
   return (
@@ -128,11 +129,11 @@ function ConsultantsCard({ consultant, onViewProfile, className }: Props) {
       <CardHeader className="pb-0 px-3 pt-3 flex flex-row justify-between">
         <div className="flex items-start gap-2.5">
           {/* Avatar */}
-          {profilePicture ? (
+          {profilePhotoUrl ? (
             <div className="relative size-10 shrink-0 overflow-hidden rounded-xl ring-1 ring-slate-100">
               <Image
-                src={profilePicture}
-                alt={name}
+                src={profilePhotoUrl}
+                alt={fullName}
                 fill
                 className="object-cover"
                 sizes="40px"
@@ -153,7 +154,7 @@ function ConsultantsCard({ consultant, onViewProfile, className }: Props) {
           {/* Name + designation + badges */}
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5 flex-wrap">
-              <p className="truncate text-sm font-semibold text-slate-900">{name}</p>
+              <p className="truncate text-sm font-semibold text-slate-900">{fullName}</p>
               {isVerified && (
                 <BadgeCheck
                   className="size-3.5 shrink-0 text-indigo-500"
@@ -183,10 +184,10 @@ function ConsultantsCard({ consultant, onViewProfile, className }: Props) {
       <CardContent className="flex flex-col gap-2 px-3 py-2.5 flex-1">
         {/* Rating row */}
         <div className="flex items-center gap-1.5">
-          <StarRating rating={Math.round(avgReviews)} />
-          <span className="text-xs font-semibold text-slate-800">{avgReviews.toFixed(1)}</span>
+          <StarRating rating={Math.round(ratingAvg)} />
+          <span className="text-xs font-semibold text-slate-800">{ratingAvg.toFixed(1)}</span>
           <span className="text-xs text-slate-400">
-            ({reviewCount} review{reviewCount !== 1 ? 's' : ''})
+            ({ratingCount} review{ratingCount !== 1 ? 's' : ''})
           </span>
         </div>
 
@@ -200,6 +201,7 @@ function ConsultantsCard({ consultant, onViewProfile, className }: Props) {
             {yearsOfExperience}y exp
           </span>
           <span className="flex items-center gap-1">
+            Website
             <MapPin className="size-3 text-slate-400" aria-hidden="true" />
             {city}, {country}
           </span>
@@ -225,7 +227,7 @@ function ConsultantsCard({ consultant, onViewProfile, className }: Props) {
 
         <button
           type="button"
-          onClick={() => router.push(`/tenant/client/appointment/${id}`)}
+          onClick={() => onBookAppointment?.(id)}
           className="rounded-lg border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-800 shadow-sm transition-all hover:border-indigo-400 hover:bg-indigo-50 hover:text-indigo-700 hover:shadow-md active:scale-[0.97]"
         >
           Book Appointment
